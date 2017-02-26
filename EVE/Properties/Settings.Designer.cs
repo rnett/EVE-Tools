@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CapitalBuildManagerApp.Properties {
+namespace EVE.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -23,14 +23,14 @@ namespace CapitalBuildManagerApp.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::CapitalBuildManagerApp.UserData UserData {
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\SDE\\SDE.mdf;I" +
+            "ntegrated Security=True")]
+        public string SDEConnectionString {
             get {
-                return ((global::CapitalBuildManagerApp.UserData)(this["UserData"]));
-            }
-            set {
-                this["UserData"] = value;
+                return ((string)(this["SDEConnectionString"]));
             }
         }
     }

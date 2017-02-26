@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2ca10406b53f4b3483dcb540f658520c" Name="Diagram1">
+        <EntityTypeShape EntityType="SDEModel.industryactivity" Width="1.5" PointX="5.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.industryactivitymaterial" Width="1.5" PointX="7.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.industryactivityprobability" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.industryactivityproduct" Width="1.5" PointX="10.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.invmarketgroup" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.invtype" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.industryblueprint" Width="1.5" PointX="5.75" PointY="7.75" IsExpanded="true" />
+        <AssociationConnector Association="SDEModel.FK_industryactivity_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivitymaterials_industryactivity" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityprobabilities_industryactivity" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityproducts_industryactivity" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivitymaterials_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityproducts_MaterialTypeID_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityprobabilities_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityproducts_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityproducts_ProductTypeID_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_invtypes_invmarketgroups" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
