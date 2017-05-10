@@ -87,6 +87,21 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
           <Property Name="soundID" Type="int" />
           <Property Name="graphicID" Type="int" />
         </EntityType>
+        <EntityType Name="ore">
+          <Key>
+            <PropertyRef Name="typeID" />
+          </Key>
+          <Property Name="typeID" Type="int" Nullable="false" />
+          <Property Name="name" Type="ntext" Nullable="false" />
+          <Property Name="Tritanium" Type="int" Nullable="false" />
+          <Property Name="Pyerite" Type="int" Nullable="false" />
+          <Property Name="Mexallon" Type="int" Nullable="false" />
+          <Property Name="Isogen" Type="int" Nullable="false" />
+          <Property Name="Nocxium" Type="int" Nullable="false" />
+          <Property Name="Zydrine" Type="int" Nullable="false" />
+          <Property Name="Megacyte" Type="int" Nullable="false" />
+          <Property Name="Morphite" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_industryactivity_invtypes">
           <End Role="invtypes" Type="Self.invtypes" Multiplicity="1" />
           <End Role="industryactivity" Type="Self.industryactivity" Multiplicity="*" />
@@ -213,6 +228,18 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ore_invtypes">
+          <End Role="invtypes" Type="Self.invtypes" Multiplicity="1" />
+          <End Role="ore" Type="Self.ore" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="invtypes">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="ore">
+              <PropertyRef Name="typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="GetBlueprint" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="productTypeID" Type="int" Mode="In" />
           <Parameter Name="activityID" Type="int" Mode="In" />
@@ -250,6 +277,25 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
                 <Property Name="activityID" Type="int" Nullable="false" />
                 <Property Name="materialTypeID" Type="int" Nullable="false" />
                 <Property Name="quantity" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetOreFromID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="typeID" Type="int" Nullable="false" />
+                <Property Name="name" Type="ntext" Nullable="false" />
+                <Property Name="Tritanium" Type="int" Nullable="false" />
+                <Property Name="Pyerite" Type="int" Nullable="false" />
+                <Property Name="Mexallon" Type="int" Nullable="false" />
+                <Property Name="Isogen" Type="int" Nullable="false" />
+                <Property Name="Nocxium" Type="int" Nullable="false" />
+                <Property Name="Zydrine" Type="int" Nullable="false" />
+                <Property Name="Megacyte" Type="int" Nullable="false" />
+                <Property Name="Morphite" Type="int" Nullable="false" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -302,6 +348,30 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="GetTypesLikeName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="typeID" Type="int" Nullable="false" />
+                <Property Name="groupID" Type="int" />
+                <Property Name="typeName" Type="varchar" MaxLength="100" Nullable="false" />
+                <Property Name="typeDescription" Type="text" />
+                <Property Name="mass" Type="float" />
+                <Property Name="volume" Type="float" />
+                <Property Name="capacity" Type="float" />
+                <Property Name="portionSize" Type="int" />
+                <Property Name="raceID" Type="int" />
+                <Property Name="basePrice" Type="decimal" Precision="19" Scale="4" />
+                <Property Name="published" Type="tinyint" />
+                <Property Name="marketGroupID" Type="int" />
+                <Property Name="iconID" Type="int" />
+                <Property Name="soundID" Type="int" />
+                <Property Name="graphicID" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <EntityContainer Name="SDEModelStoreContainer">
           <EntitySet Name="industryactivity" EntityType="Self.industryactivity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="industryactivitymaterials" EntityType="Self.industryactivitymaterials" Schema="dbo" store:Type="Tables" />
@@ -309,6 +379,7 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
           <EntitySet Name="industryactivityproducts" EntityType="Self.industryactivityproducts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="invmarketgroups" EntityType="Self.invmarketgroups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="invtypes" EntityType="Self.invtypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ore" EntityType="Self.ore" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="industryblueprints" EntityType="Self.industryblueprints" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [industryblueprints].[typeID] AS [typeID], 
@@ -354,6 +425,10 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
           <AssociationSet Name="FK_invtypes_invmarketgroups" Association="Self.FK_invtypes_invmarketgroups">
             <End Role="invmarketgroups" EntitySet="invmarketgroups" />
             <End Role="invtypes" EntitySet="invtypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ore_invtypes" Association="Self.FK_ore_invtypes">
+            <End Role="invtypes" EntitySet="invtypes" />
+            <End Role="ore" EntitySet="ore" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -452,6 +527,7 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
           <NavigationProperty Name="blueprint_industryactivityproducts" Relationship="Self.FK_industryactivityproducts_invtypes" FromRole="invtypes" ToRole="industryactivityproducts" />
           <NavigationProperty Name="product_industryactivityproducts" Relationship="Self.FK_industryactivityproducts_ProductTypeID_invtypes" FromRole="invtypes" ToRole="industryactivityproducts" />
           <NavigationProperty Name="invmarketgroup" Relationship="Self.FK_invtypes_invmarketgroups" FromRole="invtypes" ToRole="invmarketgroups" />
+          <NavigationProperty Name="ore" Relationship="SDEModel.FK_ore_invtypes" FromRole="invtype" ToRole="ore" />
         </EntityType>
         <EntityType Name="industryblueprint">
           <Key>
@@ -643,7 +719,7 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
             <Parameter Name="activityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetMats" IsComposable="true" EntitySet="industryactivitymaterials" ReturnType="Collection(SDEModel.industryactivitymaterial)">
-          <Parameter Name="productTypeID" Mode="In" Type="Int32" />
+            <Parameter Name="productTypeID" Mode="In" Type="Int32" />
             <Parameter Name="activityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetTypeFromID" IsComposable="true" EntitySet="invtypes" ReturnType="Collection(SDEModel.invtype)">
@@ -652,7 +728,63 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
           <FunctionImport Name="GetTypeFromName" IsComposable="true" EntitySet="invtypes" ReturnType="Collection(SDEModel.invtype)">
           <Parameter Name="name" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetTypesLikeName" IsComposable="true" EntitySet="invtypes" ReturnType="Collection(SDEModel.invtype)">
+          <Parameter Name="name" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="ores" EntityType="SDEModel.ore" />
+          <AssociationSet Name="FK_ore_invtypes" Association="SDEModel.FK_ore_invtypes">
+            <End Role="invtype" EntitySet="invtypes" />
+            <End Role="ore" EntitySet="ores" />
+          </AssociationSet>
+          <FunctionImport Name="GetOreFromID" IsComposable="true" EntitySet="ores" ReturnType="Collection(SDEModel.ore)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="GetTypesLikeName_Result">
+          <Property Type="Int32" Name="typeID" Nullable="false" />
+          <Property Type="Int32" Name="groupID" Nullable="true" />
+          <Property Type="String" Name="typeName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="typeDescription" Nullable="true" MaxLength="Max" />
+          <Property Type="Double" Name="mass" Nullable="true" />
+          <Property Type="Double" Name="volume" Nullable="true" />
+          <Property Type="Double" Name="capacity" Nullable="true" />
+          <Property Type="Int32" Name="portionSize" Nullable="true" />
+          <Property Type="Int32" Name="raceID" Nullable="true" />
+          <Property Type="Decimal" Name="basePrice" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="Byte" Name="published" Nullable="true" />
+          <Property Type="Int32" Name="marketGroupID" Nullable="true" />
+          <Property Type="Int32" Name="iconID" Nullable="true" />
+          <Property Type="Int32" Name="soundID" Nullable="true" />
+          <Property Type="Int32" Name="graphicID" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="ore">
+          <Key>
+            <PropertyRef Name="typeID" />
+          </Key>
+          <Property Name="typeID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Tritanium" Type="Int32" Nullable="false" />
+          <Property Name="Pyerite" Type="Int32" Nullable="false" />
+          <Property Name="Mexallon" Type="Int32" Nullable="false" />
+          <Property Name="Isogen" Type="Int32" Nullable="false" />
+          <Property Name="Nocxium" Type="Int32" Nullable="false" />
+          <Property Name="Zydrine" Type="Int32" Nullable="false" />
+          <Property Name="Megacyte" Type="Int32" Nullable="false" />
+          <Property Name="Morphite" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="invtype" Relationship="SDEModel.FK_ore_invtypes" FromRole="ore" ToRole="invtype" />
+        </EntityType>
+        <Association Name="FK_ore_invtypes">
+          <End Type="SDEModel.invtype" Role="invtype" Multiplicity="1" />
+          <End Type="SDEModel.ore" Role="ore" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="invtype">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="ore">
+              <PropertyRef Name="typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -748,6 +880,26 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
           <FunctionImportMapping FunctionName="SDEModel.Store.GetTypeFromID" FunctionImportName="GetTypeFromID">
           </FunctionImportMapping>
           <FunctionImportMapping FunctionName="SDEModel.Store.GetTypeFromName" FunctionImportName="GetTypeFromName">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTypesLikeName" FunctionName="SDEModel.Store.GetTypesLikeName">
+          </FunctionImportMapping>
+          <EntitySetMapping Name="ores">
+            <EntityTypeMapping TypeName="SDEModel.ore">
+              <MappingFragment StoreEntitySet="ore">
+                <ScalarProperty Name="Morphite" ColumnName="Morphite" />
+                <ScalarProperty Name="Megacyte" ColumnName="Megacyte" />
+                <ScalarProperty Name="Zydrine" ColumnName="Zydrine" />
+                <ScalarProperty Name="Nocxium" ColumnName="Nocxium" />
+                <ScalarProperty Name="Isogen" ColumnName="Isogen" />
+                <ScalarProperty Name="Mexallon" ColumnName="Mexallon" />
+                <ScalarProperty Name="Pyerite" ColumnName="Pyerite" />
+                <ScalarProperty Name="Tritanium" ColumnName="Tritanium" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="typeID" ColumnName="typeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetOreFromID" FunctionName="SDEModel.Store.GetOreFromID">
           </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>

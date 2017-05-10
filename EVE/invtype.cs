@@ -54,28 +54,6 @@ namespace EVE
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<industryactivityproduct> product_industryactivityproducts { get; set; }
         public virtual invmarketgroup invmarketgroup { get; set; }
-
-		public override string ToString()
-		{
-			return this.typeName;
-		}
-
-		public override bool Equals(object obj)
-		{
-			var item = obj as invtype;
-
-			if (item == null)
-			{
-				return false;
-			}
-
-			return this.typeID == item.typeID;
-		}
-
-		public override int GetHashCode()
-		{
-			return typeID.GetHashCode();
-		}
-
-	}
+        public virtual ore ore { get; set; }
+    }
 }

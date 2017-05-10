@@ -22,6 +22,8 @@
         <AssociationConnector Association="SDEModel.FK_industryactivityproducts_invtypes" ManuallyRouted="false" />
         <AssociationConnector Association="SDEModel.FK_industryactivityproducts_ProductTypeID_invtypes" ManuallyRouted="false" />
         <AssociationConnector Association="SDEModel.FK_invtypes_invmarketgroups" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SDEModel.ore" Width="1.5" PointX="4.875" PointY="0.5" />
+        <AssociationConnector Association="SDEModel.FK_ore_invtypes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -53,6 +53,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -69,6 +73,9 @@
     <Compile Include="Blueprints.cs" />
     <Compile Include="CharacterData.cs" />
     <Compile Include="Facility.cs" />
+    <Compile Include="GetTypesLikeName_Result.cs">
+      <DependentUpon>SDE.tt</DependentUpon>
+    </Compile>
     <Compile Include="industryactivity.cs">
       <DependentUpon>SDE.tt</DependentUpon>
     </Compile>
@@ -90,8 +97,12 @@
     <Compile Include="invtype.cs">
       <DependentUpon>SDE.tt</DependentUpon>
     </Compile>
+    <Compile Include="invtypeAddon.cs" />
     <Compile Include="ItemList.cs" />
     <Compile Include="IndustryJob.cs" />
+    <Compile Include="ore.cs">
+      <DependentUpon>SDE.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

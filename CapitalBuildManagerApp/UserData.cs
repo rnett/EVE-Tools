@@ -1,6 +1,7 @@
 ﻿using EVE;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,7 @@ namespace CapitalBuildManagerApp
 		public List<IndustryJob> IndustryJobs { get { return this._indyJobs; } }
 		public ItemList IndustryJobProducts { get { return this._indyJobProducts; } }
 
-		public List<Job> Jobs { get; set; }
+		public ObservableCollection<Job> Jobs { get; set; }
 
 		public List<XMLAPI> APIs {
 			get
@@ -40,9 +41,12 @@ namespace CapitalBuildManagerApp
 		public UserData()
 		{
 			this._apis = new Dictionary<long, XMLAPI>();
-			this._apis.Add(6009295, new XMLAPI("6009295", "JEFFBX1N6HjnksZuUbLwQngH3YHVCOvd7VgJTZSRWIGUeJVqXYnZJBNbC5JagyC0"));
+			//this._apis.Add(6009295, new XMLAPI("6009295", "JEFFBX1N6HjnksZuUbLwQngH3YHVCOvd7VgJTZSRWIGUeJVqXYnZJBNbC5JagyC0"));
 
 			UpdateFromAPIs();
+
+			this.Jobs = new ObservableCollection<Job>();
+
 
 		}
 

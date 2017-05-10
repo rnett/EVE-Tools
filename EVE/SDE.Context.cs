@@ -34,6 +34,7 @@ namespace EVE
         public virtual DbSet<invmarketgroup> invmarketgroups { get; set; }
         public virtual DbSet<invtype> invtypes { get; set; }
         public virtual DbSet<industryblueprint> industryblueprints { get; set; }
+        public virtual DbSet<ore> ores { get; set; }
     
         [DbFunction("SDEEntities", "GetBlueprint")]
         public virtual IQueryable<industryactivity> GetBlueprint(Nullable<int> productTypeID, Nullable<int> activityID)
@@ -95,6 +96,26 @@ namespace EVE
                 new ObjectParameter("name", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<invtype>("[SDEEntities].[GetTypeFromName](@name)", nameParameter);
+        }
+    
+        [DbFunction("SDEEntities", "GetTypesLikeName")]
+        public virtual IQueryable<invtype> GetTypesLikeName(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<invtype>("[SDEEntities].[GetTypesLikeName](@name)", nameParameter);
+        }
+    
+        [DbFunction("SDEEntities", "GetOreFromID")]
+        public virtual IQueryable<ore> GetOreFromID(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ore>("[SDEEntities].[GetOreFromID](@id)", idParameter);
         }
     }
 }

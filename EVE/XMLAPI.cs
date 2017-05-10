@@ -45,7 +45,7 @@ namespace EVE
 
 			if(expirationDate != "")
 			{
-				//throw new Exception("Key has an expiration date");
+				throw new Exception("Key has an expiration date");
 			}
 
 			// get characters
