@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EVE
+namespace SDEModel
 {
     using System;
     using System.Data.Entity;
@@ -27,31 +27,44 @@ namespace EVE
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<industryactivity> industryactivities { get; set; }
-        public virtual DbSet<industryactivitymaterial> industryactivitymaterials { get; set; }
-        public virtual DbSet<industryactivityprobability> industryactivityprobabilities { get; set; }
-        public virtual DbSet<industryactivityproduct> industryactivityproducts { get; set; }
-        public virtual DbSet<invmarketgroup> invmarketgroups { get; set; }
-        public virtual DbSet<invtype> invtypes { get; set; }
-        public virtual DbSet<industryblueprint> industryblueprints { get; set; }
+        public virtual DbSet<industryActivity> industryActivities { get; set; }
+        public virtual DbSet<industryActivityMaterial> industryActivityMaterials { get; set; }
+        public virtual DbSet<industryActivityProduct> industryActivityProducts { get; set; }
+        public virtual DbSet<industryBlueprint> industryBlueprints { get; set; }
+        public virtual DbSet<invMarketGroup> invMarketGroups { get; set; }
+        public virtual DbSet<invTypeMaterial> invTypeMaterials { get; set; }
+        public virtual DbSet<invType> invTypes { get; set; }
+        public virtual DbSet<mapConstellationJump> mapConstellationJumps { get; set; }
+        public virtual DbSet<mapConstellation> mapConstellations { get; set; }
+        public virtual DbSet<mapRegion> mapRegions { get; set; }
+        public virtual DbSet<mapSolarSystemJump> mapSolarSystemJumps { get; set; }
+        public virtual DbSet<mapSolarSystem> mapSolarSystems { get; set; }
         public virtual DbSet<ore> ores { get; set; }
+        public virtual DbSet<skill> skills { get; set; }
+        public virtual DbSet<dgmAttributeType> dgmAttributeTypes { get; set; }
+        public virtual DbSet<dgmTypeAttribute> dgmTypeAttributes { get; set; }
+        public virtual DbSet<dgmEffect> dgmEffects { get; set; }
+        public virtual DbSet<dgmTypeEffect> dgmTypeEffects { get; set; }
+        public virtual DbSet<dgmEffectsModifierInfo> dgmEffectsModifierInfoes { get; set; }
+        public virtual DbSet<invCategory> invCategories { get; set; }
+        public virtual DbSet<invGroup> invGroups { get; set; }
     
-        [DbFunction("SDEEntities", "GetBlueprint")]
-        public virtual IQueryable<industryactivity> GetBlueprint(Nullable<int> productTypeID, Nullable<int> activityID)
+        [DbFunction("SDEEntities", "GetAttribute")]
+        public virtual IQueryable<GetAttribute_Result> GetAttribute(Nullable<int> typeID, Nullable<int> attributeID)
         {
-            var productTypeIDParameter = productTypeID.HasValue ?
-                new ObjectParameter("productTypeID", productTypeID) :
-                new ObjectParameter("productTypeID", typeof(int));
+            var typeIDParameter = typeID.HasValue ?
+                new ObjectParameter("typeID", typeID) :
+                new ObjectParameter("typeID", typeof(int));
     
-            var activityIDParameter = activityID.HasValue ?
-                new ObjectParameter("activityID", activityID) :
-                new ObjectParameter("activityID", typeof(int));
+            var attributeIDParameter = attributeID.HasValue ?
+                new ObjectParameter("attributeID", attributeID) :
+                new ObjectParameter("attributeID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<industryactivity>("[SDEEntities].[GetBlueprint](@productTypeID, @activityID)", productTypeIDParameter, activityIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetAttribute_Result>("[SDEEntities].[GetAttribute](@typeID, @attributeID)", typeIDParameter, attributeIDParameter);
         }
     
         [DbFunction("SDEEntities", "GetBlueprintMaterials")]
-        public virtual IQueryable<industryactivitymaterial> GetBlueprintMaterials(Nullable<int> blueprintTypeID, Nullable<int> activityID)
+        public virtual IQueryable<industryActivityMaterial> GetBlueprintMaterials(Nullable<int> blueprintTypeID, Nullable<int> activityID)
         {
             var blueprintTypeIDParameter = blueprintTypeID.HasValue ?
                 new ObjectParameter("blueprintTypeID", blueprintTypeID) :
@@ -61,11 +74,11 @@ namespace EVE
                 new ObjectParameter("activityID", activityID) :
                 new ObjectParameter("activityID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<industryactivitymaterial>("[SDEEntities].[GetBlueprintMaterials](@blueprintTypeID, @activityID)", blueprintTypeIDParameter, activityIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<industryActivityMaterial>("[SDEEntities].[GetBlueprintMaterials](@blueprintTypeID, @activityID)", blueprintTypeIDParameter, activityIDParameter);
         }
     
         [DbFunction("SDEEntities", "GetMats")]
-        public virtual IQueryable<industryactivitymaterial> GetMats(Nullable<int> productTypeID, Nullable<int> activityID)
+        public virtual IQueryable<industryActivityMaterial> GetMats(Nullable<int> productTypeID, Nullable<int> activityID)
         {
             var productTypeIDParameter = productTypeID.HasValue ?
                 new ObjectParameter("productTypeID", productTypeID) :
@@ -75,37 +88,7 @@ namespace EVE
                 new ObjectParameter("activityID", activityID) :
                 new ObjectParameter("activityID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<industryactivitymaterial>("[SDEEntities].[GetMats](@productTypeID, @activityID)", productTypeIDParameter, activityIDParameter);
-        }
-    
-        [DbFunction("SDEEntities", "GetTypeFromID")]
-        public virtual IQueryable<invtype> GetTypeFromID(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<invtype>("[SDEEntities].[GetTypeFromID](@id)", idParameter);
-        }
-    
-        [DbFunction("SDEEntities", "GetTypeFromName")]
-        public virtual IQueryable<invtype> GetTypeFromName(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<invtype>("[SDEEntities].[GetTypeFromName](@name)", nameParameter);
-        }
-    
-        [DbFunction("SDEEntities", "GetTypesLikeName")]
-        public virtual IQueryable<invtype> GetTypesLikeName(string name)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<invtype>("[SDEEntities].[GetTypesLikeName](@name)", nameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<industryActivityMaterial>("[SDEEntities].[GetMats](@productTypeID, @activityID)", productTypeIDParameter, activityIDParameter);
         }
     
         [DbFunction("SDEEntities", "GetOreFromID")]
@@ -116,6 +99,94 @@ namespace EVE
                 new ObjectParameter("id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ore>("[SDEEntities].[GetOreFromID](@id)", idParameter);
+        }
+    
+        [DbFunction("SDEEntities", "GetSkillFromID")]
+        public virtual IQueryable<skill> GetSkillFromID(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<skill>("[SDEEntities].[GetSkillFromID](@id)", idParameter);
+        }
+    
+        [DbFunction("SDEEntities", "GetSystemFromID")]
+        public virtual IQueryable<mapSolarSystem> GetSystemFromID(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<mapSolarSystem>("[SDEEntities].[GetSystemFromID](@id)", idParameter);
+        }
+    
+        [DbFunction("SDEEntities", "GetSystemFromName")]
+        public virtual IQueryable<mapSolarSystem> GetSystemFromName(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<mapSolarSystem>("[SDEEntities].[GetSystemFromName](@name)", nameParameter);
+        }
+    
+        [DbFunction("SDEEntities", "GetTypeFromID")]
+        public virtual IQueryable<invType> GetTypeFromID(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<invType>("[SDEEntities].[GetTypeFromID](@id)", idParameter);
+        }
+    
+        [DbFunction("SDEEntities", "GetTypeFromName")]
+        public virtual IQueryable<invType> GetTypeFromName(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<invType>("[SDEEntities].[GetTypeFromName](@name)", nameParameter);
+        }
+    
+        [DbFunction("SDEEntities", "GetTypesLikeName")]
+        public virtual IQueryable<invType> GetTypesLikeName(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<invType>("[SDEEntities].[GetTypesLikeName](@name)", nameParameter);
+        }
+    
+        [DbFunction("SDEEntities", "GetBlueprintProducts")]
+        public virtual IQueryable<industryActivityProduct> GetBlueprintProducts(Nullable<int> blueprintTypeID, Nullable<int> activityID)
+        {
+            var blueprintTypeIDParameter = blueprintTypeID.HasValue ?
+                new ObjectParameter("blueprintTypeID", blueprintTypeID) :
+                new ObjectParameter("blueprintTypeID", typeof(int));
+    
+            var activityIDParameter = activityID.HasValue ?
+                new ObjectParameter("activityID", activityID) :
+                new ObjectParameter("activityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<industryActivityProduct>("[SDEEntities].[GetBlueprintProducts](@blueprintTypeID, @activityID)", blueprintTypeIDParameter, activityIDParameter);
+        }
+    
+        [DbFunction("SDEEntities", "GetBlueprintActivity")]
+        public virtual IQueryable<industryActivity> GetBlueprintActivity(Nullable<int> blueprintTypeID, Nullable<int> activityID)
+        {
+            var blueprintTypeIDParameter = blueprintTypeID.HasValue ?
+                new ObjectParameter("blueprintTypeID", blueprintTypeID) :
+                new ObjectParameter("blueprintTypeID", typeof(int));
+    
+            var activityIDParameter = activityID.HasValue ?
+                new ObjectParameter("activityID", activityID) :
+                new ObjectParameter("activityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<industryActivity>("[SDEEntities].[GetBlueprintActivity](@blueprintTypeID, @activityID)", blueprintTypeIDParameter, activityIDParameter);
         }
     }
 }

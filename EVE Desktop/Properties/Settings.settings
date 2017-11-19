@@ -1,0 +1,13 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EVE_Desktop.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="RefreshTokens" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;rmyMbnSYwJCEMjOMa2tX0EHqiPrceMmGtK6We-4dTzNDvXEyGKzIR_MR60doB0oUpGRLOxXq9L1nL6ZjpiCU1g2&lt;/string&gt;
+  &lt;string&gt;ueK6Q6reM_ZUjXWBXFyfCiuh0dqNyhq7i-pAzxW5eUHR127_K1hxwtd5FeFvXm1M-YisRgJ73si5gXOUNRlY_g2&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

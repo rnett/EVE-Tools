@@ -11,6 +11,7 @@
     <AssemblyName>EVE</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,7 +24,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -46,16 +46,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -70,39 +67,77 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Blueprints.cs" />
-    <Compile Include="CharacterData.cs" />
-    <Compile Include="Facility.cs" />
-    <Compile Include="GetTypesLikeName_Result.cs">
+    <Compile Include="Attribute.cs" />
+    <Compile Include="Character.cs" />
+    <Compile Include="Contract.cs" />
+    <Compile Include="dgmAttributeType.cs">
       <DependentUpon>SDE.tt</DependentUpon>
     </Compile>
-    <Compile Include="industryactivity.cs">
+    <Compile Include="dgmEffect.cs">
       <DependentUpon>SDE.tt</DependentUpon>
     </Compile>
-    <Compile Include="industryactivitymaterial.cs">
+    <Compile Include="dgmEffectsModifierInfo.cs">
       <DependentUpon>SDE.tt</DependentUpon>
     </Compile>
-    <Compile Include="industryactivityprobability.cs">
+    <Compile Include="dgmTypeAttribute.cs">
       <DependentUpon>SDE.tt</DependentUpon>
     </Compile>
-    <Compile Include="industryactivityproduct.cs">
+    <Compile Include="dgmTypeEffect.cs">
       <DependentUpon>SDE.tt</DependentUpon>
     </Compile>
-    <Compile Include="industryblueprint.cs">
+    <Compile Include="GetAttribute_Result.cs">
       <DependentUpon>SDE.tt</DependentUpon>
     </Compile>
-    <Compile Include="invmarketgroup.cs">
+    <Compile Include="ICharacterDataControl.cs" />
+    <Compile Include="industryActivity.cs">
       <DependentUpon>SDE.tt</DependentUpon>
     </Compile>
-    <Compile Include="invtype.cs">
+    <Compile Include="industryActivityMaterial.cs">
       <DependentUpon>SDE.tt</DependentUpon>
     </Compile>
-    <Compile Include="invtypeAddon.cs" />
-    <Compile Include="ItemList.cs" />
+    <Compile Include="industryActivityProduct.cs">
+      <DependentUpon>SDE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="industryBlueprint.cs">
+      <DependentUpon>SDE.tt</DependentUpon>
+    </Compile>
     <Compile Include="IndustryJob.cs" />
+    <Compile Include="invCategory.cs">
+      <DependentUpon>SDE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="invGroup.cs">
+      <DependentUpon>SDE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="invMarketGroup.cs">
+      <DependentUpon>SDE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="invType.cs">
+      <DependentUpon>SDE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="invTypeMaterial.cs">
+      <DependentUpon>SDE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Location.cs" />
+    <Compile Include="mapConstellation.cs">
+      <DependentUpon>SDE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mapConstellationJump.cs">
+      <DependentUpon>SDE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mapRegion.cs">
+      <DependentUpon>SDE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mapSolarSystem.cs">
+      <DependentUpon>SDE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mapSolarSystemJump.cs">
+      <DependentUpon>SDE.tt</DependentUpon>
+    </Compile>
     <Compile Include="ore.cs">
       <DependentUpon>SDE.tt</DependentUpon>
     </Compile>
+    <Compile Include="SDEAddons.cs" />
+    <Compile Include="ItemList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -124,7 +159,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SDE.edmx</DependentUpon>
     </Compile>
-    <Compile Include="XMLAPI.cs" />
+    <Compile Include="skill.cs">
+      <DependentUpon>SDE.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IndyStructure.cs" />
+    <Compile Include="TrainingSkill.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
@@ -143,6 +182,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SDE.edmx</DependentUpon>
       <LastGenOutput>SDE.Context.cs</LastGenOutput>
+      <CustomToolNamespace>SDEModel</CustomToolNamespace>
     </Content>
     <Content Include="SDE.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -151,6 +191,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SDE.edmx</DependentUpon>
       <LastGenOutput>SDE.cs</LastGenOutput>
+      <CustomToolNamespace>SDEModel</CustomToolNamespace>
     </Content>
     <Content Include="SDE_log.ldf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -167,6 +208,7 @@
     <EntityDeploy Include="SDE.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SDE.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>SDEModel</CustomToolNamespace>
     </EntityDeploy>
     <None Include="SDE.edmx.diagram">
       <DependentUpon>SDE.edmx</DependentUpon>

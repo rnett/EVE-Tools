@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EVE Desktop", "EVE Desktop\EVE Desktop.csproj", "{1CEE4DB0-3BD9-4C8C-B82E-2766AA3E7AB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EVE", "EVE\EVE.csproj", "{00AEF578-B2AA-446E-9121-DAB4B03BD1B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBUpdater", "DBUpdater\DBUpdater.csproj", "{2F829DC9-3510-4F12-B676-CE28F95F8D98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jump Calculator", "Jump Calculator\Jump Calculator.csproj", "{2EE04501-BAE6-415C-8AB8-DBFE28AC63EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1CEE4DB0-3BD9-4C8C-B82E-2766AA3E7AB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CEE4DB0-3BD9-4C8C-B82E-2766AA3E7AB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CEE4DB0-3BD9-4C8C-B82E-2766AA3E7AB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CEE4DB0-3BD9-4C8C-B82E-2766AA3E7AB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00AEF578-B2AA-446E-9121-DAB4B03BD1B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00AEF578-B2AA-446E-9121-DAB4B03BD1B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00AEF578-B2AA-446E-9121-DAB4B03BD1B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00AEF578-B2AA-446E-9121-DAB4B03BD1B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F829DC9-3510-4F12-B676-CE28F95F8D98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F829DC9-3510-4F12-B676-CE28F95F8D98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F829DC9-3510-4F12-B676-CE28F95F8D98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F829DC9-3510-4F12-B676-CE28F95F8D98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EE04501-BAE6-415C-8AB8-DBFE28AC63EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EE04501-BAE6-415C-8AB8-DBFE28AC63EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EE04501-BAE6-415C-8AB8-DBFE28AC63EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EE04501-BAE6-415C-8AB8-DBFE28AC63EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {29211342-7358-47D3-9A8D-AC5E0E2A25FA}
+	EndGlobalSection
+EndGlobal

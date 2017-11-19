@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2ca10406b53f4b3483dcb540f658520c" Name="Diagram1" ZoomLevel="85">
+        <EntityTypeShape EntityType="SDEModel.industryActivities" Width="1.5" PointX="5.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.industryActivityMaterials" Width="1.5" PointX="7.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.industryactivityprobability" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.industryActivityProducts" Width="1.5" PointX="10.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.invMarketGroups" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.invTypes" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.industryBlueprint" Width="1.5" PointX="5.75" PointY="7.75" IsExpanded="true" />
+        <AssociationConnector Association="SDEModel.FK_industryactivity_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivitymaterials_industryactivity" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityprobabilities_industryactivity" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityproducts_industryactivity" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivitymaterials_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityproducts_MaterialTypeID_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityprobabilities_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityproducts_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityproducts_ProductTypeID_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_invtypes_invmarketgroups" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SDEModel.ore" Width="1.5" PointX="4.875" PointY="0.5" />
+        <AssociationConnector Association="SDEModel.FK_ore_invtypes" />
+        <EntityTypeShape EntityType="SDEModel.skill" Width="1.5" PointX="9.5" PointY="1.25" />
+        <AssociationConnector Association="SDEModel.FK_skills_typeId_invtypes" />
+        <EntityTypeShape EntityType="SDEModel.mapconstellationjump" Width="1.5" PointX="6.625" PointY="17.125" />
+        <EntityTypeShape EntityType="SDEModel.mapconstellation" Width="1.5" PointX="6.625" PointY="11.625" />
+        <EntityTypeShape EntityType="SDEModel.mapregion" Width="1.5" PointX="2.75" PointY="11.625" />
+        <EntityTypeShape EntityType="SDEModel.mapsolarsystemjump" Width="1.5" PointX="10.625" PointY="19.5" />
+        <EntityTypeShape EntityType="SDEModel.mapsolarsystem" Width="1.5" PointX="10.625" PointY="11.75" />
+        <AssociationConnector Association="SDEModel.FK_mapconstellationjumps_mapconstellations_fromConstellation" />
+        <AssociationConnector Association="SDEModel.FK_mapconstellationjumps_mapconstellations_toConstellation" />
+        <AssociationConnector Association="SDEModel.FK_mapconstellationjumps_mapregions_fromRegion" />
+        <AssociationConnector Association="SDEModel.FK_mapconstellationjumps_mapregions_toRegion" />
+        <AssociationConnector Association="SDEModel.FK_mapconstellations_mapregions_region" />
+        <AssociationConnector Association="SDEModel.FK_mapsolarsystemjumps_mapconstellations_fromConstellation" />
+        <AssociationConnector Association="SDEModel.FK_mapsolarsystemjumps_mapconstellations_toConstellation" />
+        <AssociationConnector Association="SDEModel.FK_mapsolarsystems_mapregions_constellation" />
+        <AssociationConnector Association="SDEModel.FK_mapsolarsystemjumps_mapregions_fromRegion" />
+        <AssociationConnector Association="SDEModel.FK_mapsolarsystemjumps_mapregions_toRegion" />
+        <AssociationConnector Association="SDEModel.FK_mapsolarsystems_mapregions_region" />
+        <AssociationConnector Association="SDEModel.FK_mapsolarsystemjumps_mapsolarsystems_fromSolarSystem" />
+        <AssociationConnector Association="SDEModel.FK_mapsolarsystemjumps_mapsolarsystems_toSolarSystem" />
+        <AssociationConnector Association="SDEModel.mapregionjumps" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

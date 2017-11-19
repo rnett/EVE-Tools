@@ -7,14 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EVE
+namespace SDEModel
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class industryblueprint
+    public partial class industryBlueprint
     {
-        public int typeID { get; set; }
+        public int blueprintTypeID { get; set; }
         public Nullable<int> maxProductionLimit { get; set; }
+    
+        public virtual invType invType { get; set; }
     }
 }

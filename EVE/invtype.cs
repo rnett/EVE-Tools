@@ -7,53 +7,64 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EVE
+namespace SDEModel
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class invtype
+    public partial class invType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public invtype()
+        public invType()
         {
-            this.blueprint_industryactivities = new HashSet<industryactivity>();
-            this.blueprint_industryactivitymaterials = new HashSet<industryactivitymaterial>();
-            this.materials_industryactivitymaterials = new HashSet<industryactivitymaterial>();
-            this.blueprint_industryactivityprobabilities = new HashSet<industryactivityprobability>();
-            this.blueprint_industryactivityproducts = new HashSet<industryactivityproduct>();
-            this.product_industryactivityproducts = new HashSet<industryactivityproduct>();
+            this.blueprintActivities = new HashSet<industryActivity>();
+            this.madeWith = new HashSet<industryActivityMaterial>();
+            this.madeBy = new HashSet<industryActivityProduct>();
+            this.hasMaterial = new HashSet<invTypeMaterial>();
+            this.invTypeMaterials = new HashSet<invTypeMaterial>();
+            this.dgmTypeAttributes = new HashSet<dgmTypeAttribute>();
+            this.dgmTypeEffects = new HashSet<dgmTypeEffect>();
         }
     
         public int typeID { get; set; }
         public Nullable<int> groupID { get; set; }
         public string typeName { get; set; }
-        public string typeDescription { get; set; }
+        public string description { get; set; }
         public Nullable<double> mass { get; set; }
         public Nullable<double> volume { get; set; }
+        public Nullable<double> packagedVolume { get; set; }
         public Nullable<double> capacity { get; set; }
         public Nullable<int> portionSize { get; set; }
-        public Nullable<int> raceID { get; set; }
-        public Nullable<decimal> basePrice { get; set; }
-        public Nullable<byte> published { get; set; }
+        public Nullable<int> factionID { get; set; }
+        public Nullable<byte> raceID { get; set; }
+        public Nullable<double> basePrice { get; set; }
+        public Nullable<bool> published { get; set; }
         public Nullable<int> marketGroupID { get; set; }
+        public Nullable<int> graphicID { get; set; }
+        public Nullable<double> radius { get; set; }
         public Nullable<int> iconID { get; set; }
         public Nullable<int> soundID { get; set; }
-        public Nullable<int> graphicID { get; set; }
+        public string sofFactionName { get; set; }
+        public Nullable<int> sofMaterialSetID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<industryactivity> blueprint_industryactivities { get; set; }
+        public virtual ICollection<industryActivity> blueprintActivities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<industryactivitymaterial> blueprint_industryactivitymaterials { get; set; }
+        public virtual ICollection<industryActivityMaterial> madeWith { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<industryactivitymaterial> materials_industryactivitymaterials { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<industryactivityprobability> blueprint_industryactivityprobabilities { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<industryactivityproduct> blueprint_industryactivityproducts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<industryactivityproduct> product_industryactivityproducts { get; set; }
-        public virtual invmarketgroup invmarketgroup { get; set; }
+        public virtual ICollection<industryActivityProduct> madeBy { get; set; }
+        public virtual industryBlueprint industryBlueprint { get; set; }
         public virtual ore ore { get; set; }
+        public virtual skill skill { get; set; }
+        public virtual invMarketGroup invMarketGroup { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<invTypeMaterial> hasMaterial { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<invTypeMaterial> invTypeMaterials { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<dgmTypeAttribute> dgmTypeAttributes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<dgmTypeEffect> dgmTypeEffects { get; set; }
+        public virtual invGroup invGroup { get; set; }
     }
 }

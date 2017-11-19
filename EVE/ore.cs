@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EVE
+namespace SDEModel
 {
     using System;
     using System.Collections.Generic;
@@ -25,6 +25,6 @@ namespace EVE
         public int Megacyte { get; set; }
         public int Morphite { get; set; }
     
-        public virtual invtype invtype { get; set; }
+        public virtual invType invType { get; set; }
     }
 }

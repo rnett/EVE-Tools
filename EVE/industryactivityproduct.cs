@@ -7,20 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EVE
+namespace SDEModel
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class industryactivityproduct
+    public partial class industryActivityProduct
     {
-        public int typeID { get; set; }
-        public int activityID { get; set; }
+        public int blueprintTypeID { get; set; }
+        public byte activityID { get; set; }
         public int productTypeID { get; set; }
         public Nullable<int> quantity { get; set; }
+        public Nullable<double> probability { get; set; }
     
-        public virtual industryactivity industryactivity { get; set; }
-        public virtual invtype blueprint_invtype { get; set; }
-        public virtual invtype product_invtype { get; set; }
+        public virtual invType productType { get; set; }
+        public virtual industryActivity industryActivity { get; set; }
     }
 }

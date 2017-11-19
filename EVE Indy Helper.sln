@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapitalBuildManagerApp", "CapitalBuildManagerApp\CapitalBuildManagerApp.csproj", "{EDC0EED4-6491-48AB-888C-7BF26DC7DCFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EVEIndyHelper", "CapitalBuildManagerApp\EVEIndyHelper.csproj", "{EDC0EED4-6491-48AB-888C-7BF26DC7DCFB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EVE", "EVE\EVE.csproj", "{00AEF578-B2AA-446E-9121-DAB4B03BD1B1}"
 EndProject
@@ -24,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {09DE1817-5C0E-4634-9AFC-6B564B5E3469}
 	EndGlobalSection
 EndGlobal

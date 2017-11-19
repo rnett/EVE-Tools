@@ -11,155 +11,27 @@ using EVE;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using SDEModel;
 
 namespace CapitalBuildManagerApp
 {
 	public partial class MainForm : Form
 	{
 
-		public static readonly SDEEntities _sde = new SDEEntities();
-		private UserData _userData;
+		public static readonly SDEEntities _sde = SDEEntities.SDE;
 		private OreOptimizer _oreOptimizer;
 
 		public MainForm()
 		{
-
-			
-			this._userData = Properties.Settings.Default.UserData;
-
-			if(this._userData == null)
-			{
-				this._userData = new UserData();
-			}
-
+            
 			_oreOptimizer = new OreOptimizer(_sde);
 
 			InitializeComponent();
 
-			this.QMMatsGrid.Rows.Add("Defaults", "-", 10, 20, 5.158, 59.4, 0, 32);
+            this.QMMatsGrid.Rows.Add("Defaults", "-", 10, 20, 5.158, 59.4, 0, 32);
+        }
 
-			UpdateAPITable();
-			UpdateJobTable();
-		}
-
-		private void AddAPIButton_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				this._userData.AddAPI(new XMLAPI(this.APIKeyIDTextbox.Text, this.APIvCodeTextBox.Text));
-			}
-			catch (Exception exception)
-			{
-				this.APIErrorLabel.Text = "Error: " + exception.Message;
-				return;
-			}
-
-			this.APIKeyIDTextbox.Text = "";
-			this.APIvCodeTextBox.Text = "";
-			this.UpdateAPITable();
-		}
-
-		private void APIGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			var senderGrid = (DataGridView)sender;
-
-			if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
-				e.RowIndex >= 0)
-			{
-				this._userData.RemoveAPI(long.Parse((string)senderGrid.Rows[e.RowIndex].Cells[1].Value));
-				UpdateAPITable();
-			}
-		}
-
-		private void UpdateAPITable()
-		{
-
-			this.APIGridView.Rows.Clear();
-
-			foreach (XMLAPI api in this._userData.APIs)
-			{
-				string characters = "";
-				foreach (CharacterData character in api.Characters)
-				{
-					if (character != null)
-					{
-						characters += ", " + character.CharacterName;
-					}
-				}
-
-				characters = characters.Substring(2);
-
-				this.APIGridView.Rows.Add(characters, api.KeyID, api.VCode, "Delete");
-
-			}
-
-
-		}
-
-		private void UpdateJobTable()
-		{
-			this.JobDataGridView.Rows.Clear();
-
-			foreach (Job job in this._userData.Jobs)
-			{
-				this.JobDataGridView.Rows.Add(job.Type.typeName, job.Amount, job.TimeEntered, job.BpcsOnly, "+", "-", "x");
-
-			}
-		}
-
-		private void JobDataGridView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-		{
-			var senderGrid = (DataGridView)sender;
-
-			if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
-				e.RowIndex >= 0)
-			{
-				if (senderGrid.Columns[e.ColumnIndex].HeaderText == "Up")
-				{
-					if (e.RowIndex - 1 > 0)
-						this._userData.Jobs.Move(e.RowIndex - 1, e.RowIndex - 2);
-
-				}
-				else if (senderGrid.Columns[e.ColumnIndex].HeaderText == "Down")
-				{
-					if (e.RowIndex - 1 < this._userData.Jobs.Count - 1)
-						this._userData.Jobs.Move(e.RowIndex - 1, e.RowIndex);
-
-
-				}
-				else if (senderGrid.Columns[e.ColumnIndex].HeaderText == "Remove")
-				{
-					this._userData.Jobs.RemoveAt(e.RowIndex - 1);
-
-
-				}
-			}
-
-			this.UpdateJobTable();
-
-		}
-
-		private void AddJobButton_Click(object sender, EventArgs e)
-		{
-			this._userData.Jobs.Add( new Job(_sde.GetTypeFromName(this.AddJobItemCombobox.Text).First(), int.Parse(this.AddJobQuantityTextBox.Text), DateTime.UtcNow, this.AddJobCopyOnlyCheckbox.Checked ) );
-			this.UpdateJobTable();
-		}
-
-		private void AddJobItemCombobox_TextChanged(object sender, EventArgs e)
-		{
-
-			if (this.AddJobItemCombobox.Text.Count() >= 3)
-			{
-				
-				UpdateData(this.AddJobItemCombobox);
-					
-				
-			}
-			else
-			{
-				return;
-			}
-		}
+		
 
 		private void QMItemBox_TextChanged(object sender, EventArgs e)
 		{
@@ -181,7 +53,7 @@ namespace CapitalBuildManagerApp
 		{
 			if (box.Text.Length > 1)
 			{
-				List<string> searchData = _sde.GetTypesLikeName(box.Text).Where(x => x.product_industryactivityproducts.Count > 0).ToList().Select(x => x.typeName).ToList();
+				List<string> searchData = _sde.GetTypesLikeName(box.Text).Where(x => x.madeBy.Count > 0).ToList().Select(x => x.typeName).ToList();
 				HandleTextChanged(searchData, box);
 			}
 		}
@@ -190,18 +62,18 @@ namespace CapitalBuildManagerApp
 		private void HandleTextChanged(List<string> dataSource, ComboBox box)
 		{
 			var text = box.Text;
-
-
-
+            
 			if (box.Text.Count() >= 3 && dataSource.Count() > 0)
 			{
-
+                
 				var sText = box.Text;
-				box.DroppedDown = false;
+                dataSource.Insert(0, sText);
+                box.DroppedDown = false;
 				box.DataSource = dataSource;
 				box.DroppedDown = true;
 				box.Text = sText;
-				box.Select(text.Count(), 0);
+                box.SelectionStart = sText.Length;
+                box.Select(sText.Count(), 0);
 				Cursor.Current = Cursors.Default;
 
 				return;
@@ -212,14 +84,6 @@ namespace CapitalBuildManagerApp
 				box.DroppedDown = false;
 				box.SelectionStart = text.Length;
 			}
-		}
-
-		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			Properties.Settings.Default.UserData = this._userData;
-			Properties.Settings.Default.Save();
-			var settings = JsonConvert.SerializeObject(this._userData);
-			UserData product = JsonConvert.DeserializeObject<UserData>(settings); //TODO figure out a way to get settings to save and load
 		}
 
 		private void OptimizeButton_Click(object sender, EventArgs e)
@@ -236,7 +100,7 @@ namespace CapitalBuildManagerApp
 				this.MorphBox.Text != "" ? int.Parse(this.MorphBox.Text) : 0
 				);
 			this.OreOptimizerResultsGrid.Rows.Clear();
-			foreach(KeyValuePair<invtype, int> pair in list.Item2)
+			foreach(KeyValuePair<invType, int> pair in list.Item2)
 			{
 				this.OreOptimizerResultsGrid.Rows.Add(pair.Key.typeName, pair.Value);
 			}
@@ -305,7 +169,8 @@ namespace CapitalBuildManagerApp
 				}
 
 				string name = line.Substring(0, line.LastIndexOf(" "));
-				string amount = line.Substring(line.LastIndexOf(" "), line.Count() - line.LastIndexOf(" "));
+                int numStart = line.LastIndexOf(" ") + 1;
+                string amount = line.Substring(numStart, line.Count() - numStart);
 
 				try
 				{
@@ -325,7 +190,7 @@ namespace CapitalBuildManagerApp
 
 			// write the mat tree
 
-			invtype type;
+			invType type;
 
 			try
 			{
@@ -346,12 +211,12 @@ namespace CapitalBuildManagerApp
 
 		}
 
-		private invtype currentType;
-		private Dictionary<invtype, METEData> meteDatas = new Dictionary<invtype, METEData>();
+		private invType currentType;
+		private Dictionary<invType, METEData> meteDatas = new Dictionary<invType, METEData>();
 		private METEData defaultMETE = new METEData(10, 20, 5.158, 59.4, 0, 32);
 		private ItemList baseMats = new ItemList();
 
-		private void addMatR(invtype mat, int amount, int depth, bool start = false)
+		private void addMatR(invType mat, int amount, int depth, bool start = false)
 		{
 
 			if(mat == null)
@@ -393,7 +258,7 @@ namespace CapitalBuildManagerApp
 				}
 				var matlist = mat.getMats(amount, data.TotalMEAsMultiplier);
 
-				foreach (KeyValuePair<invtype, int> submat in matlist)
+				foreach (KeyValuePair<invType, int> submat in matlist)
 				{
 					addMatR(submat.Key, submat.Value, depth + 1);
 				}
@@ -425,7 +290,7 @@ namespace CapitalBuildManagerApp
 			this.QMMineralBaseMatsDataView.Rows.Clear();
 			this.QMOtherBaseMatsDataView.Rows.Clear();
 
-			foreach (KeyValuePair<invtype, int> baseMat in this.baseMats)
+			foreach (KeyValuePair<invType, int> baseMat in this.baseMats)
 			{
 				if (baseMat.Key.isMineral())
 				{
@@ -456,7 +321,7 @@ namespace CapitalBuildManagerApp
 			{
 				string name = (string)this.QMMatsGrid.Rows[e.RowIndex].Cells[0].Value;
 				name = name.Substring(name.LastIndexOf("-") + 1);
-				invtype item = MainForm._sde.GetTypeFromName(name).First();
+				invType item = MainForm._sde.GetTypeFromName(name).First();
 
 				METEData data = new METEData(
 					(this.QMMatsGrid.Rows[e.RowIndex].Cells[2].Value == null || (string)this.QMMatsGrid.Rows[e.RowIndex].Cells[2].Value == "") ? -1 : int.Parse(this.QMMatsGrid.Rows[e.RowIndex].Cells[2].Value.ToString()),
@@ -504,7 +369,7 @@ namespace CapitalBuildManagerApp
 			this.MorphBox.Text = morph.ToString();
 
 			this.OptimizeButton_Click(null, null);
-			this.Tabs.SelectedIndex = 9;
+			this.Tabs.SelectedIndex = 1;
 		}
 	}
 }

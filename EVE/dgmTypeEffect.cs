@@ -7,19 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EVE
+namespace SDEModel
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class industryactivityprobability
+    public partial class dgmTypeEffect
     {
         public int typeID { get; set; }
-        public int activityID { get; set; }
-        public int productTypeID { get; set; }
-        public Nullable<decimal> probability { get; set; }
+        public short effectID { get; set; }
+        public Nullable<bool> isDefault { get; set; }
     
-        public virtual industryactivity industryactivity { get; set; }
-        public virtual invtype invtype { get; set; }
+        public virtual dgmEffect dgmEffect { get; set; }
+        public virtual invType invType { get; set; }
     }
 }

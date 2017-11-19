@@ -7,31 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EVE
+namespace SDEModel
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class industryactivity
+    public partial class industryActivity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public industryactivity()
+        public industryActivity()
         {
-            this.industryactivitymaterials = new HashSet<industryactivitymaterial>();
-            this.industryactivityprobabilities = new HashSet<industryactivityprobability>();
-            this.industryactivityproducts = new HashSet<industryactivityproduct>();
+            this.industryActivityMaterials = new HashSet<industryActivityMaterial>();
+            this.industryActivityProducts = new HashSet<industryActivityProduct>();
         }
     
-        public int typeID { get; set; }
-        public int activityID { get; set; }
+        public int blueprintTypeID { get; set; }
+        public byte activityID { get; set; }
         public Nullable<int> time { get; set; }
     
-        public virtual invtype blueprint_invtype { get; set; }
+        public virtual invType blueprintType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<industryactivitymaterial> industryactivitymaterials { get; set; }
+        public virtual ICollection<industryActivityMaterial> industryActivityMaterials { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<industryactivityprobability> industryactivityprobabilities { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<industryactivityproduct> industryactivityproducts { get; set; }
+        public virtual ICollection<industryActivityProduct> industryActivityProducts { get; set; }
     }
 }

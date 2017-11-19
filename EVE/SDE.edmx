@@ -5,87 +5,297 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SDEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="industryactivity">
+        <EntityType Name="dgmAttributeTypes">
+          <Key>
+            <PropertyRef Name="attributeID" />
+          </Key>
+          <Property Name="attributeID" Type="smallint" Nullable="false" />
+          <Property Name="attributeName" Type="varchar" MaxLength="100" />
+          <Property Name="description" Type="varchar" MaxLength="1000" />
+          <Property Name="iconID" Type="int" />
+          <Property Name="defaultValue" Type="float" />
+          <Property Name="published" Type="bit" />
+          <Property Name="displayName" Type="varchar" MaxLength="1000" />
+          <Property Name="unitID" Type="tinyint" />
+          <Property Name="stackable" Type="bit" />
+          <Property Name="highIsGood" Type="bit" />
+          <Property Name="categoryID" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="dgmEffects">
+          <Key>
+            <PropertyRef Name="effectID" />
+          </Key>
+          <Property Name="effectID" Type="smallint" Nullable="false" />
+          <Property Name="effectName" Type="varchar" MaxLength="400" />
+          <Property Name="effectCategory" Type="smallint" />
+          <Property Name="preExpression" Type="int" />
+          <Property Name="postExpression" Type="int" />
+          <Property Name="description" Type="varchar" MaxLength="1000" />
+          <Property Name="guid" Type="varchar" MaxLength="60" />
+          <Property Name="iconID" Type="int" />
+          <Property Name="isOffensive" Type="bit" />
+          <Property Name="isAssistance" Type="bit" />
+          <Property Name="durationAttributeID" Type="smallint" />
+          <Property Name="trackingSpeedAttributeID" Type="smallint" />
+          <Property Name="dischargeAttributeID" Type="smallint" />
+          <Property Name="rangeAttributeID" Type="smallint" />
+          <Property Name="falloffAttributeID" Type="smallint" />
+          <Property Name="disallowAutoRepeat" Type="bit" />
+          <Property Name="published" Type="bit" />
+          <Property Name="displayName" Type="varchar" MaxLength="100" />
+          <Property Name="isWarpSafe" Type="bit" />
+          <Property Name="rangeChance" Type="bit" />
+          <Property Name="electronicChance" Type="bit" />
+          <Property Name="propulsionChance" Type="bit" />
+          <Property Name="distribution" Type="tinyint" />
+          <Property Name="sfxName" Type="varchar" MaxLength="20" />
+          <Property Name="npcUsageChanceAttributeID" Type="smallint" />
+          <Property Name="npcActivationChanceAttributeID" Type="smallint" />
+          <Property Name="fittingUsageChanceAttributeID" Type="smallint" />
+        </EntityType>
+        <EntityType Name="dgmEffectsModifierInfo">
+          <Key>
+            <PropertyRef Name="effectID" />
+            <PropertyRef Name="func" />
+            <PropertyRef Name="modifiedAttributeID" />
+            <PropertyRef Name="modifyingAttributeID" />
+            <PropertyRef Name="operator" />
+          </Key>
+          <Property Name="effectID" Type="smallint" Nullable="false" />
+          <Property Name="func" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="groupID" Type="int" />
+          <Property Name="modifiedAttributeID" Type="smallint" Nullable="false" />
+          <Property Name="modifyingAttributeID" Type="smallint" Nullable="false" />
+          <Property Name="operator" Type="int" Nullable="false" />
+          <Property Name="skillTypeID" Type="int" />
+          <Property Name="secondEffectID" Type="int" />
+        </EntityType>
+        <EntityType Name="dgmTypeAttributes">
           <Key>
             <PropertyRef Name="typeID" />
-            <PropertyRef Name="activityID" />
+            <PropertyRef Name="attributeID" />
           </Key>
           <Property Name="typeID" Type="int" Nullable="false" />
-          <Property Name="activityID" Type="int" Nullable="false" />
-          <Property Name="time" Type="int" />
+          <Property Name="attributeID" Type="smallint" Nullable="false" />
+          <Property Name="valueInt" Type="int" />
+          <Property Name="valueFloat" Type="float" />
         </EntityType>
-        <EntityType Name="industryactivitymaterials">
+        <EntityType Name="dgmTypeEffects">
           <Key>
             <PropertyRef Name="typeID" />
+            <PropertyRef Name="effectID" />
+          </Key>
+          <Property Name="typeID" Type="int" Nullable="false" />
+          <Property Name="effectID" Type="smallint" Nullable="false" />
+          <Property Name="isDefault" Type="bit" />
+        </EntityType>
+        <EntityType Name="industryActivities">
+          <Key>
+            <PropertyRef Name="blueprintTypeID" />
+            <PropertyRef Name="activityID" />
+          </Key>
+          <Property Name="blueprintTypeID" Type="int" Nullable="false" />
+          <Property Name="activityID" Type="tinyint" Nullable="false" />
+          <Property Name="time" Type="int" />
+        </EntityType>
+        <EntityType Name="industryActivityMaterials">
+          <Key>
+            <PropertyRef Name="blueprintTypeID" />
             <PropertyRef Name="activityID" />
             <PropertyRef Name="materialTypeID" />
           </Key>
-          <Property Name="typeID" Type="int" Nullable="false" />
-          <Property Name="activityID" Type="int" Nullable="false" />
+          <Property Name="blueprintTypeID" Type="int" Nullable="false" />
+          <Property Name="activityID" Type="tinyint" Nullable="false" />
           <Property Name="materialTypeID" Type="int" Nullable="false" />
           <Property Name="quantity" Type="int" />
         </EntityType>
-        <EntityType Name="industryactivityprobabilities">
+        <EntityType Name="industryActivityProducts">
           <Key>
-            <PropertyRef Name="typeID" />
+            <PropertyRef Name="blueprintTypeID" />
             <PropertyRef Name="activityID" />
             <PropertyRef Name="productTypeID" />
           </Key>
-          <Property Name="typeID" Type="int" Nullable="false" />
-          <Property Name="activityID" Type="int" Nullable="false" />
-          <Property Name="productTypeID" Type="int" Nullable="false" />
-          <Property Name="probability" Type="decimal" Precision="3" Scale="2" />
-        </EntityType>
-        <EntityType Name="industryactivityproducts">
-          <Key>
-            <PropertyRef Name="typeID" />
-            <PropertyRef Name="activityID" />
-            <PropertyRef Name="productTypeID" />
-          </Key>
-          <Property Name="typeID" Type="int" Nullable="false" />
-          <Property Name="activityID" Type="int" Nullable="false" />
+          <Property Name="blueprintTypeID" Type="int" Nullable="false" />
+          <Property Name="activityID" Type="tinyint" Nullable="false" />
           <Property Name="productTypeID" Type="int" Nullable="false" />
           <Property Name="quantity" Type="int" />
+          <Property Name="probability" Type="float" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPITALBUILDMANAGERAPP\EVE\SDE.MDF.dbo.industryblueprints' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="industryblueprints">
+        <EntityType Name="industryBlueprints">
           <Key>
-            <PropertyRef Name="typeID" />
+            <PropertyRef Name="blueprintTypeID" />
           </Key>
-          <Property Name="typeID" Type="int" Nullable="false" />
+          <Property Name="blueprintTypeID" Type="int" Nullable="false" />
           <Property Name="maxProductionLimit" Type="int" />
         </EntityType>
-        <EntityType Name="invmarketgroups">
+        <EntityType Name="invCategories">
+          <Key>
+            <PropertyRef Name="categoryID" />
+          </Key>
+          <Property Name="categoryID" Type="int" Nullable="false" />
+          <Property Name="categoryName" Type="nvarchar" MaxLength="500" />
+          <Property Name="published" Type="bit" />
+          <Property Name="iconID" Type="int" />
+        </EntityType>
+        <EntityType Name="invGroups">
+          <Key>
+            <PropertyRef Name="groupID" />
+          </Key>
+          <Property Name="groupID" Type="int" Nullable="false" />
+          <Property Name="categoryID" Type="int" />
+          <Property Name="groupName" Type="nvarchar" MaxLength="500" />
+          <Property Name="published" Type="bit" />
+          <Property Name="anchorable" Type="bit" />
+          <Property Name="anchored" Type="bit" />
+          <Property Name="fittableNonSingleton" Type="bit" />
+          <Property Name="useBasePrice" Type="bit" />
+          <Property Name="iconID" Type="int" />
+        </EntityType>
+        <EntityType Name="invMarketGroups">
           <Key>
             <PropertyRef Name="marketGroupID" />
           </Key>
           <Property Name="marketGroupID" Type="int" Nullable="false" />
           <Property Name="parentGroupID" Type="int" />
-          <Property Name="marketGroupName" Type="varchar" MaxLength="100" />
-          <Property Name="description" Type="varchar" MaxLength="3000" />
+          <Property Name="marketGroupName" Type="nvarchar" MaxLength="100" />
+          <Property Name="description" Type="nvarchar" MaxLength="3000" />
           <Property Name="iconID" Type="int" />
-          <Property Name="hasTypes" Type="tinyint" />
+          <Property Name="hasTypes" Type="bit" />
         </EntityType>
-        <EntityType Name="invtypes">
+        <EntityType Name="invTypeMaterials">
+          <Key>
+            <PropertyRef Name="typeID" />
+            <PropertyRef Name="materialTypeID" />
+          </Key>
+          <Property Name="typeID" Type="int" Nullable="false" />
+          <Property Name="materialTypeID" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="invTypes">
           <Key>
             <PropertyRef Name="typeID" />
           </Key>
           <Property Name="typeID" Type="int" Nullable="false" />
           <Property Name="groupID" Type="int" />
-          <Property Name="typeName" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="typeDescription" Type="text" />
+          <Property Name="typeName" Type="nvarchar" MaxLength="500" />
+          <Property Name="description" Type="text" />
           <Property Name="mass" Type="float" />
           <Property Name="volume" Type="float" />
+          <Property Name="packagedVolume" Type="float" />
           <Property Name="capacity" Type="float" />
           <Property Name="portionSize" Type="int" />
-          <Property Name="raceID" Type="int" />
-          <Property Name="basePrice" Type="decimal" Precision="19" Scale="4" />
-          <Property Name="published" Type="tinyint" />
+          <Property Name="factionID" Type="int" />
+          <Property Name="raceID" Type="tinyint" />
+          <Property Name="basePrice" Type="float" />
+          <Property Name="published" Type="bit" />
           <Property Name="marketGroupID" Type="int" />
+          <Property Name="graphicID" Type="int" />
+          <Property Name="radius" Type="float" />
           <Property Name="iconID" Type="int" />
           <Property Name="soundID" Type="int" />
-          <Property Name="graphicID" Type="int" />
+          <Property Name="sofFactionName" Type="nvarchar" MaxLength="100" />
+          <Property Name="sofMaterialSetID" Type="int" />
+        </EntityType>
+        <EntityType Name="mapConstellationJumps">
+          <Key>
+            <PropertyRef Name="fromConstellationID" />
+            <PropertyRef Name="toConstellationID" />
+          </Key>
+          <Property Name="fromRegionID" Type="int" />
+          <Property Name="fromConstellationID" Type="int" Nullable="false" />
+          <Property Name="toConstellationID" Type="int" Nullable="false" />
+          <Property Name="toRegionID" Type="int" />
+        </EntityType>
+        <EntityType Name="mapConstellations">
+          <Key>
+            <PropertyRef Name="constellationID" />
+          </Key>
+          <Property Name="constellationID" Type="int" Nullable="false" />
+          <Property Name="constellationName" Type="varchar" MaxLength="100" />
+          <Property Name="regionID" Type="int" />
+          <Property Name="x" Type="real" />
+          <Property Name="y" Type="real" />
+          <Property Name="z" Type="real" />
+          <Property Name="x_Min" Type="real" />
+          <Property Name="x_Max" Type="real" />
+          <Property Name="y_Min" Type="real" />
+          <Property Name="y_Max" Type="real" />
+          <Property Name="z_Min" Type="real" />
+          <Property Name="z_Max" Type="real" />
+          <Property Name="radius" Type="real" />
+          <Property Name="factionID" Type="int" />
+        </EntityType>
+        <EntityType Name="mapRegionJumps">
+          <Key>
+            <PropertyRef Name="fromRegionID" />
+            <PropertyRef Name="toRegionID" />
+          </Key>
+          <Property Name="fromRegionID" Type="int" Nullable="false" />
+          <Property Name="toRegionID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="mapRegions">
+          <Key>
+            <PropertyRef Name="regionID" />
+          </Key>
+          <Property Name="regionID" Type="int" Nullable="false" />
+          <Property Name="regionName" Type="varchar" MaxLength="100" />
+          <Property Name="x" Type="real" />
+          <Property Name="y" Type="real" />
+          <Property Name="z" Type="real" />
+          <Property Name="x_Min" Type="real" />
+          <Property Name="x_Max" Type="real" />
+          <Property Name="y_Min" Type="real" />
+          <Property Name="y_Max" Type="real" />
+          <Property Name="z_Min" Type="real" />
+          <Property Name="z_Max" Type="real" />
+          <Property Name="factionID" Type="int" />
+          <Property Name="nameID" Type="int" />
+          <Property Name="descriptionID" Type="int" />
+        </EntityType>
+        <EntityType Name="mapSolarSystemJumps">
+          <Key>
+            <PropertyRef Name="fromSolarSystemID" />
+            <PropertyRef Name="toSolarSystemID" />
+          </Key>
+          <Property Name="fromRegionID" Type="int" />
+          <Property Name="fromConstellationID" Type="int" />
+          <Property Name="fromSolarSystemID" Type="int" Nullable="false" />
+          <Property Name="toSolarSystemID" Type="int" Nullable="false" />
+          <Property Name="toConstellationID" Type="int" />
+          <Property Name="toRegionID" Type="int" />
+        </EntityType>
+        <EntityType Name="mapSolarSystems">
+          <Key>
+            <PropertyRef Name="solarSystemID" />
+          </Key>
+          <Property Name="solarSystemID" Type="int" Nullable="false" />
+          <Property Name="solarSystemName" Type="varchar" MaxLength="100" />
+          <Property Name="regionID" Type="int" />
+          <Property Name="constellationID" Type="int" />
+          <Property Name="x" Type="real" />
+          <Property Name="y" Type="real" />
+          <Property Name="z" Type="real" />
+          <Property Name="x_Min" Type="real" />
+          <Property Name="x_Max" Type="real" />
+          <Property Name="y_Min" Type="real" />
+          <Property Name="y_Max" Type="real" />
+          <Property Name="z_Min" Type="real" />
+          <Property Name="z_Max" Type="real" />
+          <Property Name="luminosity" Type="real" />
+          <Property Name="border" Type="bit" />
+          <Property Name="corridor" Type="bit" />
+          <Property Name="fringe" Type="bit" />
+          <Property Name="hub" Type="bit" />
+          <Property Name="international" Type="bit" />
+          <Property Name="regional" Type="bit" />
+          <Property Name="security" Type="real" />
+          <Property Name="factionID" Type="int" />
+          <Property Name="radius" Type="real" />
+          <Property Name="sunTypeID" Type="int" />
+          <Property Name="securityClass" Type="varchar" MaxLength="2" />
+          <Property Name="solarSystemNameID" Type="int" />
+          <Property Name="visualEffect" Type="varchar" MaxLength="50" />
+          <Property Name="descriptionID" Type="int" />
         </EntityType>
         <EntityType Name="ore">
           <Key>
@@ -102,137 +312,421 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
           <Property Name="Megacyte" Type="int" Nullable="false" />
           <Property Name="Morphite" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="skills">
+          <Key>
+            <PropertyRef Name="typeId" />
+          </Key>
+          <Property Name="typeId" Type="int" Nullable="false" />
+          <Property Name="typeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="rank" Type="int" Nullable="false" />
+          <Property Name="primaryAttr" Type="int" Nullable="false" />
+          <Property Name="secondaryAttr" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dgmEffectModifierInfo_dgmAttributeTypes_modifiedAttribute">
+          <End Role="dgmAttributeTypes" Type="Self.dgmAttributeTypes" Multiplicity="1" />
+          <End Role="dgmEffectsModifierInfo" Type="Self.dgmEffectsModifierInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dgmAttributeTypes">
+              <PropertyRef Name="attributeID" />
+            </Principal>
+            <Dependent Role="dgmEffectsModifierInfo">
+              <PropertyRef Name="modifiedAttributeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dgmEffectModifierInfo_dgmAttributeTypes_modifyingAttribute">
+          <End Role="dgmAttributeTypes" Type="Self.dgmAttributeTypes" Multiplicity="1" />
+          <End Role="dgmEffectsModifierInfo" Type="Self.dgmEffectsModifierInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dgmAttributeTypes">
+              <PropertyRef Name="attributeID" />
+            </Principal>
+            <Dependent Role="dgmEffectsModifierInfo">
+              <PropertyRef Name="modifyingAttributeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dgmEffectModifierInfo_dgmEffects">
+          <End Role="dgmEffects" Type="Self.dgmEffects" Multiplicity="1" />
+          <End Role="dgmEffectsModifierInfo" Type="Self.dgmEffectsModifierInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dgmEffects">
+              <PropertyRef Name="effectID" />
+            </Principal>
+            <Dependent Role="dgmEffectsModifierInfo">
+              <PropertyRef Name="effectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dgmTypeAttributes_dgmAttributeTypes">
+          <End Role="dgmAttributeTypes" Type="Self.dgmAttributeTypes" Multiplicity="1" />
+          <End Role="dgmTypeAttributes" Type="Self.dgmTypeAttributes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dgmAttributeTypes">
+              <PropertyRef Name="attributeID" />
+            </Principal>
+            <Dependent Role="dgmTypeAttributes">
+              <PropertyRef Name="attributeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dgmTypeAttributes_invTypes">
+          <End Role="invTypes" Type="Self.invTypes" Multiplicity="1" />
+          <End Role="dgmTypeAttributes" Type="Self.dgmTypeAttributes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invTypes">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="dgmTypeAttributes">
+              <PropertyRef Name="typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dgmTypeEffects_dgmEffects">
+          <End Role="dgmEffects" Type="Self.dgmEffects" Multiplicity="1" />
+          <End Role="dgmTypeEffects" Type="Self.dgmTypeEffects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dgmEffects">
+              <PropertyRef Name="effectID" />
+            </Principal>
+            <Dependent Role="dgmTypeEffects">
+              <PropertyRef Name="effectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dgmTypeEffects_invTypes">
+          <End Role="invTypes" Type="Self.invTypes" Multiplicity="1" />
+          <End Role="dgmTypeEffects" Type="Self.dgmTypeEffects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invTypes">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="dgmTypeEffects">
+              <PropertyRef Name="typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_industryactivity_invtypes">
-          <End Role="invtypes" Type="Self.invtypes" Multiplicity="1" />
-          <End Role="industryactivity" Type="Self.industryactivity" Multiplicity="*" />
+          <End Role="invTypes" Type="Self.invTypes" Multiplicity="1" />
+          <End Role="industryActivities" Type="Self.industryActivities" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="invtypes">
+            <Principal Role="invTypes">
               <PropertyRef Name="typeID" />
             </Principal>
-            <Dependent Role="industryactivity">
-              <PropertyRef Name="typeID" />
+            <Dependent Role="industryActivities">
+              <PropertyRef Name="blueprintTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_industryactivitymaterials_industryactivity">
-          <End Role="industryactivity" Type="Self.industryactivity" Multiplicity="1" />
-          <End Role="industryactivitymaterials" Type="Self.industryactivitymaterials" Multiplicity="*" />
+        <Association Name="FK_industryActivityMaterials_industryActivities">
+          <End Role="industryActivities" Type="Self.industryActivities" Multiplicity="1" />
+          <End Role="industryActivityMaterials" Type="Self.industryActivityMaterials" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="industryactivity">
+            <Principal Role="industryActivities">
+              <PropertyRef Name="blueprintTypeID" />
               <PropertyRef Name="activityID" />
-              <PropertyRef Name="typeID" />
             </Principal>
-            <Dependent Role="industryactivitymaterials">
+            <Dependent Role="industryActivityMaterials">
+              <PropertyRef Name="blueprintTypeID" />
               <PropertyRef Name="activityID" />
-              <PropertyRef Name="typeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_industryactivitymaterials_invtypes">
-          <End Role="invtypes" Type="Self.invtypes" Multiplicity="1" />
-          <End Role="industryactivitymaterials" Type="Self.industryactivitymaterials" Multiplicity="*" />
+        <Association Name="FK_industryactivityproducts_industryActivities">
+          <End Role="industryActivities" Type="Self.industryActivities" Multiplicity="1" />
+          <End Role="industryActivityProducts" Type="Self.industryActivityProducts" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="invtypes">
-              <PropertyRef Name="typeID" />
-            </Principal>
-            <Dependent Role="industryactivitymaterials">
-              <PropertyRef Name="typeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_industryactivityprobabilities_industryactivity">
-          <End Role="industryactivity" Type="Self.industryactivity" Multiplicity="1" />
-          <End Role="industryactivityprobabilities" Type="Self.industryactivityprobabilities" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="industryactivity">
+            <Principal Role="industryActivities">
+              <PropertyRef Name="blueprintTypeID" />
               <PropertyRef Name="activityID" />
-              <PropertyRef Name="typeID" />
             </Principal>
-            <Dependent Role="industryactivityprobabilities">
+            <Dependent Role="industryActivityProducts">
+              <PropertyRef Name="blueprintTypeID" />
               <PropertyRef Name="activityID" />
-              <PropertyRef Name="typeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_industryactivityprobabilities_invtypes">
-          <End Role="invtypes" Type="Self.invtypes" Multiplicity="1" />
-          <End Role="industryactivityprobabilities" Type="Self.industryactivityprobabilities" Multiplicity="*" />
+        <Association Name="FK_industryActivityProducts_MaterialTypeID_invTypes">
+          <End Role="invTypes" Type="Self.invTypes" Multiplicity="1" />
+          <End Role="industryActivityMaterials" Type="Self.industryActivityMaterials" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="invtypes">
+            <Principal Role="invTypes">
               <PropertyRef Name="typeID" />
             </Principal>
-            <Dependent Role="industryactivityprobabilities">
-              <PropertyRef Name="typeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_industryactivityproducts_industryactivity">
-          <End Role="industryactivity" Type="Self.industryactivity" Multiplicity="1" />
-          <End Role="industryactivityproducts" Type="Self.industryactivityproducts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="industryactivity">
-              <PropertyRef Name="activityID" />
-              <PropertyRef Name="typeID" />
-            </Principal>
-            <Dependent Role="industryactivityproducts">
-              <PropertyRef Name="activityID" />
-              <PropertyRef Name="typeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_industryactivityproducts_invtypes">
-          <End Role="invtypes" Type="Self.invtypes" Multiplicity="1" />
-          <End Role="industryactivityproducts" Type="Self.industryactivityproducts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="invtypes">
-              <PropertyRef Name="typeID" />
-            </Principal>
-            <Dependent Role="industryactivityproducts">
-              <PropertyRef Name="typeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_industryactivityproducts_MaterialTypeID_invtypes">
-          <End Role="invtypes" Type="Self.invtypes" Multiplicity="1" />
-          <End Role="industryactivitymaterials" Type="Self.industryactivitymaterials" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="invtypes">
-              <PropertyRef Name="typeID" />
-            </Principal>
-            <Dependent Role="industryactivitymaterials">
+            <Dependent Role="industryActivityMaterials">
               <PropertyRef Name="materialTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_industryactivityproducts_ProductTypeID_invtypes">
-          <End Role="invtypes" Type="Self.invtypes" Multiplicity="1" />
-          <End Role="industryactivityproducts" Type="Self.industryactivityproducts" Multiplicity="*" />
+          <End Role="invTypes" Type="Self.invTypes" Multiplicity="1" />
+          <End Role="industryActivityProducts" Type="Self.industryActivityProducts" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="invtypes">
+            <Principal Role="invTypes">
               <PropertyRef Name="typeID" />
             </Principal>
-            <Dependent Role="industryactivityproducts">
+            <Dependent Role="industryActivityProducts">
               <PropertyRef Name="productTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_invtypes_invmarketgroups">
-          <End Role="invmarketgroups" Type="Self.invmarketgroups" Multiplicity="0..1" />
-          <End Role="invtypes" Type="Self.invtypes" Multiplicity="*" />
+        <Association Name="FK_industryBlueprints_invtypes">
+          <End Role="invTypes" Type="Self.invTypes" Multiplicity="1" />
+          <End Role="industryBlueprints" Type="Self.industryBlueprints" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="invmarketgroups">
+            <Principal Role="invTypes">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="industryBlueprints">
+              <PropertyRef Name="blueprintTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invGroups_invCategories">
+          <End Role="invCategories" Type="Self.invCategories" Multiplicity="0..1" />
+          <End Role="invGroups" Type="Self.invGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invCategories">
+              <PropertyRef Name="categoryID" />
+            </Principal>
+            <Dependent Role="invGroups">
+              <PropertyRef Name="categoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invTypeMaterials_invTypes_material">
+          <End Role="invTypes" Type="Self.invTypes" Multiplicity="1" />
+          <End Role="invTypeMaterials" Type="Self.invTypeMaterials" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invTypes">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="invTypeMaterials">
+              <PropertyRef Name="materialTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invTypeMaterials_invTypes_type">
+          <End Role="invTypes" Type="Self.invTypes" Multiplicity="1" />
+          <End Role="invTypeMaterials" Type="Self.invTypeMaterials" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invTypes">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="invTypeMaterials">
+              <PropertyRef Name="typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invTypes_invGroups">
+          <End Role="invGroups" Type="Self.invGroups" Multiplicity="0..1" />
+          <End Role="invTypes" Type="Self.invTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invGroups">
+              <PropertyRef Name="groupID" />
+            </Principal>
+            <Dependent Role="invTypes">
+              <PropertyRef Name="groupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invTypes_invMarketGroups">
+          <End Role="invMarketGroups" Type="Self.invMarketGroups" Multiplicity="0..1" />
+          <End Role="invTypes" Type="Self.invTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invMarketGroups">
               <PropertyRef Name="marketGroupID" />
             </Principal>
-            <Dependent Role="invtypes">
+            <Dependent Role="invTypes">
               <PropertyRef Name="marketGroupID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_mapconstellationjumps_mapconstellations_fromConstellation">
+          <End Role="mapConstellations" Type="Self.mapConstellations" Multiplicity="1" />
+          <End Role="mapConstellationJumps" Type="Self.mapConstellationJumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapConstellations">
+              <PropertyRef Name="constellationID" />
+            </Principal>
+            <Dependent Role="mapConstellationJumps">
+              <PropertyRef Name="fromConstellationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapconstellationjumps_mapconstellations_toConstellation">
+          <End Role="mapConstellations" Type="Self.mapConstellations" Multiplicity="1" />
+          <End Role="mapConstellationJumps" Type="Self.mapConstellationJumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapConstellations">
+              <PropertyRef Name="constellationID" />
+            </Principal>
+            <Dependent Role="mapConstellationJumps">
+              <PropertyRef Name="toConstellationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapconstellationjumps_mapregions_fromRegion">
+          <End Role="mapRegions" Type="Self.mapRegions" Multiplicity="0..1" />
+          <End Role="mapConstellationJumps" Type="Self.mapConstellationJumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapRegions">
+              <PropertyRef Name="regionID" />
+            </Principal>
+            <Dependent Role="mapConstellationJumps">
+              <PropertyRef Name="fromRegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapconstellationjumps_mapregions_toRegion">
+          <End Role="mapRegions" Type="Self.mapRegions" Multiplicity="0..1" />
+          <End Role="mapConstellationJumps" Type="Self.mapConstellationJumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapRegions">
+              <PropertyRef Name="regionID" />
+            </Principal>
+            <Dependent Role="mapConstellationJumps">
+              <PropertyRef Name="toRegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapconstellations_mapregions_region">
+          <End Role="mapRegions" Type="Self.mapRegions" Multiplicity="0..1" />
+          <End Role="mapConstellations" Type="Self.mapConstellations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapRegions">
+              <PropertyRef Name="regionID" />
+            </Principal>
+            <Dependent Role="mapConstellations">
+              <PropertyRef Name="regionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapregionjumps_mapregions_fromRegion">
+          <End Role="mapRegions" Type="Self.mapRegions" Multiplicity="1" />
+          <End Role="mapRegionJumps" Type="Self.mapRegionJumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapRegions">
+              <PropertyRef Name="regionID" />
+            </Principal>
+            <Dependent Role="mapRegionJumps">
+              <PropertyRef Name="fromRegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapregionjumps_mapregions_toRegion">
+          <End Role="mapRegions" Type="Self.mapRegions" Multiplicity="1" />
+          <End Role="mapRegionJumps" Type="Self.mapRegionJumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapRegions">
+              <PropertyRef Name="regionID" />
+            </Principal>
+            <Dependent Role="mapRegionJumps">
+              <PropertyRef Name="toRegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapsolarsystemjumps_mapconstellations_fromConstellation">
+          <End Role="mapConstellations" Type="Self.mapConstellations" Multiplicity="0..1" />
+          <End Role="mapSolarSystemJumps" Type="Self.mapSolarSystemJumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapConstellations">
+              <PropertyRef Name="constellationID" />
+            </Principal>
+            <Dependent Role="mapSolarSystemJumps">
+              <PropertyRef Name="fromConstellationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapsolarsystemjumps_mapconstellations_toConstellation">
+          <End Role="mapConstellations" Type="Self.mapConstellations" Multiplicity="0..1" />
+          <End Role="mapSolarSystemJumps" Type="Self.mapSolarSystemJumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapConstellations">
+              <PropertyRef Name="constellationID" />
+            </Principal>
+            <Dependent Role="mapSolarSystemJumps">
+              <PropertyRef Name="toConstellationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapsolarsystemjumps_mapregions_fromRegion">
+          <End Role="mapRegions" Type="Self.mapRegions" Multiplicity="0..1" />
+          <End Role="mapSolarSystemJumps" Type="Self.mapSolarSystemJumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapRegions">
+              <PropertyRef Name="regionID" />
+            </Principal>
+            <Dependent Role="mapSolarSystemJumps">
+              <PropertyRef Name="fromRegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapsolarsystemjumps_mapregions_toRegion">
+          <End Role="mapRegions" Type="Self.mapRegions" Multiplicity="0..1" />
+          <End Role="mapSolarSystemJumps" Type="Self.mapSolarSystemJumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapRegions">
+              <PropertyRef Name="regionID" />
+            </Principal>
+            <Dependent Role="mapSolarSystemJumps">
+              <PropertyRef Name="toRegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapsolarsystemjumps_mapsolarsystems_fromSolarSystem">
+          <End Role="mapSolarSystems" Type="Self.mapSolarSystems" Multiplicity="1" />
+          <End Role="mapSolarSystemJumps" Type="Self.mapSolarSystemJumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapSolarSystems">
+              <PropertyRef Name="solarSystemID" />
+            </Principal>
+            <Dependent Role="mapSolarSystemJumps">
+              <PropertyRef Name="fromSolarSystemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapsolarsystemjumps_mapsolarsystems_toSolarSystem">
+          <End Role="mapSolarSystems" Type="Self.mapSolarSystems" Multiplicity="1" />
+          <End Role="mapSolarSystemJumps" Type="Self.mapSolarSystemJumps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapSolarSystems">
+              <PropertyRef Name="solarSystemID" />
+            </Principal>
+            <Dependent Role="mapSolarSystemJumps">
+              <PropertyRef Name="toSolarSystemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapsolarsystems_mapregions_constellation">
+          <End Role="mapConstellations" Type="Self.mapConstellations" Multiplicity="0..1" />
+          <End Role="mapSolarSystems" Type="Self.mapSolarSystems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapConstellations">
+              <PropertyRef Name="constellationID" />
+            </Principal>
+            <Dependent Role="mapSolarSystems">
+              <PropertyRef Name="constellationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapsolarsystems_mapregions_region">
+          <End Role="mapRegions" Type="Self.mapRegions" Multiplicity="0..1" />
+          <End Role="mapSolarSystems" Type="Self.mapSolarSystems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapRegions">
+              <PropertyRef Name="regionID" />
+            </Principal>
+            <Dependent Role="mapSolarSystems">
+              <PropertyRef Name="regionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ore_invtypes">
-          <End Role="invtypes" Type="Self.invtypes" Multiplicity="1" />
+          <End Role="invTypes" Type="Self.invTypes" Multiplicity="1" />
           <End Role="ore" Type="Self.ore" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="invtypes">
+            <Principal Role="invTypes">
               <PropertyRef Name="typeID" />
             </Principal>
             <Dependent Role="ore">
@@ -240,14 +734,62 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="GetBlueprint" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="productTypeID" Type="int" Mode="In" />
-          <Parameter Name="activityID" Type="int" Mode="In" />
+        <Association Name="FK_parent">
+          <End Role="invMarketGroups" Type="Self.invMarketGroups" Multiplicity="0..1" />
+          <End Role="invMarketGroups1" Type="Self.invMarketGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invMarketGroups">
+              <PropertyRef Name="marketGroupID" />
+            </Principal>
+            <Dependent Role="invMarketGroups1">
+              <PropertyRef Name="parentGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_skills_typeId_invtypes">
+          <End Role="invTypes" Type="Self.invTypes" Multiplicity="1" />
+          <End Role="skills" Type="Self.skills" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="invTypes">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="skills">
+              <PropertyRef Name="typeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetAttribute" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="typeID" Type="int" Mode="In" />
+          <Parameter Name="attributeID" Type="int" Mode="In" />
           <ReturnType>
             <CollectionType>
               <RowType>
                 <Property Name="typeID" Type="int" Nullable="false" />
-                <Property Name="activityID" Type="int" Nullable="false" />
+                <Property Name="valueFloat" Type="float" />
+                <Property Name="valueInt" Type="int" />
+                <Property Name="attributeID" Type="smallint" Nullable="false" />
+                <Property Name="attributeName" Type="varchar" MaxLength="100" />
+                <Property Name="description" Type="varchar" MaxLength="1000" />
+                <Property Name="iconID" Type="int" />
+                <Property Name="defaultValue" Type="float" />
+                <Property Name="published" Type="bit" />
+                <Property Name="displayName" Type="varchar" MaxLength="1000" />
+                <Property Name="unitID" Type="tinyint" />
+                <Property Name="stackable" Type="bit" />
+                <Property Name="highIsGood" Type="bit" />
+                <Property Name="categoryID" Type="tinyint" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetBlueprintActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="blueprintTypeID" Type="int" Mode="In" />
+          <Parameter Name="activityID" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="blueprintTypeID" Type="int" Nullable="false" />
+                <Property Name="activityID" Type="tinyint" Nullable="false" />
                 <Property Name="time" Type="int" />
               </RowType>
             </CollectionType>
@@ -259,10 +801,25 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
           <ReturnType>
             <CollectionType>
               <RowType>
-                <Property Name="typeID" Type="int" Nullable="false" />
-                <Property Name="activityID" Type="int" Nullable="false" />
+                <Property Name="blueprintTypeID" Type="int" Nullable="false" />
+                <Property Name="activityID" Type="tinyint" Nullable="false" />
                 <Property Name="materialTypeID" Type="int" Nullable="false" />
                 <Property Name="quantity" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetBlueprintProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="blueprintTypeID" Type="int" Mode="In" />
+          <Parameter Name="activityID" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="blueprintTypeID" Type="int" Nullable="false" />
+                <Property Name="activityID" Type="tinyint" Nullable="false" />
+                <Property Name="productTypeID" Type="int" Nullable="false" />
+                <Property Name="quantity" Type="int" />
+                <Property Name="probability" Type="float" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -273,8 +830,8 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
           <ReturnType>
             <CollectionType>
               <RowType>
-                <Property Name="typeID" Type="int" Nullable="false" />
-                <Property Name="activityID" Type="int" Nullable="false" />
+                <Property Name="blueprintTypeID" Type="int" Nullable="false" />
+                <Property Name="activityID" Type="tinyint" Nullable="false" />
                 <Property Name="materialTypeID" Type="int" Nullable="false" />
                 <Property Name="quantity" Type="int" />
               </RowType>
@@ -300,6 +857,94 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="GetSkillFromID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="typeId" Type="int" Nullable="false" />
+                <Property Name="typeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+                <Property Name="rank" Type="int" Nullable="false" />
+                <Property Name="primaryAttr" Type="int" Nullable="false" />
+                <Property Name="secondaryAttr" Type="int" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetSystemFromID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="solarSystemID" Type="int" Nullable="false" />
+                <Property Name="solarSystemName" Type="varchar" MaxLength="100" />
+                <Property Name="regionID" Type="int" />
+                <Property Name="constellationID" Type="int" />
+                <Property Name="x" Type="real" />
+                <Property Name="y" Type="real" />
+                <Property Name="z" Type="real" />
+                <Property Name="x_Min" Type="real" />
+                <Property Name="x_Max" Type="real" />
+                <Property Name="y_Min" Type="real" />
+                <Property Name="y_Max" Type="real" />
+                <Property Name="z_Min" Type="real" />
+                <Property Name="z_Max" Type="real" />
+                <Property Name="luminosity" Type="real" />
+                <Property Name="border" Type="bit" />
+                <Property Name="corridor" Type="bit" />
+                <Property Name="fringe" Type="bit" />
+                <Property Name="hub" Type="bit" />
+                <Property Name="international" Type="bit" />
+                <Property Name="regional" Type="bit" />
+                <Property Name="security" Type="real" />
+                <Property Name="factionID" Type="int" />
+                <Property Name="radius" Type="real" />
+                <Property Name="sunTypeID" Type="int" />
+                <Property Name="securityClass" Type="varchar" MaxLength="2" />
+                <Property Name="solarSystemNameID" Type="int" />
+                <Property Name="visualEffect" Type="varchar" MaxLength="50" />
+                <Property Name="descriptionID" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetSystemFromName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="solarSystemID" Type="int" Nullable="false" />
+                <Property Name="solarSystemName" Type="varchar" MaxLength="100" />
+                <Property Name="regionID" Type="int" />
+                <Property Name="constellationID" Type="int" />
+                <Property Name="x" Type="real" />
+                <Property Name="y" Type="real" />
+                <Property Name="z" Type="real" />
+                <Property Name="x_Min" Type="real" />
+                <Property Name="x_Max" Type="real" />
+                <Property Name="y_Min" Type="real" />
+                <Property Name="y_Max" Type="real" />
+                <Property Name="z_Min" Type="real" />
+                <Property Name="z_Max" Type="real" />
+                <Property Name="luminosity" Type="real" />
+                <Property Name="border" Type="bit" />
+                <Property Name="corridor" Type="bit" />
+                <Property Name="fringe" Type="bit" />
+                <Property Name="hub" Type="bit" />
+                <Property Name="international" Type="bit" />
+                <Property Name="regional" Type="bit" />
+                <Property Name="security" Type="real" />
+                <Property Name="factionID" Type="int" />
+                <Property Name="radius" Type="real" />
+                <Property Name="sunTypeID" Type="int" />
+                <Property Name="securityClass" Type="varchar" MaxLength="2" />
+                <Property Name="solarSystemNameID" Type="int" />
+                <Property Name="visualEffect" Type="varchar" MaxLength="50" />
+                <Property Name="descriptionID" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="GetTypeFromID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
           <ReturnType>
@@ -307,19 +952,24 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
               <RowType>
                 <Property Name="typeID" Type="int" Nullable="false" />
                 <Property Name="groupID" Type="int" />
-                <Property Name="typeName" Type="varchar" MaxLength="100" Nullable="false" />
-                <Property Name="typeDescription" Type="text" />
+                <Property Name="typeName" Type="nvarchar" MaxLength="500" />
+                <Property Name="description" Type="text" />
                 <Property Name="mass" Type="float" />
                 <Property Name="volume" Type="float" />
+                <Property Name="packagedVolume" Type="float" />
                 <Property Name="capacity" Type="float" />
                 <Property Name="portionSize" Type="int" />
-                <Property Name="raceID" Type="int" />
-                <Property Name="basePrice" Type="decimal" Precision="19" Scale="4" />
-                <Property Name="published" Type="tinyint" />
+                <Property Name="factionID" Type="int" />
+                <Property Name="raceID" Type="tinyint" />
+                <Property Name="basePrice" Type="float" />
+                <Property Name="published" Type="bit" />
                 <Property Name="marketGroupID" Type="int" />
+                <Property Name="graphicID" Type="int" />
+                <Property Name="radius" Type="float" />
                 <Property Name="iconID" Type="int" />
                 <Property Name="soundID" Type="int" />
-                <Property Name="graphicID" Type="int" />
+                <Property Name="sofFactionName" Type="nvarchar" MaxLength="100" />
+                <Property Name="sofMaterialSetID" Type="int" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -331,19 +981,24 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
               <RowType>
                 <Property Name="typeID" Type="int" Nullable="false" />
                 <Property Name="groupID" Type="int" />
-                <Property Name="typeName" Type="varchar" MaxLength="100" Nullable="false" />
-                <Property Name="typeDescription" Type="text" />
+                <Property Name="typeName" Type="nvarchar" MaxLength="500" />
+                <Property Name="description" Type="text" />
                 <Property Name="mass" Type="float" />
                 <Property Name="volume" Type="float" />
+                <Property Name="packagedVolume" Type="float" />
                 <Property Name="capacity" Type="float" />
                 <Property Name="portionSize" Type="int" />
-                <Property Name="raceID" Type="int" />
-                <Property Name="basePrice" Type="decimal" Precision="19" Scale="4" />
-                <Property Name="published" Type="tinyint" />
+                <Property Name="factionID" Type="int" />
+                <Property Name="raceID" Type="tinyint" />
+                <Property Name="basePrice" Type="float" />
+                <Property Name="published" Type="bit" />
                 <Property Name="marketGroupID" Type="int" />
+                <Property Name="graphicID" Type="int" />
+                <Property Name="radius" Type="float" />
                 <Property Name="iconID" Type="int" />
                 <Property Name="soundID" Type="int" />
-                <Property Name="graphicID" Type="int" />
+                <Property Name="sofFactionName" Type="nvarchar" MaxLength="100" />
+                <Property Name="sofMaterialSetID" Type="int" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -355,408 +1010,639 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
               <RowType>
                 <Property Name="typeID" Type="int" Nullable="false" />
                 <Property Name="groupID" Type="int" />
-                <Property Name="typeName" Type="varchar" MaxLength="100" Nullable="false" />
-                <Property Name="typeDescription" Type="text" />
+                <Property Name="typeName" Type="nvarchar" MaxLength="500" />
+                <Property Name="description" Type="text" />
                 <Property Name="mass" Type="float" />
                 <Property Name="volume" Type="float" />
+                <Property Name="packagedVolume" Type="float" />
                 <Property Name="capacity" Type="float" />
                 <Property Name="portionSize" Type="int" />
-                <Property Name="raceID" Type="int" />
-                <Property Name="basePrice" Type="decimal" Precision="19" Scale="4" />
-                <Property Name="published" Type="tinyint" />
+                <Property Name="factionID" Type="int" />
+                <Property Name="raceID" Type="tinyint" />
+                <Property Name="basePrice" Type="float" />
+                <Property Name="published" Type="bit" />
                 <Property Name="marketGroupID" Type="int" />
+                <Property Name="graphicID" Type="int" />
+                <Property Name="radius" Type="float" />
                 <Property Name="iconID" Type="int" />
                 <Property Name="soundID" Type="int" />
-                <Property Name="graphicID" Type="int" />
+                <Property Name="sofFactionName" Type="nvarchar" MaxLength="100" />
+                <Property Name="sofMaterialSetID" Type="int" />
               </RowType>
             </CollectionType>
           </ReturnType>
         </Function>
         <EntityContainer Name="SDEModelStoreContainer">
-          <EntitySet Name="industryactivity" EntityType="Self.industryactivity" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="industryactivitymaterials" EntityType="Self.industryactivitymaterials" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="industryactivityprobabilities" EntityType="Self.industryactivityprobabilities" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="industryactivityproducts" EntityType="Self.industryactivityproducts" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="invmarketgroups" EntityType="Self.invmarketgroups" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="invtypes" EntityType="Self.invtypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dgmAttributeTypes" EntityType="Self.dgmAttributeTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dgmEffects" EntityType="Self.dgmEffects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dgmEffectsModifierInfo" EntityType="Self.dgmEffectsModifierInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dgmTypeAttributes" EntityType="Self.dgmTypeAttributes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dgmTypeEffects" EntityType="Self.dgmTypeEffects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="industryActivities" EntityType="Self.industryActivities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="industryActivityMaterials" EntityType="Self.industryActivityMaterials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="industryActivityProducts" EntityType="Self.industryActivityProducts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="industryBlueprints" EntityType="Self.industryBlueprints" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="invCategories" EntityType="Self.invCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="invGroups" EntityType="Self.invGroups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="invMarketGroups" EntityType="Self.invMarketGroups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="invTypeMaterials" EntityType="Self.invTypeMaterials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="invTypes" EntityType="Self.invTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mapConstellationJumps" EntityType="Self.mapConstellationJumps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mapConstellations" EntityType="Self.mapConstellations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mapRegionJumps" EntityType="Self.mapRegionJumps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mapRegions" EntityType="Self.mapRegions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mapSolarSystemJumps" EntityType="Self.mapSolarSystemJumps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mapSolarSystems" EntityType="Self.mapSolarSystems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ore" EntityType="Self.ore" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="industryblueprints" EntityType="Self.industryblueprints" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [industryblueprints].[typeID] AS [typeID], 
-    [industryblueprints].[maxProductionLimit] AS [maxProductionLimit]
-    FROM [dbo].[industryblueprints] AS [industryblueprints]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="skills" EntityType="Self.skills" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dgmEffectModifierInfo_dgmAttributeTypes_modifiedAttribute" Association="Self.FK_dgmEffectModifierInfo_dgmAttributeTypes_modifiedAttribute">
+            <End Role="dgmAttributeTypes" EntitySet="dgmAttributeTypes" />
+            <End Role="dgmEffectsModifierInfo" EntitySet="dgmEffectsModifierInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dgmEffectModifierInfo_dgmAttributeTypes_modifyingAttribute" Association="Self.FK_dgmEffectModifierInfo_dgmAttributeTypes_modifyingAttribute">
+            <End Role="dgmAttributeTypes" EntitySet="dgmAttributeTypes" />
+            <End Role="dgmEffectsModifierInfo" EntitySet="dgmEffectsModifierInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dgmEffectModifierInfo_dgmEffects" Association="Self.FK_dgmEffectModifierInfo_dgmEffects">
+            <End Role="dgmEffects" EntitySet="dgmEffects" />
+            <End Role="dgmEffectsModifierInfo" EntitySet="dgmEffectsModifierInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dgmTypeAttributes_dgmAttributeTypes" Association="Self.FK_dgmTypeAttributes_dgmAttributeTypes">
+            <End Role="dgmAttributeTypes" EntitySet="dgmAttributeTypes" />
+            <End Role="dgmTypeAttributes" EntitySet="dgmTypeAttributes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dgmTypeAttributes_invTypes" Association="Self.FK_dgmTypeAttributes_invTypes">
+            <End Role="invTypes" EntitySet="invTypes" />
+            <End Role="dgmTypeAttributes" EntitySet="dgmTypeAttributes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dgmTypeEffects_dgmEffects" Association="Self.FK_dgmTypeEffects_dgmEffects">
+            <End Role="dgmEffects" EntitySet="dgmEffects" />
+            <End Role="dgmTypeEffects" EntitySet="dgmTypeEffects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dgmTypeEffects_invTypes" Association="Self.FK_dgmTypeEffects_invTypes">
+            <End Role="invTypes" EntitySet="invTypes" />
+            <End Role="dgmTypeEffects" EntitySet="dgmTypeEffects" />
+          </AssociationSet>
           <AssociationSet Name="FK_industryactivity_invtypes" Association="Self.FK_industryactivity_invtypes">
-            <End Role="invtypes" EntitySet="invtypes" />
-            <End Role="industryactivity" EntitySet="industryactivity" />
+            <End Role="invTypes" EntitySet="invTypes" />
+            <End Role="industryActivities" EntitySet="industryActivities" />
           </AssociationSet>
-          <AssociationSet Name="FK_industryactivitymaterials_industryactivity" Association="Self.FK_industryactivitymaterials_industryactivity">
-            <End Role="industryactivity" EntitySet="industryactivity" />
-            <End Role="industryactivitymaterials" EntitySet="industryactivitymaterials" />
+          <AssociationSet Name="FK_industryActivityMaterials_industryActivities" Association="Self.FK_industryActivityMaterials_industryActivities">
+            <End Role="industryActivities" EntitySet="industryActivities" />
+            <End Role="industryActivityMaterials" EntitySet="industryActivityMaterials" />
           </AssociationSet>
-          <AssociationSet Name="FK_industryactivitymaterials_invtypes" Association="Self.FK_industryactivitymaterials_invtypes">
-            <End Role="invtypes" EntitySet="invtypes" />
-            <End Role="industryactivitymaterials" EntitySet="industryactivitymaterials" />
+          <AssociationSet Name="FK_industryactivityproducts_industryActivities" Association="Self.FK_industryactivityproducts_industryActivities">
+            <End Role="industryActivities" EntitySet="industryActivities" />
+            <End Role="industryActivityProducts" EntitySet="industryActivityProducts" />
           </AssociationSet>
-          <AssociationSet Name="FK_industryactivityprobabilities_industryactivity" Association="Self.FK_industryactivityprobabilities_industryactivity">
-            <End Role="industryactivity" EntitySet="industryactivity" />
-            <End Role="industryactivityprobabilities" EntitySet="industryactivityprobabilities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_industryactivityprobabilities_invtypes" Association="Self.FK_industryactivityprobabilities_invtypes">
-            <End Role="invtypes" EntitySet="invtypes" />
-            <End Role="industryactivityprobabilities" EntitySet="industryactivityprobabilities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_industryactivityproducts_industryactivity" Association="Self.FK_industryactivityproducts_industryactivity">
-            <End Role="industryactivity" EntitySet="industryactivity" />
-            <End Role="industryactivityproducts" EntitySet="industryactivityproducts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_industryactivityproducts_invtypes" Association="Self.FK_industryactivityproducts_invtypes">
-            <End Role="invtypes" EntitySet="invtypes" />
-            <End Role="industryactivityproducts" EntitySet="industryactivityproducts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_industryactivityproducts_MaterialTypeID_invtypes" Association="Self.FK_industryactivityproducts_MaterialTypeID_invtypes">
-            <End Role="invtypes" EntitySet="invtypes" />
-            <End Role="industryactivitymaterials" EntitySet="industryactivitymaterials" />
+          <AssociationSet Name="FK_industryActivityProducts_MaterialTypeID_invTypes" Association="Self.FK_industryActivityProducts_MaterialTypeID_invTypes">
+            <End Role="invTypes" EntitySet="invTypes" />
+            <End Role="industryActivityMaterials" EntitySet="industryActivityMaterials" />
           </AssociationSet>
           <AssociationSet Name="FK_industryactivityproducts_ProductTypeID_invtypes" Association="Self.FK_industryactivityproducts_ProductTypeID_invtypes">
-            <End Role="invtypes" EntitySet="invtypes" />
-            <End Role="industryactivityproducts" EntitySet="industryactivityproducts" />
+            <End Role="invTypes" EntitySet="invTypes" />
+            <End Role="industryActivityProducts" EntitySet="industryActivityProducts" />
           </AssociationSet>
-          <AssociationSet Name="FK_invtypes_invmarketgroups" Association="Self.FK_invtypes_invmarketgroups">
-            <End Role="invmarketgroups" EntitySet="invmarketgroups" />
-            <End Role="invtypes" EntitySet="invtypes" />
+          <AssociationSet Name="FK_industryBlueprints_invtypes" Association="Self.FK_industryBlueprints_invtypes">
+            <End Role="invTypes" EntitySet="invTypes" />
+            <End Role="industryBlueprints" EntitySet="industryBlueprints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invGroups_invCategories" Association="Self.FK_invGroups_invCategories">
+            <End Role="invCategories" EntitySet="invCategories" />
+            <End Role="invGroups" EntitySet="invGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invTypeMaterials_invTypes_material" Association="Self.FK_invTypeMaterials_invTypes_material">
+            <End Role="invTypes" EntitySet="invTypes" />
+            <End Role="invTypeMaterials" EntitySet="invTypeMaterials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invTypeMaterials_invTypes_type" Association="Self.FK_invTypeMaterials_invTypes_type">
+            <End Role="invTypes" EntitySet="invTypes" />
+            <End Role="invTypeMaterials" EntitySet="invTypeMaterials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invTypes_invGroups" Association="Self.FK_invTypes_invGroups">
+            <End Role="invGroups" EntitySet="invGroups" />
+            <End Role="invTypes" EntitySet="invTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invTypes_invMarketGroups" Association="Self.FK_invTypes_invMarketGroups">
+            <End Role="invMarketGroups" EntitySet="invMarketGroups" />
+            <End Role="invTypes" EntitySet="invTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapconstellationjumps_mapconstellations_fromConstellation" Association="Self.FK_mapconstellationjumps_mapconstellations_fromConstellation">
+            <End Role="mapConstellations" EntitySet="mapConstellations" />
+            <End Role="mapConstellationJumps" EntitySet="mapConstellationJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapconstellationjumps_mapconstellations_toConstellation" Association="Self.FK_mapconstellationjumps_mapconstellations_toConstellation">
+            <End Role="mapConstellations" EntitySet="mapConstellations" />
+            <End Role="mapConstellationJumps" EntitySet="mapConstellationJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapconstellationjumps_mapregions_fromRegion" Association="Self.FK_mapconstellationjumps_mapregions_fromRegion">
+            <End Role="mapRegions" EntitySet="mapRegions" />
+            <End Role="mapConstellationJumps" EntitySet="mapConstellationJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapconstellationjumps_mapregions_toRegion" Association="Self.FK_mapconstellationjumps_mapregions_toRegion">
+            <End Role="mapRegions" EntitySet="mapRegions" />
+            <End Role="mapConstellationJumps" EntitySet="mapConstellationJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapconstellations_mapregions_region" Association="Self.FK_mapconstellations_mapregions_region">
+            <End Role="mapRegions" EntitySet="mapRegions" />
+            <End Role="mapConstellations" EntitySet="mapConstellations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapregionjumps_mapregions_fromRegion" Association="Self.FK_mapregionjumps_mapregions_fromRegion">
+            <End Role="mapRegions" EntitySet="mapRegions" />
+            <End Role="mapRegionJumps" EntitySet="mapRegionJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapregionjumps_mapregions_toRegion" Association="Self.FK_mapregionjumps_mapregions_toRegion">
+            <End Role="mapRegions" EntitySet="mapRegions" />
+            <End Role="mapRegionJumps" EntitySet="mapRegionJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapsolarsystemjumps_mapconstellations_fromConstellation" Association="Self.FK_mapsolarsystemjumps_mapconstellations_fromConstellation">
+            <End Role="mapConstellations" EntitySet="mapConstellations" />
+            <End Role="mapSolarSystemJumps" EntitySet="mapSolarSystemJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapsolarsystemjumps_mapconstellations_toConstellation" Association="Self.FK_mapsolarsystemjumps_mapconstellations_toConstellation">
+            <End Role="mapConstellations" EntitySet="mapConstellations" />
+            <End Role="mapSolarSystemJumps" EntitySet="mapSolarSystemJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapsolarsystemjumps_mapregions_fromRegion" Association="Self.FK_mapsolarsystemjumps_mapregions_fromRegion">
+            <End Role="mapRegions" EntitySet="mapRegions" />
+            <End Role="mapSolarSystemJumps" EntitySet="mapSolarSystemJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapsolarsystemjumps_mapregions_toRegion" Association="Self.FK_mapsolarsystemjumps_mapregions_toRegion">
+            <End Role="mapRegions" EntitySet="mapRegions" />
+            <End Role="mapSolarSystemJumps" EntitySet="mapSolarSystemJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapsolarsystemjumps_mapsolarsystems_fromSolarSystem" Association="Self.FK_mapsolarsystemjumps_mapsolarsystems_fromSolarSystem">
+            <End Role="mapSolarSystems" EntitySet="mapSolarSystems" />
+            <End Role="mapSolarSystemJumps" EntitySet="mapSolarSystemJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapsolarsystemjumps_mapsolarsystems_toSolarSystem" Association="Self.FK_mapsolarsystemjumps_mapsolarsystems_toSolarSystem">
+            <End Role="mapSolarSystems" EntitySet="mapSolarSystems" />
+            <End Role="mapSolarSystemJumps" EntitySet="mapSolarSystemJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapsolarsystems_mapregions_constellation" Association="Self.FK_mapsolarsystems_mapregions_constellation">
+            <End Role="mapConstellations" EntitySet="mapConstellations" />
+            <End Role="mapSolarSystems" EntitySet="mapSolarSystems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapsolarsystems_mapregions_region" Association="Self.FK_mapsolarsystems_mapregions_region">
+            <End Role="mapRegions" EntitySet="mapRegions" />
+            <End Role="mapSolarSystems" EntitySet="mapSolarSystems" />
           </AssociationSet>
           <AssociationSet Name="FK_ore_invtypes" Association="Self.FK_ore_invtypes">
-            <End Role="invtypes" EntitySet="invtypes" />
+            <End Role="invTypes" EntitySet="invTypes" />
             <End Role="ore" EntitySet="ore" />
+          </AssociationSet>
+          <AssociationSet Name="FK_parent" Association="Self.FK_parent">
+            <End Role="invMarketGroups" EntitySet="invMarketGroups" />
+            <End Role="invMarketGroups1" EntitySet="invMarketGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_skills_typeId_invtypes" Association="Self.FK_skills_typeId_invtypes">
+            <End Role="invTypes" EntitySet="invTypes" />
+            <End Role="skills" EntitySet="skills" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SDEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="industryactivity">
+        <EntityContainer Name="SDEEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="industryActivities" EntityType="SDEModel.industryActivity" />
+          <EntitySet Name="industryActivityMaterials" EntityType="SDEModel.industryActivityMaterial" />
+          <EntitySet Name="industryActivityProducts" EntityType="SDEModel.industryActivityProduct" />
+          <EntitySet Name="industryBlueprints" EntityType="SDEModel.industryBlueprint" />
+          <EntitySet Name="invMarketGroups" EntityType="SDEModel.invMarketGroup" />
+          <EntitySet Name="invTypeMaterials" EntityType="SDEModel.invTypeMaterial" />
+          <EntitySet Name="invTypes" EntityType="SDEModel.invType" />
+          <EntitySet Name="mapConstellationJumps" EntityType="SDEModel.mapConstellationJump" />
+          <EntitySet Name="mapConstellations" EntityType="SDEModel.mapConstellation" />
+          <EntitySet Name="mapRegions" EntityType="SDEModel.mapRegion" />
+          <EntitySet Name="mapSolarSystemJumps" EntityType="SDEModel.mapSolarSystemJump" />
+          <EntitySet Name="mapSolarSystems" EntityType="SDEModel.mapSolarSystem" />
+          <EntitySet Name="ores" EntityType="SDEModel.ore" />
+          <EntitySet Name="skills" EntityType="SDEModel.skill" />
+          <AssociationSet Name="FK_industryactivity_invtypes" Association="SDEModel.FK_industryactivity_invtypes">
+            <End Role="invType" EntitySet="invTypes" />
+            <End Role="industryActivity" EntitySet="industryActivities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_industryActivityMaterials_industryActivities" Association="SDEModel.FK_industryActivityMaterials_industryActivities">
+            <End Role="industryActivity" EntitySet="industryActivities" />
+            <End Role="industryActivityMaterial" EntitySet="industryActivityMaterials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_industryActivityProducts_MaterialTypeID_invTypes" Association="SDEModel.FK_industryActivityProducts_MaterialTypeID_invTypes">
+            <End Role="invType" EntitySet="invTypes" />
+            <End Role="industryActivityMaterial" EntitySet="industryActivityMaterials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_industryactivityproducts_ProductTypeID_invtypes" Association="SDEModel.FK_industryactivityproducts_ProductTypeID_invtypes">
+            <End Role="invType" EntitySet="invTypes" />
+            <End Role="industryActivityProduct" EntitySet="industryActivityProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_industryBlueprints_invtypes" Association="SDEModel.FK_industryBlueprints_invtypes">
+            <End Role="invType" EntitySet="invTypes" />
+            <End Role="industryBlueprint" EntitySet="industryBlueprints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ore_invtypes" Association="SDEModel.FK_ore_invtypes">
+            <End Role="invType" EntitySet="invTypes" />
+            <End Role="ore" EntitySet="ores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_skills_typeId_invtypes" Association="SDEModel.FK_skills_typeId_invtypes">
+            <End Role="invType" EntitySet="invTypes" />
+            <End Role="skill" EntitySet="skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapconstellationjumps_mapconstellations_fromConstellation" Association="SDEModel.FK_mapconstellationjumps_mapconstellations_fromConstellation">
+            <End Role="mapConstellation" EntitySet="mapConstellations" />
+            <End Role="mapConstellationJump" EntitySet="mapConstellationJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapconstellationjumps_mapconstellations_toConstellation" Association="SDEModel.FK_mapconstellationjumps_mapconstellations_toConstellation">
+            <End Role="mapConstellation" EntitySet="mapConstellations" />
+            <End Role="mapConstellationJump" EntitySet="mapConstellationJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapconstellationjumps_mapregions_fromRegion" Association="SDEModel.FK_mapconstellationjumps_mapregions_fromRegion">
+            <End Role="mapRegion" EntitySet="mapRegions" />
+            <End Role="mapConstellationJump" EntitySet="mapConstellationJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapconstellationjumps_mapregions_toRegion" Association="SDEModel.FK_mapconstellationjumps_mapregions_toRegion">
+            <End Role="mapRegion" EntitySet="mapRegions" />
+            <End Role="mapConstellationJump" EntitySet="mapConstellationJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapconstellations_mapregions_region" Association="SDEModel.FK_mapconstellations_mapregions_region">
+            <End Role="mapRegion" EntitySet="mapRegions" />
+            <End Role="mapConstellation" EntitySet="mapConstellations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapsolarsystemjumps_mapconstellations_fromConstellation" Association="SDEModel.FK_mapsolarsystemjumps_mapconstellations_fromConstellation">
+            <End Role="mapConstellation" EntitySet="mapConstellations" />
+            <End Role="mapSolarSystemJump" EntitySet="mapSolarSystemJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapsolarsystemjumps_mapconstellations_toConstellation" Association="SDEModel.FK_mapsolarsystemjumps_mapconstellations_toConstellation">
+            <End Role="mapConstellation" EntitySet="mapConstellations" />
+            <End Role="mapSolarSystemJump" EntitySet="mapSolarSystemJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapsolarsystems_mapregions_constellation" Association="SDEModel.FK_mapsolarsystems_mapregions_constellation">
+            <End Role="mapConstellation" EntitySet="mapConstellations" />
+            <End Role="mapSolarSystem" EntitySet="mapSolarSystems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapsolarsystemjumps_mapregions_fromRegion" Association="SDEModel.FK_mapsolarsystemjumps_mapregions_fromRegion">
+            <End Role="mapRegion" EntitySet="mapRegions" />
+            <End Role="mapSolarSystemJump" EntitySet="mapSolarSystemJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapsolarsystemjumps_mapregions_toRegion" Association="SDEModel.FK_mapsolarsystemjumps_mapregions_toRegion">
+            <End Role="mapRegion" EntitySet="mapRegions" />
+            <End Role="mapSolarSystemJump" EntitySet="mapSolarSystemJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapsolarsystems_mapregions_region" Association="SDEModel.FK_mapsolarsystems_mapregions_region">
+            <End Role="mapRegion" EntitySet="mapRegions" />
+            <End Role="mapSolarSystem" EntitySet="mapSolarSystems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapsolarsystemjumps_mapsolarsystems_fromSolarSystem" Association="SDEModel.FK_mapsolarsystemjumps_mapsolarsystems_fromSolarSystem">
+            <End Role="mapSolarSystem" EntitySet="mapSolarSystems" />
+            <End Role="mapSolarSystemJump" EntitySet="mapSolarSystemJumps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mapsolarsystemjumps_mapsolarsystems_toSolarSystem" Association="SDEModel.FK_mapsolarsystemjumps_mapsolarsystems_toSolarSystem">
+            <End Role="mapSolarSystem" EntitySet="mapSolarSystems" />
+            <End Role="mapSolarSystemJump" EntitySet="mapSolarSystemJumps" />
+          </AssociationSet>
+          <AssociationSet Name="mapRegionJumps" Association="SDEModel.mapRegionJumps">
+            <End Role="mapRegion" EntitySet="mapRegions" />
+            <End Role="mapRegion1" EntitySet="mapRegions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invTypes_invMarketGroups" Association="SDEModel.FK_invTypes_invMarketGroups">
+            <End Role="invMarketGroup" EntitySet="invMarketGroups" />
+            <End Role="invType" EntitySet="invTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invTypeMaterials_invTypes_material" Association="SDEModel.FK_invTypeMaterials_invTypes_material">
+            <End Role="invType" EntitySet="invTypes" />
+            <End Role="invTypeMaterial" EntitySet="invTypeMaterials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invTypeMaterials_invTypes_type" Association="SDEModel.FK_invTypeMaterials_invTypes_type">
+            <End Role="invType" EntitySet="invTypes" />
+            <End Role="invTypeMaterial" EntitySet="invTypeMaterials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_industryactivityproducts_industryActivities" Association="SDEModel.FK_industryactivityproducts_industryActivities">
+            <End Role="industryActivity" EntitySet="industryActivities" />
+            <End Role="industryActivityProduct" EntitySet="industryActivityProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_parent" Association="SDEModel.FK_parent">
+            <End Role="invMarketGroup" EntitySet="invMarketGroups" />
+            <End Role="invMarketGroup1" EntitySet="invMarketGroups" />
+          </AssociationSet>
+          <EntitySet Name="dgmAttributeTypes" EntityType="SDEModel.dgmAttributeType" />
+          <EntitySet Name="dgmTypeAttributes" EntityType="SDEModel.dgmTypeAttribute" />
+          <AssociationSet Name="FK_dgmTypeAttributes_dgmAttributeTypes" Association="SDEModel.FK_dgmTypeAttributes_dgmAttributeTypes">
+            <End Role="dgmAttributeType" EntitySet="dgmAttributeTypes" />
+            <End Role="dgmTypeAttribute" EntitySet="dgmTypeAttributes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dgmTypeAttributes_invTypes" Association="SDEModel.FK_dgmTypeAttributes_invTypes">
+            <End Role="invType" EntitySet="invTypes" />
+            <End Role="dgmTypeAttribute" EntitySet="dgmTypeAttributes" />
+          </AssociationSet>
+          <FunctionImport Name="GetAttribute" IsComposable="true" ReturnType="Collection(SDEModel.GetAttribute_Result)">
+            <Parameter Name="typeID" Mode="In" Type="Int32" />
+            <Parameter Name="attributeID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetBlueprintMaterials" IsComposable="true" EntitySet="industryActivityMaterials" ReturnType="Collection(SDEModel.industryActivityMaterial)">
+            <Parameter Name="blueprintTypeID" Mode="In" Type="Int32" />
+            <Parameter Name="activityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetMats" IsComposable="true" EntitySet="industryActivityMaterials" ReturnType="Collection(SDEModel.industryActivityMaterial)">
+            <Parameter Name="productTypeID" Mode="In" Type="Int32" />
+            <Parameter Name="activityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetOreFromID" IsComposable="true" EntitySet="ores" ReturnType="Collection(SDEModel.ore)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetSkillFromID" IsComposable="true" EntitySet="skills" ReturnType="Collection(SDEModel.skill)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetSystemFromID" IsComposable="true" EntitySet="mapSolarSystems" ReturnType="Collection(SDEModel.mapSolarSystem)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetSystemFromName" IsComposable="true" EntitySet="mapSolarSystems" ReturnType="Collection(SDEModel.mapSolarSystem)">
+          <Parameter Name="name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetTypeFromID" IsComposable="true" EntitySet="invTypes" ReturnType="Collection(SDEModel.invType)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetTypeFromName" IsComposable="true" EntitySet="invTypes" ReturnType="Collection(SDEModel.invType)">
+          <Parameter Name="name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetTypesLikeName" IsComposable="true" EntitySet="invTypes" ReturnType="Collection(SDEModel.invType)">
+          <Parameter Name="name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetBlueprintProducts" IsComposable="true" EntitySet="industryActivityProducts" ReturnType="Collection(SDEModel.industryActivityProduct)">
+            <Parameter Name="blueprintTypeID" Mode="In" Type="Int32" />
+            <Parameter Name="activityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetBlueprintActivity" IsComposable="true" EntitySet="industryActivities" ReturnType="Collection(SDEModel.industryActivity)">
+            <Parameter Name="blueprintTypeID" Mode="In" Type="Int32" />
+            <Parameter Name="activityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="dgmEffects" EntityType="SDEModel.dgmEffect" />
+          <EntitySet Name="dgmTypeEffects" EntityType="SDEModel.dgmTypeEffect" />
+          <AssociationSet Name="FK_dgmTypeEffects_dgmEffects" Association="SDEModel.FK_dgmTypeEffects_dgmEffects">
+            <End Role="dgmEffect" EntitySet="dgmEffects" />
+            <End Role="dgmTypeEffect" EntitySet="dgmTypeEffects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dgmTypeEffects_invTypes" Association="SDEModel.FK_dgmTypeEffects_invTypes">
+            <End Role="dgmEffect" EntitySet="dgmEffects" />
+            <End Role="dgmTypeEffect" EntitySet="dgmTypeEffects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dgmTypeEffects_invTypes1" Association="SDEModel.FK_dgmTypeEffects_invTypes1">
+            <End Role="invType" EntitySet="invTypes" />
+            <End Role="dgmTypeEffect" EntitySet="dgmTypeEffects" />
+          </AssociationSet>
+          <EntitySet Name="dgmEffectsModifierInfoes" EntityType="SDEModel.dgmEffectsModifierInfo" />
+          <AssociationSet Name="FK_dgmEffectModifierInfo_dgmAttributeTypes_modifiedAttribute" Association="SDEModel.FK_dgmEffectModifierInfo_dgmAttributeTypes_modifiedAttribute">
+            <End Role="dgmAttributeType" EntitySet="dgmAttributeTypes" />
+            <End Role="dgmEffectsModifierInfo" EntitySet="dgmEffectsModifierInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dgmEffectModifierInfo_dgmAttributeTypes_modifyingAttribute" Association="SDEModel.FK_dgmEffectModifierInfo_dgmAttributeTypes_modifyingAttribute">
+            <End Role="dgmAttributeType" EntitySet="dgmAttributeTypes" />
+            <End Role="dgmEffectsModifierInfo" EntitySet="dgmEffectsModifierInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dgmEffectModifierInfo_dgmEffects" Association="SDEModel.FK_dgmEffectModifierInfo_dgmEffects">
+            <End Role="dgmEffect" EntitySet="dgmEffects" />
+            <End Role="dgmEffectsModifierInfo" EntitySet="dgmEffectsModifierInfoes" />
+          </AssociationSet>
+          <EntitySet Name="invCategories" EntityType="SDEModel.invCategory" />
+          <EntitySet Name="invGroups" EntityType="SDEModel.invGroup" />
+          <AssociationSet Name="FK_invGroups_invCategories" Association="SDEModel.FK_invGroups_invCategories">
+            <End Role="invCategory" EntitySet="invCategories" />
+            <End Role="invGroup" EntitySet="invGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invTypes_invGroups" Association="SDEModel.FK_invTypes_invGroups">
+            <End Role="invGroup" EntitySet="invGroups" />
+            <End Role="invType" EntitySet="invTypes" />
+          </AssociationSet>
+          
+          </EntityContainer>
+        <EntityType Name="industryActivity">
           <Key>
-            <PropertyRef Name="typeID" />
+            <PropertyRef Name="blueprintTypeID" />
             <PropertyRef Name="activityID" />
           </Key>
-          <Property Name="typeID" Type="Int32" Nullable="false" />
-          <Property Name="activityID" Type="Int32" Nullable="false" />
+          <Property Name="blueprintTypeID" Type="Int32" Nullable="false" />
+          <Property Name="activityID" Type="Byte" Nullable="false" />
           <Property Name="time" Type="Int32" />
-          <NavigationProperty Name="blueprint_invtype" Relationship="Self.FK_industryactivity_invtypes" FromRole="industryactivity" ToRole="invtypes" />
-          <NavigationProperty Name="industryactivitymaterials" Relationship="Self.FK_industryactivitymaterials_industryactivity" FromRole="industryactivity" ToRole="industryactivitymaterials" />
-          <NavigationProperty Name="industryactivityprobabilities" Relationship="Self.FK_industryactivityprobabilities_industryactivity" FromRole="industryactivity" ToRole="industryactivityprobabilities" />
-          <NavigationProperty Name="industryactivityproducts" Relationship="Self.FK_industryactivityproducts_industryactivity" FromRole="industryactivity" ToRole="industryactivityproducts" />
+          <NavigationProperty Name="blueprintType" Relationship="SDEModel.FK_industryactivity_invtypes" FromRole="industryActivity" ToRole="invType" />
+          <NavigationProperty Name="industryActivityMaterials" Relationship="SDEModel.FK_industryActivityMaterials_industryActivities" FromRole="industryActivity" ToRole="industryActivityMaterial" />
+          <NavigationProperty Name="industryActivityProducts" Relationship="SDEModel.FK_industryactivityproducts_industryActivities" FromRole="industryActivity" ToRole="industryActivityProduct" />
         </EntityType>
-        <EntityType Name="industryactivitymaterial">
+        <EntityType Name="industryActivityMaterial">
           <Key>
-            <PropertyRef Name="typeID" />
+            <PropertyRef Name="blueprintTypeID" />
             <PropertyRef Name="activityID" />
             <PropertyRef Name="materialTypeID" />
           </Key>
-          <Property Name="typeID" Type="Int32" Nullable="false" />
-          <Property Name="activityID" Type="Int32" Nullable="false" />
+          <Property Name="blueprintTypeID" Type="Int32" Nullable="false" />
+          <Property Name="activityID" Type="Byte" Nullable="false" />
           <Property Name="materialTypeID" Type="Int32" Nullable="false" />
           <Property Name="quantity" Type="Int32" />
-          <NavigationProperty Name="industryactivity" Relationship="Self.FK_industryactivitymaterials_industryactivity" FromRole="industryactivitymaterials" ToRole="industryactivity" />
-          <NavigationProperty Name="blueprint_invtype" Relationship="Self.FK_industryactivitymaterials_invtypes" FromRole="industryactivitymaterials" ToRole="invtypes" />
-          <NavigationProperty Name="material_invtype" Relationship="Self.FK_industryactivityproducts_MaterialTypeID_invtypes" FromRole="industryactivitymaterials" ToRole="invtypes" />
+          <NavigationProperty Name="industryActivity" Relationship="SDEModel.FK_industryActivityMaterials_industryActivities" FromRole="industryActivityMaterial" ToRole="industryActivity" />
+          <NavigationProperty Name="materialType" Relationship="SDEModel.FK_industryActivityProducts_MaterialTypeID_invTypes" FromRole="industryActivityMaterial" ToRole="invType" />
         </EntityType>
-        <EntityType Name="industryactivityprobability">
+        <EntityType Name="industryActivityProduct">
           <Key>
-            <PropertyRef Name="typeID" />
+            <PropertyRef Name="blueprintTypeID" />
             <PropertyRef Name="activityID" />
             <PropertyRef Name="productTypeID" />
           </Key>
-          <Property Name="typeID" Type="Int32" Nullable="false" />
-          <Property Name="activityID" Type="Int32" Nullable="false" />
-          <Property Name="productTypeID" Type="Int32" Nullable="false" />
-          <Property Name="probability" Type="Decimal" Precision="3" Scale="2" />
-          <NavigationProperty Name="industryactivity" Relationship="Self.FK_industryactivityprobabilities_industryactivity" FromRole="industryactivityprobabilities" ToRole="industryactivity" />
-          <NavigationProperty Name="invtype" Relationship="Self.FK_industryactivityprobabilities_invtypes" FromRole="industryactivityprobabilities" ToRole="invtypes" />
-        </EntityType>
-        <EntityType Name="industryactivityproduct">
-          <Key>
-            <PropertyRef Name="typeID" />
-            <PropertyRef Name="activityID" />
-            <PropertyRef Name="productTypeID" />
-          </Key>
-          <Property Name="typeID" Type="Int32" Nullable="false" />
-          <Property Name="activityID" Type="Int32" Nullable="false" />
+          <Property Name="blueprintTypeID" Type="Int32" Nullable="false" />
+          <Property Name="activityID" Type="Byte" Nullable="false" />
           <Property Name="productTypeID" Type="Int32" Nullable="false" />
           <Property Name="quantity" Type="Int32" />
-          <NavigationProperty Name="industryactivity" Relationship="Self.FK_industryactivityproducts_industryactivity" FromRole="industryactivityproducts" ToRole="industryactivity" />
-          <NavigationProperty Name="blueprint_invtype" Relationship="Self.FK_industryactivityproducts_invtypes" FromRole="industryactivityproducts" ToRole="invtypes" />
-          <NavigationProperty Name="product_invtype" Relationship="Self.FK_industryactivityproducts_ProductTypeID_invtypes" FromRole="industryactivityproducts" ToRole="invtypes" />
+          <Property Name="probability" Type="Double" />
+          <NavigationProperty Name="productType" Relationship="SDEModel.FK_industryactivityproducts_ProductTypeID_invtypes" FromRole="industryActivityProduct" ToRole="invType" />
+          <NavigationProperty Name="industryActivity" Relationship="SDEModel.FK_industryactivityproducts_industryActivities" FromRole="industryActivityProduct" ToRole="industryActivity" />
         </EntityType>
-        <EntityType Name="invmarketgroup">
+        <EntityType Name="industryBlueprint">
+          <Key>
+            <PropertyRef Name="blueprintTypeID" />
+          </Key>
+          <Property Name="blueprintTypeID" Type="Int32" Nullable="false" />
+          <Property Name="maxProductionLimit" Type="Int32" />
+          <NavigationProperty Name="invType" Relationship="SDEModel.FK_industryBlueprints_invtypes" FromRole="industryBlueprint" ToRole="invType" />
+        </EntityType>
+        <EntityType Name="invMarketGroup">
           <Key>
             <PropertyRef Name="marketGroupID" />
           </Key>
           <Property Name="marketGroupID" Type="Int32" Nullable="false" />
           <Property Name="parentGroupID" Type="Int32" />
-          <Property Name="marketGroupName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="description" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+          <Property Name="marketGroupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="3000" FixedLength="false" Unicode="true" />
           <Property Name="iconID" Type="Int32" />
-          <Property Name="hasTypes" Type="Byte" />
-          <NavigationProperty Name="invtypes" Relationship="Self.FK_invtypes_invmarketgroups" FromRole="invmarketgroups" ToRole="invtypes" />
+          <Property Name="hasTypes" Type="Boolean" />
+          <NavigationProperty Name="typesInGroup" Relationship="SDEModel.FK_invTypes_invMarketGroups" FromRole="invMarketGroup" ToRole="invType" />
+          <NavigationProperty Name="children" Relationship="SDEModel.FK_parent" FromRole="invMarketGroup" ToRole="invMarketGroup1" />
+          <NavigationProperty Name="parent" Relationship="SDEModel.FK_parent" FromRole="invMarketGroup1" ToRole="invMarketGroup" />
         </EntityType>
-        <EntityType Name="invtype">
+        <EntityType Name="invTypeMaterial">
+          <Key>
+            <PropertyRef Name="typeID" />
+            <PropertyRef Name="materialTypeID" />
+          </Key>
+          <Property Name="typeID" Type="Int32" Nullable="false" />
+          <Property Name="materialTypeID" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="materialType" Relationship="SDEModel.FK_invTypeMaterials_invTypes_material" FromRole="invTypeMaterial" ToRole="invType" />
+          <NavigationProperty Name="invType" Relationship="SDEModel.FK_invTypeMaterials_invTypes_type" FromRole="invTypeMaterial" ToRole="invType" />
+        </EntityType>
+        <EntityType Name="invType">
           <Key>
             <PropertyRef Name="typeID" />
           </Key>
           <Property Name="typeID" Type="Int32" Nullable="false" />
           <Property Name="groupID" Type="Int32" />
-          <Property Name="typeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="typeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="typeName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="mass" Type="Double" />
           <Property Name="volume" Type="Double" />
+          <Property Name="packagedVolume" Type="Double" />
           <Property Name="capacity" Type="Double" />
           <Property Name="portionSize" Type="Int32" />
-          <Property Name="raceID" Type="Int32" />
-          <Property Name="basePrice" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="published" Type="Byte" />
+          <Property Name="factionID" Type="Int32" />
+          <Property Name="raceID" Type="Byte" />
+          <Property Name="basePrice" Type="Double" />
+          <Property Name="published" Type="Boolean" />
           <Property Name="marketGroupID" Type="Int32" />
+          <Property Name="graphicID" Type="Int32" />
+          <Property Name="radius" Type="Double" />
           <Property Name="iconID" Type="Int32" />
           <Property Name="soundID" Type="Int32" />
-          <Property Name="graphicID" Type="Int32" />
-          <NavigationProperty Name="blueprint_industryactivities" Relationship="SDEModel.FK_industryactivity_invtypes" FromRole="invtypes" ToRole="industryactivity" />
-          <NavigationProperty Name="blueprint_industryactivitymaterials" Relationship="Self.FK_industryactivitymaterials_invtypes" FromRole="invtypes" ToRole="industryactivitymaterials" />
-          <NavigationProperty Name="materials_industryactivitymaterials" Relationship="Self.FK_industryactivityproducts_MaterialTypeID_invtypes" FromRole="invtypes" ToRole="industryactivitymaterials" />
-          <NavigationProperty Name="blueprint_industryactivityprobabilities" Relationship="Self.FK_industryactivityprobabilities_invtypes" FromRole="invtypes" ToRole="industryactivityprobabilities" />
-          <NavigationProperty Name="blueprint_industryactivityproducts" Relationship="Self.FK_industryactivityproducts_invtypes" FromRole="invtypes" ToRole="industryactivityproducts" />
-          <NavigationProperty Name="product_industryactivityproducts" Relationship="Self.FK_industryactivityproducts_ProductTypeID_invtypes" FromRole="invtypes" ToRole="industryactivityproducts" />
-          <NavigationProperty Name="invmarketgroup" Relationship="Self.FK_invtypes_invmarketgroups" FromRole="invtypes" ToRole="invmarketgroups" />
-          <NavigationProperty Name="ore" Relationship="SDEModel.FK_ore_invtypes" FromRole="invtype" ToRole="ore" />
+          <Property Name="sofFactionName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sofMaterialSetID" Type="Int32" />
+          <NavigationProperty Name="blueprintActivities" Relationship="SDEModel.FK_industryactivity_invtypes" FromRole="invType" ToRole="industryActivity" />
+          <NavigationProperty Name="madeWith" Relationship="SDEModel.FK_industryActivityProducts_MaterialTypeID_invTypes" FromRole="invType" ToRole="industryActivityMaterial" />
+          <NavigationProperty Name="madeBy" Relationship="SDEModel.FK_industryactivityproducts_ProductTypeID_invtypes" FromRole="invType" ToRole="industryActivityProduct" />
+          <NavigationProperty Name="industryBlueprint" Relationship="SDEModel.FK_industryBlueprints_invtypes" FromRole="invType" ToRole="industryBlueprint" />
+          <NavigationProperty Name="ore" Relationship="SDEModel.FK_ore_invtypes" FromRole="invType" ToRole="ore" />
+          <NavigationProperty Name="skill" Relationship="SDEModel.FK_skills_typeId_invtypes" FromRole="invType" ToRole="skill" />
+          <NavigationProperty Name="invMarketGroup" Relationship="SDEModel.FK_invTypes_invMarketGroups" FromRole="invType" ToRole="invMarketGroup" />
+          <NavigationProperty Name="hasMaterial" Relationship="SDEModel.FK_invTypeMaterials_invTypes_material" FromRole="invType" ToRole="invTypeMaterial" />
+          <NavigationProperty Name="invTypeMaterials" Relationship="SDEModel.FK_invTypeMaterials_invTypes_type" FromRole="invType" ToRole="invTypeMaterial" />
+          <NavigationProperty Name="dgmTypeAttributes" Relationship="SDEModel.FK_dgmTypeAttributes_invTypes" FromRole="invType" ToRole="dgmTypeAttribute" />
+          <NavigationProperty Name="dgmTypeEffects" Relationship="SDEModel.FK_dgmTypeEffects_invTypes1" FromRole="invType" ToRole="dgmTypeEffect" />
+          <NavigationProperty Name="invGroup" Relationship="SDEModel.FK_invTypes_invGroups" FromRole="invType" ToRole="invGroup" />
         </EntityType>
-        <EntityType Name="industryblueprint">
+        <EntityType Name="mapConstellationJump">
           <Key>
-            <PropertyRef Name="typeID" />
+            <PropertyRef Name="fromConstellationID" />
+            <PropertyRef Name="toConstellationID" />
           </Key>
-          <Property Name="typeID" Type="Int32" Nullable="false" />
-          <Property Name="maxProductionLimit" Type="Int32" />
+          <Property Name="fromRegionID" Type="Int32" />
+          <Property Name="fromConstellationID" Type="Int32" Nullable="false" />
+          <Property Name="toConstellationID" Type="Int32" Nullable="false" />
+          <Property Name="toRegionID" Type="Int32" />
+          <NavigationProperty Name="fromConstellation" Relationship="SDEModel.FK_mapconstellationjumps_mapconstellations_fromConstellation" FromRole="mapConstellationJump" ToRole="mapConstellation" />
+          <NavigationProperty Name="toConstellation" Relationship="SDEModel.FK_mapconstellationjumps_mapconstellations_toConstellation" FromRole="mapConstellationJump" ToRole="mapConstellation" />
+          <NavigationProperty Name="fromRegion" Relationship="SDEModel.FK_mapconstellationjumps_mapregions_fromRegion" FromRole="mapConstellationJump" ToRole="mapRegion" />
+          <NavigationProperty Name="toRegion" Relationship="SDEModel.FK_mapconstellationjumps_mapregions_toRegion" FromRole="mapConstellationJump" ToRole="mapRegion" />
         </EntityType>
-        <Association Name="FK_industryactivity_invtypes">
-          <End Role="invtypes" Type="Self.invtype" Multiplicity="1" />
-          <End Role="industryactivity" Type="Self.industryactivity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="invtypes">
-              <PropertyRef Name="typeID" />
-            </Principal>
-            <Dependent Role="industryactivity">
-              <PropertyRef Name="typeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_industryactivitymaterials_industryactivity">
-          <End Role="industryactivity" Type="Self.industryactivity" Multiplicity="1" />
-          <End Role="industryactivitymaterials" Type="Self.industryactivitymaterial" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="industryactivity">
-              <PropertyRef Name="activityID" />
-              <PropertyRef Name="typeID" />
-            </Principal>
-            <Dependent Role="industryactivitymaterials">
-              <PropertyRef Name="activityID" />
-              <PropertyRef Name="typeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_industryactivityprobabilities_industryactivity">
-          <End Role="industryactivity" Type="Self.industryactivity" Multiplicity="1" />
-          <End Role="industryactivityprobabilities" Type="Self.industryactivityprobability" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="industryactivity">
-              <PropertyRef Name="activityID" />
-              <PropertyRef Name="typeID" />
-            </Principal>
-            <Dependent Role="industryactivityprobabilities">
-              <PropertyRef Name="activityID" />
-              <PropertyRef Name="typeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_industryactivityproducts_industryactivity">
-          <End Role="industryactivity" Type="Self.industryactivity" Multiplicity="1" />
-          <End Role="industryactivityproducts" Type="Self.industryactivityproduct" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="industryactivity">
-              <PropertyRef Name="activityID" />
-              <PropertyRef Name="typeID" />
-            </Principal>
-            <Dependent Role="industryactivityproducts">
-              <PropertyRef Name="activityID" />
-              <PropertyRef Name="typeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_industryactivitymaterials_invtypes">
-          <End Role="invtypes" Type="Self.invtype" Multiplicity="1" />
-          <End Role="industryactivitymaterials" Type="Self.industryactivitymaterial" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="invtypes">
-              <PropertyRef Name="typeID" />
-            </Principal>
-            <Dependent Role="industryactivitymaterials">
-              <PropertyRef Name="typeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_industryactivityproducts_MaterialTypeID_invtypes">
-          <End Role="invtypes" Type="Self.invtype" Multiplicity="1" />
-          <End Role="industryactivitymaterials" Type="Self.industryactivitymaterial" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="invtypes">
-              <PropertyRef Name="typeID" />
-            </Principal>
-            <Dependent Role="industryactivitymaterials">
-              <PropertyRef Name="materialTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_industryactivityprobabilities_invtypes">
-          <End Role="invtypes" Type="Self.invtype" Multiplicity="1" />
-          <End Role="industryactivityprobabilities" Type="Self.industryactivityprobability" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="invtypes">
-              <PropertyRef Name="typeID" />
-            </Principal>
-            <Dependent Role="industryactivityprobabilities">
-              <PropertyRef Name="typeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_industryactivityproducts_invtypes">
-          <End Role="invtypes" Type="Self.invtype" Multiplicity="1" />
-          <End Role="industryactivityproducts" Type="Self.industryactivityproduct" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="invtypes">
-              <PropertyRef Name="typeID" />
-            </Principal>
-            <Dependent Role="industryactivityproducts">
-              <PropertyRef Name="typeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_industryactivityproducts_ProductTypeID_invtypes">
-          <End Role="invtypes" Type="Self.invtype" Multiplicity="1" />
-          <End Role="industryactivityproducts" Type="Self.industryactivityproduct" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="invtypes">
-              <PropertyRef Name="typeID" />
-            </Principal>
-            <Dependent Role="industryactivityproducts">
-              <PropertyRef Name="productTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_invtypes_invmarketgroups">
-          <End Role="invmarketgroups" Type="Self.invmarketgroup" Multiplicity="0..1" />
-          <End Role="invtypes" Type="Self.invtype" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="invmarketgroups">
-              <PropertyRef Name="marketGroupID" />
-            </Principal>
-            <Dependent Role="invtypes">
-              <PropertyRef Name="marketGroupID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="SDEEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="industryactivities" EntityType="Self.industryactivity" />
-          <EntitySet Name="industryactivitymaterials" EntityType="Self.industryactivitymaterial" />
-          <EntitySet Name="industryactivityprobabilities" EntityType="Self.industryactivityprobability" />
-          <EntitySet Name="industryactivityproducts" EntityType="Self.industryactivityproduct" />
-          <EntitySet Name="invmarketgroups" EntityType="Self.invmarketgroup" />
-          <EntitySet Name="invtypes" EntityType="Self.invtype" />
-          <EntitySet Name="industryblueprints" EntityType="Self.industryblueprint" />
-          <AssociationSet Name="FK_industryactivity_invtypes" Association="Self.FK_industryactivity_invtypes">
-            <End Role="invtypes" EntitySet="invtypes" />
-            <End Role="industryactivity" EntitySet="industryactivities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_industryactivitymaterials_industryactivity" Association="Self.FK_industryactivitymaterials_industryactivity">
-            <End Role="industryactivity" EntitySet="industryactivities" />
-            <End Role="industryactivitymaterials" EntitySet="industryactivitymaterials" />
-          </AssociationSet>
-          <AssociationSet Name="FK_industryactivityprobabilities_industryactivity" Association="Self.FK_industryactivityprobabilities_industryactivity">
-            <End Role="industryactivity" EntitySet="industryactivities" />
-            <End Role="industryactivityprobabilities" EntitySet="industryactivityprobabilities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_industryactivityproducts_industryactivity" Association="Self.FK_industryactivityproducts_industryactivity">
-            <End Role="industryactivity" EntitySet="industryactivities" />
-            <End Role="industryactivityproducts" EntitySet="industryactivityproducts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_industryactivitymaterials_invtypes" Association="Self.FK_industryactivitymaterials_invtypes">
-            <End Role="invtypes" EntitySet="invtypes" />
-            <End Role="industryactivitymaterials" EntitySet="industryactivitymaterials" />
-          </AssociationSet>
-          <AssociationSet Name="FK_industryactivityproducts_MaterialTypeID_invtypes" Association="Self.FK_industryactivityproducts_MaterialTypeID_invtypes">
-            <End Role="invtypes" EntitySet="invtypes" />
-            <End Role="industryactivitymaterials" EntitySet="industryactivitymaterials" />
-          </AssociationSet>
-          <AssociationSet Name="FK_industryactivityprobabilities_invtypes" Association="Self.FK_industryactivityprobabilities_invtypes">
-            <End Role="invtypes" EntitySet="invtypes" />
-            <End Role="industryactivityprobabilities" EntitySet="industryactivityprobabilities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_industryactivityproducts_invtypes" Association="Self.FK_industryactivityproducts_invtypes">
-            <End Role="invtypes" EntitySet="invtypes" />
-            <End Role="industryactivityproducts" EntitySet="industryactivityproducts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_industryactivityproducts_ProductTypeID_invtypes" Association="Self.FK_industryactivityproducts_ProductTypeID_invtypes">
-            <End Role="invtypes" EntitySet="invtypes" />
-            <End Role="industryactivityproducts" EntitySet="industryactivityproducts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_invtypes_invmarketgroups" Association="Self.FK_invtypes_invmarketgroups">
-            <End Role="invmarketgroups" EntitySet="invmarketgroups" />
-            <End Role="invtypes" EntitySet="invtypes" />
-          </AssociationSet>
-          <FunctionImport Name="GetBlueprint" IsComposable="true" EntitySet="industryactivities" ReturnType="Collection(SDEModel.industryactivity)">
-            <Parameter Name="productTypeID" Mode="In" Type="Int32" />
-            <Parameter Name="activityID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetBlueprintMaterials" IsComposable="true" EntitySet="industryactivitymaterials" ReturnType="Collection(SDEModel.industryactivitymaterial)">
-            <Parameter Name="blueprintTypeID" Mode="In" Type="Int32" />
-            <Parameter Name="activityID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetMats" IsComposable="true" EntitySet="industryactivitymaterials" ReturnType="Collection(SDEModel.industryactivitymaterial)">
-            <Parameter Name="productTypeID" Mode="In" Type="Int32" />
-            <Parameter Name="activityID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetTypeFromID" IsComposable="true" EntitySet="invtypes" ReturnType="Collection(SDEModel.invtype)">
-          <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetTypeFromName" IsComposable="true" EntitySet="invtypes" ReturnType="Collection(SDEModel.invtype)">
-          <Parameter Name="name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetTypesLikeName" IsComposable="true" EntitySet="invtypes" ReturnType="Collection(SDEModel.invtype)">
-          <Parameter Name="name" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="ores" EntityType="SDEModel.ore" />
-          <AssociationSet Name="FK_ore_invtypes" Association="SDEModel.FK_ore_invtypes">
-            <End Role="invtype" EntitySet="invtypes" />
-            <End Role="ore" EntitySet="ores" />
-          </AssociationSet>
-          <FunctionImport Name="GetOreFromID" IsComposable="true" EntitySet="ores" ReturnType="Collection(SDEModel.ore)">
-            <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
-        </EntityContainer>
-        <ComplexType Name="GetTypesLikeName_Result">
-          <Property Type="Int32" Name="typeID" Nullable="false" />
-          <Property Type="Int32" Name="groupID" Nullable="true" />
-          <Property Type="String" Name="typeName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="typeDescription" Nullable="true" MaxLength="Max" />
-          <Property Type="Double" Name="mass" Nullable="true" />
-          <Property Type="Double" Name="volume" Nullable="true" />
-          <Property Type="Double" Name="capacity" Nullable="true" />
-          <Property Type="Int32" Name="portionSize" Nullable="true" />
-          <Property Type="Int32" Name="raceID" Nullable="true" />
-          <Property Type="Decimal" Name="basePrice" Nullable="true" Precision="19" Scale="4" />
-          <Property Type="Byte" Name="published" Nullable="true" />
-          <Property Type="Int32" Name="marketGroupID" Nullable="true" />
-          <Property Type="Int32" Name="iconID" Nullable="true" />
-          <Property Type="Int32" Name="soundID" Nullable="true" />
-          <Property Type="Int32" Name="graphicID" Nullable="true" />
-        </ComplexType>
+        <EntityType Name="mapConstellation">
+          <Key>
+            <PropertyRef Name="constellationID" />
+          </Key>
+          <Property Name="constellationID" Type="Int32" Nullable="false" />
+          <Property Name="constellationName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="regionID" Type="Int32" />
+          <Property Name="x" Type="Single" />
+          <Property Name="y" Type="Single" />
+          <Property Name="z" Type="Single" />
+          <Property Name="x_Min" Type="Single" />
+          <Property Name="x_Max" Type="Single" />
+          <Property Name="y_Min" Type="Single" />
+          <Property Name="y_Max" Type="Single" />
+          <Property Name="z_Min" Type="Single" />
+          <Property Name="z_Max" Type="Single" />
+          <Property Name="radius" Type="Single" />
+          <Property Name="factionID" Type="Int32" />
+          <NavigationProperty Name="jumpsFrom" Relationship="SDEModel.FK_mapconstellationjumps_mapconstellations_fromConstellation" FromRole="mapConstellation" ToRole="mapConstellationJump" />
+          <NavigationProperty Name="jumpsTo" Relationship="SDEModel.FK_mapconstellationjumps_mapconstellations_toConstellation" FromRole="mapConstellation" ToRole="mapConstellationJump" />
+          <NavigationProperty Name="mapRegion" Relationship="SDEModel.FK_mapconstellations_mapregions_region" FromRole="mapConstellation" ToRole="mapRegion" />
+          <NavigationProperty Name="systemJumpsFrom" Relationship="SDEModel.FK_mapsolarsystemjumps_mapconstellations_fromConstellation" FromRole="mapConstellation" ToRole="mapSolarSystemJump" />
+          <NavigationProperty Name="systemJumpsTo" Relationship="SDEModel.FK_mapsolarsystemjumps_mapconstellations_toConstellation" FromRole="mapConstellation" ToRole="mapSolarSystemJump" />
+          <NavigationProperty Name="mapSolarSystems" Relationship="SDEModel.FK_mapsolarsystems_mapregions_constellation" FromRole="mapConstellation" ToRole="mapSolarSystem" />
+        </EntityType>
+        <EntityType Name="mapRegion">
+          <Key>
+            <PropertyRef Name="regionID" />
+          </Key>
+          <Property Name="regionID" Type="Int32" Nullable="false" />
+          <Property Name="regionName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="x" Type="Single" />
+          <Property Name="y" Type="Single" />
+          <Property Name="z" Type="Single" />
+          <Property Name="x_Min" Type="Single" />
+          <Property Name="x_Max" Type="Single" />
+          <Property Name="y_Min" Type="Single" />
+          <Property Name="y_Max" Type="Single" />
+          <Property Name="z_Min" Type="Single" />
+          <Property Name="z_Max" Type="Single" />
+          <Property Name="factionID" Type="Int32" />
+          <Property Name="nameID" Type="Int32" />
+          <Property Name="descriptionID" Type="Int32" />
+          <NavigationProperty Name="constellationJumpsFrom" Relationship="SDEModel.FK_mapconstellationjumps_mapregions_fromRegion" FromRole="mapRegion" ToRole="mapConstellationJump" />
+          <NavigationProperty Name="constellationJumpsTo" Relationship="SDEModel.FK_mapconstellationjumps_mapregions_toRegion" FromRole="mapRegion" ToRole="mapConstellationJump" />
+          <NavigationProperty Name="mapConstellations" Relationship="SDEModel.FK_mapconstellations_mapregions_region" FromRole="mapRegion" ToRole="mapConstellation" />
+          <NavigationProperty Name="systemJumpsFrom" Relationship="SDEModel.FK_mapsolarsystemjumps_mapregions_fromRegion" FromRole="mapRegion" ToRole="mapSolarSystemJump" />
+          <NavigationProperty Name="systemJumpsTo" Relationship="SDEModel.FK_mapsolarsystemjumps_mapregions_toRegion" FromRole="mapRegion" ToRole="mapSolarSystemJump" />
+          <NavigationProperty Name="mapSolarSystems" Relationship="SDEModel.FK_mapsolarsystems_mapregions_region" FromRole="mapRegion" ToRole="mapSolarSystem" />
+          <NavigationProperty Name="jumpsFrom" Relationship="SDEModel.mapRegionJumps" FromRole="mapRegion" ToRole="mapRegion1" />
+          <NavigationProperty Name="jumpsTo" Relationship="SDEModel.mapRegionJumps" FromRole="mapRegion1" ToRole="mapRegion" />
+        </EntityType>
+        <EntityType Name="mapSolarSystemJump">
+          <Key>
+            <PropertyRef Name="fromSolarSystemID" />
+            <PropertyRef Name="toSolarSystemID" />
+          </Key>
+          <Property Name="fromRegionID" Type="Int32" />
+          <Property Name="fromConstellationID" Type="Int32" />
+          <Property Name="fromSolarSystemID" Type="Int32" Nullable="false" />
+          <Property Name="toSolarSystemID" Type="Int32" Nullable="false" />
+          <Property Name="toConstellationID" Type="Int32" />
+          <Property Name="toRegionID" Type="Int32" />
+          <NavigationProperty Name="fromConstellation" Relationship="SDEModel.FK_mapsolarsystemjumps_mapconstellations_fromConstellation" FromRole="mapSolarSystemJump" ToRole="mapConstellation" />
+          <NavigationProperty Name="toConstellation" Relationship="SDEModel.FK_mapsolarsystemjumps_mapconstellations_toConstellation" FromRole="mapSolarSystemJump" ToRole="mapConstellation" />
+          <NavigationProperty Name="fromRegion" Relationship="SDEModel.FK_mapsolarsystemjumps_mapregions_fromRegion" FromRole="mapSolarSystemJump" ToRole="mapRegion" />
+          <NavigationProperty Name="toRegion" Relationship="SDEModel.FK_mapsolarsystemjumps_mapregions_toRegion" FromRole="mapSolarSystemJump" ToRole="mapRegion" />
+          <NavigationProperty Name="fromSystem" Relationship="SDEModel.FK_mapsolarsystemjumps_mapsolarsystems_fromSolarSystem" FromRole="mapSolarSystemJump" ToRole="mapSolarSystem" />
+          <NavigationProperty Name="toSystem" Relationship="SDEModel.FK_mapsolarsystemjumps_mapsolarsystems_toSolarSystem" FromRole="mapSolarSystemJump" ToRole="mapSolarSystem" />
+        </EntityType>
+        <EntityType Name="mapSolarSystem">
+          <Key>
+            <PropertyRef Name="solarSystemID" />
+          </Key>
+          <Property Name="solarSystemID" Type="Int32" Nullable="false" />
+          <Property Name="solarSystemName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="regionID" Type="Int32" />
+          <Property Name="constellationID" Type="Int32" />
+          <Property Name="x" Type="Single" />
+          <Property Name="y" Type="Single" />
+          <Property Name="z" Type="Single" />
+          <Property Name="x_Min" Type="Single" />
+          <Property Name="x_Max" Type="Single" />
+          <Property Name="y_Min" Type="Single" />
+          <Property Name="y_Max" Type="Single" />
+          <Property Name="z_Min" Type="Single" />
+          <Property Name="z_Max" Type="Single" />
+          <Property Name="luminosity" Type="Single" />
+          <Property Name="border" Type="Boolean" />
+          <Property Name="corridor" Type="Boolean" />
+          <Property Name="fringe" Type="Boolean" />
+          <Property Name="hub" Type="Boolean" />
+          <Property Name="international" Type="Boolean" />
+          <Property Name="regional" Type="Boolean" />
+          <Property Name="security" Type="Single" />
+          <Property Name="factionID" Type="Int32" />
+          <Property Name="radius" Type="Single" />
+          <Property Name="sunTypeID" Type="Int32" />
+          <Property Name="securityClass" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="solarSystemNameID" Type="Int32" />
+          <Property Name="visualEffect" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descriptionID" Type="Int32" />
+          <NavigationProperty Name="mapConstellation" Relationship="SDEModel.FK_mapsolarsystems_mapregions_constellation" FromRole="mapSolarSystem" ToRole="mapConstellation" />
+          <NavigationProperty Name="mapRegion" Relationship="SDEModel.FK_mapsolarsystems_mapregions_region" FromRole="mapSolarSystem" ToRole="mapRegion" />
+          <NavigationProperty Name="jumpsFrom" Relationship="SDEModel.FK_mapsolarsystemjumps_mapsolarsystems_fromSolarSystem" FromRole="mapSolarSystem" ToRole="mapSolarSystemJump" />
+          <NavigationProperty Name="jumpsTo" Relationship="SDEModel.FK_mapsolarsystemjumps_mapsolarsystems_toSolarSystem" FromRole="mapSolarSystem" ToRole="mapSolarSystemJump" />
+        </EntityType>
         <EntityType Name="ore">
           <Key>
             <PropertyRef Name="typeID" />
@@ -771,13 +1657,86 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
           <Property Name="Zydrine" Type="Int32" Nullable="false" />
           <Property Name="Megacyte" Type="Int32" Nullable="false" />
           <Property Name="Morphite" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="invtype" Relationship="SDEModel.FK_ore_invtypes" FromRole="ore" ToRole="invtype" />
+          <NavigationProperty Name="invType" Relationship="SDEModel.FK_ore_invtypes" FromRole="ore" ToRole="invType" />
         </EntityType>
+        <EntityType Name="skill">
+          <Key>
+            <PropertyRef Name="typeId" />
+          </Key>
+          <Property Name="typeId" Type="Int32" Nullable="false" />
+          <Property Name="typeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="rank" Type="Int32" Nullable="false" />
+          <Property Name="primaryAttr" Type="Int32" Nullable="false" />
+          <Property Name="secondaryAttr" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="invType" Relationship="SDEModel.FK_skills_typeId_invtypes" FromRole="skill" ToRole="invType" />
+        </EntityType>
+        <Association Name="FK_industryactivity_invtypes">
+          <End Type="SDEModel.invType" Role="invType" Multiplicity="1" />
+          <End Type="SDEModel.industryActivity" Role="industryActivity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invType">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="industryActivity">
+              <PropertyRef Name="blueprintTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_industryActivityMaterials_industryActivities">
+          <End Type="SDEModel.industryActivity" Role="industryActivity" Multiplicity="1" />
+          <End Type="SDEModel.industryActivityMaterial" Role="industryActivityMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="industryActivity">
+              <PropertyRef Name="blueprintTypeID" />
+              <PropertyRef Name="activityID" />
+            </Principal>
+            <Dependent Role="industryActivityMaterial">
+              <PropertyRef Name="blueprintTypeID" />
+              <PropertyRef Name="activityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_industryActivityProducts_MaterialTypeID_invTypes">
+          <End Type="SDEModel.invType" Role="invType" Multiplicity="1" />
+          <End Type="SDEModel.industryActivityMaterial" Role="industryActivityMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invType">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="industryActivityMaterial">
+              <PropertyRef Name="materialTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_industryactivityproducts_ProductTypeID_invtypes">
+          <End Type="SDEModel.invType" Role="invType" Multiplicity="1" />
+          <End Type="SDEModel.industryActivityProduct" Role="industryActivityProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invType">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="industryActivityProduct">
+              <PropertyRef Name="productTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_industryBlueprints_invtypes">
+          <End Type="SDEModel.invType" Role="invType" Multiplicity="1" />
+          <End Type="SDEModel.industryBlueprint" Role="industryBlueprint" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="invType">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="industryBlueprint">
+              <PropertyRef Name="blueprintTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ore_invtypes">
-          <End Type="SDEModel.invtype" Role="invtype" Multiplicity="1" />
+          <End Type="SDEModel.invType" Role="invType" Multiplicity="1" />
           <End Type="SDEModel.ore" Role="ore" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="invtype">
+            <Principal Role="invType">
               <PropertyRef Name="typeID" />
             </Principal>
             <Dependent Role="ore">
@@ -785,104 +1744,685 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_skills_typeId_invtypes">
+          <End Type="SDEModel.invType" Role="invType" Multiplicity="1" />
+          <End Type="SDEModel.skill" Role="skill" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="invType">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="skill">
+              <PropertyRef Name="typeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapconstellationjumps_mapconstellations_fromConstellation">
+          <End Type="SDEModel.mapConstellation" Role="mapConstellation" Multiplicity="1" />
+          <End Type="SDEModel.mapConstellationJump" Role="mapConstellationJump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapConstellation">
+              <PropertyRef Name="constellationID" />
+            </Principal>
+            <Dependent Role="mapConstellationJump">
+              <PropertyRef Name="fromConstellationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapconstellationjumps_mapconstellations_toConstellation">
+          <End Type="SDEModel.mapConstellation" Role="mapConstellation" Multiplicity="1" />
+          <End Type="SDEModel.mapConstellationJump" Role="mapConstellationJump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapConstellation">
+              <PropertyRef Name="constellationID" />
+            </Principal>
+            <Dependent Role="mapConstellationJump">
+              <PropertyRef Name="toConstellationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapconstellationjumps_mapregions_fromRegion">
+          <End Type="SDEModel.mapRegion" Role="mapRegion" Multiplicity="0..1" />
+          <End Type="SDEModel.mapConstellationJump" Role="mapConstellationJump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapRegion">
+              <PropertyRef Name="regionID" />
+            </Principal>
+            <Dependent Role="mapConstellationJump">
+              <PropertyRef Name="fromRegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapconstellationjumps_mapregions_toRegion">
+          <End Type="SDEModel.mapRegion" Role="mapRegion" Multiplicity="0..1" />
+          <End Type="SDEModel.mapConstellationJump" Role="mapConstellationJump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapRegion">
+              <PropertyRef Name="regionID" />
+            </Principal>
+            <Dependent Role="mapConstellationJump">
+              <PropertyRef Name="toRegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapconstellations_mapregions_region">
+          <End Type="SDEModel.mapRegion" Role="mapRegion" Multiplicity="0..1" />
+          <End Type="SDEModel.mapConstellation" Role="mapConstellation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapRegion">
+              <PropertyRef Name="regionID" />
+            </Principal>
+            <Dependent Role="mapConstellation">
+              <PropertyRef Name="regionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapsolarsystemjumps_mapconstellations_fromConstellation">
+          <End Type="SDEModel.mapConstellation" Role="mapConstellation" Multiplicity="0..1" />
+          <End Type="SDEModel.mapSolarSystemJump" Role="mapSolarSystemJump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapConstellation">
+              <PropertyRef Name="constellationID" />
+            </Principal>
+            <Dependent Role="mapSolarSystemJump">
+              <PropertyRef Name="fromConstellationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapsolarsystemjumps_mapconstellations_toConstellation">
+          <End Type="SDEModel.mapConstellation" Role="mapConstellation" Multiplicity="0..1" />
+          <End Type="SDEModel.mapSolarSystemJump" Role="mapSolarSystemJump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapConstellation">
+              <PropertyRef Name="constellationID" />
+            </Principal>
+            <Dependent Role="mapSolarSystemJump">
+              <PropertyRef Name="toConstellationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapsolarsystems_mapregions_constellation">
+          <End Type="SDEModel.mapConstellation" Role="mapConstellation" Multiplicity="0..1" />
+          <End Type="SDEModel.mapSolarSystem" Role="mapSolarSystem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapConstellation">
+              <PropertyRef Name="constellationID" />
+            </Principal>
+            <Dependent Role="mapSolarSystem">
+              <PropertyRef Name="constellationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapsolarsystemjumps_mapregions_fromRegion">
+          <End Type="SDEModel.mapRegion" Role="mapRegion" Multiplicity="0..1" />
+          <End Type="SDEModel.mapSolarSystemJump" Role="mapSolarSystemJump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapRegion">
+              <PropertyRef Name="regionID" />
+            </Principal>
+            <Dependent Role="mapSolarSystemJump">
+              <PropertyRef Name="fromRegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapsolarsystemjumps_mapregions_toRegion">
+          <End Type="SDEModel.mapRegion" Role="mapRegion" Multiplicity="0..1" />
+          <End Type="SDEModel.mapSolarSystemJump" Role="mapSolarSystemJump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapRegion">
+              <PropertyRef Name="regionID" />
+            </Principal>
+            <Dependent Role="mapSolarSystemJump">
+              <PropertyRef Name="toRegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapsolarsystems_mapregions_region">
+          <End Type="SDEModel.mapRegion" Role="mapRegion" Multiplicity="0..1" />
+          <End Type="SDEModel.mapSolarSystem" Role="mapSolarSystem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapRegion">
+              <PropertyRef Name="regionID" />
+            </Principal>
+            <Dependent Role="mapSolarSystem">
+              <PropertyRef Name="regionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapsolarsystemjumps_mapsolarsystems_fromSolarSystem">
+          <End Type="SDEModel.mapSolarSystem" Role="mapSolarSystem" Multiplicity="1" />
+          <End Type="SDEModel.mapSolarSystemJump" Role="mapSolarSystemJump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapSolarSystem">
+              <PropertyRef Name="solarSystemID" />
+            </Principal>
+            <Dependent Role="mapSolarSystemJump">
+              <PropertyRef Name="fromSolarSystemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mapsolarsystemjumps_mapsolarsystems_toSolarSystem">
+          <End Type="SDEModel.mapSolarSystem" Role="mapSolarSystem" Multiplicity="1" />
+          <End Type="SDEModel.mapSolarSystemJump" Role="mapSolarSystemJump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mapSolarSystem">
+              <PropertyRef Name="solarSystemID" />
+            </Principal>
+            <Dependent Role="mapSolarSystemJump">
+              <PropertyRef Name="toSolarSystemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="mapRegionJumps">
+          <End Type="SDEModel.mapRegion" Role="mapRegion" Multiplicity="*" />
+          <End Type="SDEModel.mapRegion" Role="mapRegion1" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_invTypes_invMarketGroups">
+          <End Type="SDEModel.invMarketGroup" Role="invMarketGroup" Multiplicity="0..1" />
+          <End Type="SDEModel.invType" Role="invType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invMarketGroup">
+              <PropertyRef Name="marketGroupID" />
+            </Principal>
+            <Dependent Role="invType">
+              <PropertyRef Name="marketGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invTypeMaterials_invTypes_material">
+          <End Type="SDEModel.invType" Role="invType" Multiplicity="1" />
+          <End Type="SDEModel.invTypeMaterial" Role="invTypeMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invType">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="invTypeMaterial">
+              <PropertyRef Name="materialTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invTypeMaterials_invTypes_type">
+          <End Type="SDEModel.invType" Role="invType" Multiplicity="1" />
+          <End Type="SDEModel.invTypeMaterial" Role="invTypeMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invType">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="invTypeMaterial">
+              <PropertyRef Name="typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_industryactivityproducts_industryActivities">
+          <End Type="SDEModel.industryActivity" Role="industryActivity" Multiplicity="1" />
+          <End Type="SDEModel.industryActivityProduct" Role="industryActivityProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="industryActivity">
+              <PropertyRef Name="blueprintTypeID" />
+              <PropertyRef Name="activityID" />
+            </Principal>
+            <Dependent Role="industryActivityProduct">
+              <PropertyRef Name="blueprintTypeID" />
+              <PropertyRef Name="activityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_parent">
+          <End Type="SDEModel.invMarketGroup" Role="invMarketGroup" Multiplicity="0..1" />
+          <End Type="SDEModel.invMarketGroup" Role="invMarketGroup1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invMarketGroup">
+              <PropertyRef Name="marketGroupID" />
+            </Principal>
+            <Dependent Role="invMarketGroup1">
+              <PropertyRef Name="parentGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="dgmAttributeType">
+          <Key>
+            <PropertyRef Name="attributeID" />
+          </Key>
+          <Property Name="attributeID" Type="Int16" Nullable="false" />
+          <Property Name="attributeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="iconID" Type="Int32" />
+          <Property Name="defaultValue" Type="Double" />
+          <Property Name="published" Type="Boolean" />
+          <Property Name="displayName" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="unitID" Type="Byte" />
+          <Property Name="stackable" Type="Boolean" />
+          <Property Name="highIsGood" Type="Boolean" />
+          <Property Name="categoryID" Type="Byte" />
+          <NavigationProperty Name="dgmTypeAttributes" Relationship="SDEModel.FK_dgmTypeAttributes_dgmAttributeTypes" FromRole="dgmAttributeType" ToRole="dgmTypeAttribute" />
+          <NavigationProperty Name="dgmEffectsModifierInfoes" Relationship="SDEModel.FK_dgmEffectModifierInfo_dgmAttributeTypes_modifiedAttribute" FromRole="dgmAttributeType" ToRole="dgmEffectsModifierInfo" />
+          <NavigationProperty Name="dgmEffectsModifierInfoes1" Relationship="SDEModel.FK_dgmEffectModifierInfo_dgmAttributeTypes_modifyingAttribute" FromRole="dgmAttributeType" ToRole="dgmEffectsModifierInfo" />
+        </EntityType>
+        <EntityType Name="dgmTypeAttribute">
+          <Key>
+            <PropertyRef Name="typeID" />
+            <PropertyRef Name="attributeID" />
+          </Key>
+          <Property Name="typeID" Type="Int32" Nullable="false" />
+          <Property Name="attributeID" Type="Int16" Nullable="false" />
+          <Property Name="valueInt" Type="Int32" />
+          <Property Name="valueFloat" Type="Double" />
+          <NavigationProperty Name="dgmAttributeType" Relationship="SDEModel.FK_dgmTypeAttributes_dgmAttributeTypes" FromRole="dgmTypeAttribute" ToRole="dgmAttributeType" />
+          <NavigationProperty Name="invType" Relationship="SDEModel.FK_dgmTypeAttributes_invTypes" FromRole="dgmTypeAttribute" ToRole="invType" />
+        </EntityType>
+        <Association Name="FK_dgmTypeAttributes_dgmAttributeTypes">
+          <End Type="SDEModel.dgmAttributeType" Role="dgmAttributeType" Multiplicity="1" />
+          <End Type="SDEModel.dgmTypeAttribute" Role="dgmTypeAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dgmAttributeType">
+              <PropertyRef Name="attributeID" />
+            </Principal>
+            <Dependent Role="dgmTypeAttribute">
+              <PropertyRef Name="attributeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dgmTypeAttributes_invTypes">
+          <End Type="SDEModel.invType" Role="invType" Multiplicity="1" />
+          <End Type="SDEModel.dgmTypeAttribute" Role="dgmTypeAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invType">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="dgmTypeAttribute">
+              <PropertyRef Name="typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetAttribute_Result">
+          <Property Type="Int32" Name="typeID" Nullable="false" />
+          <Property Type="Double" Name="valueFloat" Nullable="true" />
+          <Property Type="Int32" Name="valueInt" Nullable="true" />
+          <Property Type="Int16" Name="attributeID" Nullable="false" />
+          <Property Type="String" Name="attributeName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="1000" />
+          <Property Type="Int32" Name="iconID" Nullable="true" />
+          <Property Type="Double" Name="defaultValue" Nullable="true" />
+          <Property Type="Boolean" Name="published" Nullable="true" />
+          <Property Type="String" Name="displayName" Nullable="true" MaxLength="1000" />
+          <Property Type="Byte" Name="unitID" Nullable="true" />
+          <Property Type="Boolean" Name="stackable" Nullable="true" />
+          <Property Type="Boolean" Name="highIsGood" Nullable="true" />
+          <Property Type="Byte" Name="categoryID" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="dgmEffect">
+          <Key>
+            <PropertyRef Name="effectID" />
+          </Key>
+          <Property Name="effectID" Type="Int16" Nullable="false" />
+          <Property Name="effectName" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="effectCategory" Type="Int16" />
+          <Property Name="preExpression" Type="Int32" />
+          <Property Name="postExpression" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="guid" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="iconID" Type="Int32" />
+          <Property Name="isOffensive" Type="Boolean" />
+          <Property Name="isAssistance" Type="Boolean" />
+          <Property Name="durationAttributeID" Type="Int16" />
+          <Property Name="trackingSpeedAttributeID" Type="Int16" />
+          <Property Name="dischargeAttributeID" Type="Int16" />
+          <Property Name="rangeAttributeID" Type="Int16" />
+          <Property Name="falloffAttributeID" Type="Int16" />
+          <Property Name="disallowAutoRepeat" Type="Boolean" />
+          <Property Name="published" Type="Boolean" />
+          <Property Name="displayName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="isWarpSafe" Type="Boolean" />
+          <Property Name="rangeChance" Type="Boolean" />
+          <Property Name="electronicChance" Type="Boolean" />
+          <Property Name="propulsionChance" Type="Boolean" />
+          <Property Name="distribution" Type="Byte" />
+          <Property Name="sfxName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="npcUsageChanceAttributeID" Type="Int16" />
+          <Property Name="npcActivationChanceAttributeID" Type="Int16" />
+          <Property Name="fittingUsageChanceAttributeID" Type="Int16" />
+          <NavigationProperty Name="dgmTypeEffects" Relationship="SDEModel.FK_dgmTypeEffects_dgmEffects" FromRole="dgmEffect" ToRole="dgmTypeEffect" />
+          <NavigationProperty Name="dgmEffectsModifierInfoes" Relationship="SDEModel.FK_dgmEffectModifierInfo_dgmEffects" FromRole="dgmEffect" ToRole="dgmEffectsModifierInfo" />
+        </EntityType>
+        <EntityType Name="dgmTypeEffect">
+          <Key>
+            <PropertyRef Name="typeID" />
+            <PropertyRef Name="effectID" />
+          </Key>
+          <Property Name="typeID" Type="Int32" Nullable="false" />
+          <Property Name="effectID" Type="Int16" Nullable="false" />
+          <Property Name="isDefault" Type="Boolean" />
+          <NavigationProperty Name="dgmEffect" Relationship="SDEModel.FK_dgmTypeEffects_dgmEffects" FromRole="dgmTypeEffect" ToRole="dgmEffect" />
+          <NavigationProperty Name="invType" Relationship="SDEModel.FK_dgmTypeEffects_invTypes1" FromRole="dgmTypeEffect" ToRole="invType" />
+        </EntityType>
+        <Association Name="FK_dgmTypeEffects_dgmEffects">
+          <End Type="SDEModel.dgmEffect" Role="dgmEffect" Multiplicity="1" />
+          <End Type="SDEModel.dgmTypeEffect" Role="dgmTypeEffect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dgmEffect">
+              <PropertyRef Name="effectID" />
+            </Principal>
+            <Dependent Role="dgmTypeEffect">
+              <PropertyRef Name="effectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dgmTypeEffects_invTypes">
+          <End Type="SDEModel.dgmEffect" Role="dgmEffect" Multiplicity="1" />
+          <End Type="SDEModel.dgmTypeEffect" Role="dgmTypeEffect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dgmEffect">
+              <PropertyRef Name="effectID" />
+            </Principal>
+            <Dependent Role="dgmTypeEffect">
+              <PropertyRef Name="effectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dgmTypeEffects_invTypes1">
+          <End Type="SDEModel.invType" Role="invType" Multiplicity="1" />
+          <End Type="SDEModel.dgmTypeEffect" Role="dgmTypeEffect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invType">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="dgmTypeEffect">
+              <PropertyRef Name="typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="dgmEffectsModifierInfo">
+          <Key>
+            <PropertyRef Name="effectID" />
+            <PropertyRef Name="func" />
+            <PropertyRef Name="modifiedAttributeID" />
+            <PropertyRef Name="modifyingAttributeID" />
+            <PropertyRef Name="operator" />
+          </Key>
+          <Property Name="effectID" Type="Int16" Nullable="false" />
+          <Property Name="func" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="groupID" Type="Int32" />
+          <Property Name="modifiedAttributeID" Type="Int16" Nullable="false" />
+          <Property Name="modifyingAttributeID" Type="Int16" Nullable="false" />
+          <Property Name="operator" Type="Int32" Nullable="false" />
+          <Property Name="skillTypeID" Type="Int32" />
+          <Property Name="secondEffectID" Type="Int32" />
+          <NavigationProperty Name="modifiedAttribute" Relationship="SDEModel.FK_dgmEffectModifierInfo_dgmAttributeTypes_modifiedAttribute" FromRole="dgmEffectsModifierInfo" ToRole="dgmAttributeType" />
+          <NavigationProperty Name="modifyingAttribute" Relationship="SDEModel.FK_dgmEffectModifierInfo_dgmAttributeTypes_modifyingAttribute" FromRole="dgmEffectsModifierInfo" ToRole="dgmAttributeType" />
+          <NavigationProperty Name="dgmEffect" Relationship="SDEModel.FK_dgmEffectModifierInfo_dgmEffects" FromRole="dgmEffectsModifierInfo" ToRole="dgmEffect" />
+        </EntityType>
+        <Association Name="FK_dgmEffectModifierInfo_dgmAttributeTypes_modifiedAttribute">
+          <End Type="SDEModel.dgmAttributeType" Role="dgmAttributeType" Multiplicity="1" />
+          <End Type="SDEModel.dgmEffectsModifierInfo" Role="dgmEffectsModifierInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dgmAttributeType">
+              <PropertyRef Name="attributeID" />
+            </Principal>
+            <Dependent Role="dgmEffectsModifierInfo">
+              <PropertyRef Name="modifiedAttributeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dgmEffectModifierInfo_dgmAttributeTypes_modifyingAttribute">
+          <End Type="SDEModel.dgmAttributeType" Role="dgmAttributeType" Multiplicity="1" />
+          <End Type="SDEModel.dgmEffectsModifierInfo" Role="dgmEffectsModifierInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dgmAttributeType">
+              <PropertyRef Name="attributeID" />
+            </Principal>
+            <Dependent Role="dgmEffectsModifierInfo">
+              <PropertyRef Name="modifyingAttributeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dgmEffectModifierInfo_dgmEffects">
+          <End Type="SDEModel.dgmEffect" Role="dgmEffect" Multiplicity="1" />
+          <End Type="SDEModel.dgmEffectsModifierInfo" Role="dgmEffectsModifierInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dgmEffect">
+              <PropertyRef Name="effectID" />
+            </Principal>
+            <Dependent Role="dgmEffectsModifierInfo">
+              <PropertyRef Name="effectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="invCategory">
+          <Key>
+            <PropertyRef Name="categoryID" />
+          </Key>
+          <Property Name="categoryID" Type="Int32" Nullable="false" />
+          <Property Name="categoryName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="published" Type="Boolean" />
+          <Property Name="iconID" Type="Int32" />
+          <NavigationProperty Name="invGroups" Relationship="SDEModel.FK_invGroups_invCategories" FromRole="invCategory" ToRole="invGroup" />
+        </EntityType>
+        <EntityType Name="invGroup">
+          <Key>
+            <PropertyRef Name="groupID" />
+          </Key>
+          <Property Name="groupID" Type="Int32" Nullable="false" />
+          <Property Name="categoryID" Type="Int32" />
+          <Property Name="groupName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="published" Type="Boolean" />
+          <Property Name="anchorable" Type="Boolean" />
+          <Property Name="anchored" Type="Boolean" />
+          <Property Name="fittableNonSingleton" Type="Boolean" />
+          <Property Name="useBasePrice" Type="Boolean" />
+          <Property Name="iconID" Type="Int32" />
+          <NavigationProperty Name="invCategory" Relationship="SDEModel.FK_invGroups_invCategories" FromRole="invGroup" ToRole="invCategory" />
+          <NavigationProperty Name="invTypes" Relationship="SDEModel.FK_invTypes_invGroups" FromRole="invGroup" ToRole="invType" />
+        </EntityType>
+        <Association Name="FK_invGroups_invCategories">
+          <End Type="SDEModel.invCategory" Role="invCategory" Multiplicity="0..1" />
+          <End Type="SDEModel.invGroup" Role="invGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invCategory">
+              <PropertyRef Name="categoryID" />
+            </Principal>
+            <Dependent Role="invGroup">
+              <PropertyRef Name="categoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invTypes_invGroups">
+          <End Type="SDEModel.invGroup" Role="invGroup" Multiplicity="0..1" />
+          <End Type="SDEModel.invType" Role="invType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="invGroup">
+              <PropertyRef Name="groupID" />
+            </Principal>
+            <Dependent Role="invType">
+              <PropertyRef Name="groupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SDEModelStoreContainer" CdmEntityContainer="SDEEntities">
-          <EntitySetMapping Name="industryactivities">
-            <EntityTypeMapping TypeName="SDEModel.industryactivity">
-              <MappingFragment StoreEntitySet="industryactivity">
-                <ScalarProperty Name="typeID" ColumnName="typeID" />
-                <ScalarProperty Name="activityID" ColumnName="activityID" />
+          <EntitySetMapping Name="industryActivities">
+            <EntityTypeMapping TypeName="SDEModel.industryActivity">
+              <MappingFragment StoreEntitySet="industryActivities">
                 <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="activityID" ColumnName="activityID" />
+                <ScalarProperty Name="blueprintTypeID" ColumnName="blueprintTypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="industryactivitymaterials">
-            <EntityTypeMapping TypeName="SDEModel.industryactivitymaterial">
-              <MappingFragment StoreEntitySet="industryactivitymaterials">
-                <ScalarProperty Name="typeID" ColumnName="typeID" />
-                <ScalarProperty Name="activityID" ColumnName="activityID" />
+          <EntitySetMapping Name="industryActivityMaterials">
+            <EntityTypeMapping TypeName="SDEModel.industryActivityMaterial">
+              <MappingFragment StoreEntitySet="industryActivityMaterials">
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
                 <ScalarProperty Name="materialTypeID" ColumnName="materialTypeID" />
-                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="activityID" ColumnName="activityID" />
+                <ScalarProperty Name="blueprintTypeID" ColumnName="blueprintTypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="industryactivityprobabilities">
-            <EntityTypeMapping TypeName="SDEModel.industryactivityprobability">
-              <MappingFragment StoreEntitySet="industryactivityprobabilities">
-                <ScalarProperty Name="typeID" ColumnName="typeID" />
-                <ScalarProperty Name="activityID" ColumnName="activityID" />
-                <ScalarProperty Name="productTypeID" ColumnName="productTypeID" />
+          <EntitySetMapping Name="industryActivityProducts">
+            <EntityTypeMapping TypeName="SDEModel.industryActivityProduct">
+              <MappingFragment StoreEntitySet="industryActivityProducts">
                 <ScalarProperty Name="probability" ColumnName="probability" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="industryactivityproducts">
-            <EntityTypeMapping TypeName="SDEModel.industryactivityproduct">
-              <MappingFragment StoreEntitySet="industryactivityproducts">
-                <ScalarProperty Name="typeID" ColumnName="typeID" />
-                <ScalarProperty Name="activityID" ColumnName="activityID" />
-                <ScalarProperty Name="productTypeID" ColumnName="productTypeID" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="productTypeID" ColumnName="productTypeID" />
+                <ScalarProperty Name="activityID" ColumnName="activityID" />
+                <ScalarProperty Name="blueprintTypeID" ColumnName="blueprintTypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="invmarketgroups">
-            <EntityTypeMapping TypeName="SDEModel.invmarketgroup">
-              <MappingFragment StoreEntitySet="invmarketgroups">
-                <ScalarProperty Name="marketGroupID" ColumnName="marketGroupID" />
-                <ScalarProperty Name="parentGroupID" ColumnName="parentGroupID" />
-                <ScalarProperty Name="marketGroupName" ColumnName="marketGroupName" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="iconID" ColumnName="iconID" />
-                <ScalarProperty Name="hasTypes" ColumnName="hasTypes" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="invtypes">
-            <EntityTypeMapping TypeName="SDEModel.invtype">
-              <MappingFragment StoreEntitySet="invtypes">
-                <ScalarProperty Name="typeID" ColumnName="typeID" />
-                <ScalarProperty Name="groupID" ColumnName="groupID" />
-                <ScalarProperty Name="typeName" ColumnName="typeName" />
-                <ScalarProperty Name="typeDescription" ColumnName="typeDescription" />
-                <ScalarProperty Name="mass" ColumnName="mass" />
-                <ScalarProperty Name="volume" ColumnName="volume" />
-                <ScalarProperty Name="capacity" ColumnName="capacity" />
-                <ScalarProperty Name="portionSize" ColumnName="portionSize" />
-                <ScalarProperty Name="raceID" ColumnName="raceID" />
-                <ScalarProperty Name="basePrice" ColumnName="basePrice" />
-                <ScalarProperty Name="published" ColumnName="published" />
-                <ScalarProperty Name="marketGroupID" ColumnName="marketGroupID" />
-                <ScalarProperty Name="iconID" ColumnName="iconID" />
-                <ScalarProperty Name="soundID" ColumnName="soundID" />
-                <ScalarProperty Name="graphicID" ColumnName="graphicID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="industryblueprints">
-            <EntityTypeMapping TypeName="SDEModel.industryblueprint">
-              <MappingFragment StoreEntitySet="industryblueprints">
-                <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <EntitySetMapping Name="industryBlueprints">
+            <EntityTypeMapping TypeName="SDEModel.industryBlueprint">
+              <MappingFragment StoreEntitySet="industryBlueprints">
                 <ScalarProperty Name="maxProductionLimit" ColumnName="maxProductionLimit" />
+                <ScalarProperty Name="blueprintTypeID" ColumnName="blueprintTypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionName="SDEModel.Store.GetBlueprint" FunctionImportName="GetBlueprint">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionName="SDEModel.Store.GetBlueprintMaterials" FunctionImportName="GetBlueprintMaterials">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionName="SDEModel.Store.GetMats" FunctionImportName="GetMats">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionName="SDEModel.Store.GetTypeFromID" FunctionImportName="GetTypeFromID">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionName="SDEModel.Store.GetTypeFromName" FunctionImportName="GetTypeFromName">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetTypesLikeName" FunctionName="SDEModel.Store.GetTypesLikeName">
-          </FunctionImportMapping>
+          <EntitySetMapping Name="invMarketGroups">
+            <EntityTypeMapping TypeName="SDEModel.invMarketGroup">
+              <MappingFragment StoreEntitySet="invMarketGroups">
+                <ScalarProperty Name="hasTypes" ColumnName="hasTypes" />
+                <ScalarProperty Name="iconID" ColumnName="iconID" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="marketGroupName" ColumnName="marketGroupName" />
+                <ScalarProperty Name="parentGroupID" ColumnName="parentGroupID" />
+                <ScalarProperty Name="marketGroupID" ColumnName="marketGroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="invTypeMaterials">
+            <EntityTypeMapping TypeName="SDEModel.invTypeMaterial">
+              <MappingFragment StoreEntitySet="invTypeMaterials">
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="materialTypeID" ColumnName="materialTypeID" />
+                <ScalarProperty Name="typeID" ColumnName="typeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="invTypes">
+            <EntityTypeMapping TypeName="SDEModel.invType">
+              <MappingFragment StoreEntitySet="invTypes">
+                <ScalarProperty Name="sofMaterialSetID" ColumnName="sofMaterialSetID" />
+                <ScalarProperty Name="sofFactionName" ColumnName="sofFactionName" />
+                <ScalarProperty Name="soundID" ColumnName="soundID" />
+                <ScalarProperty Name="iconID" ColumnName="iconID" />
+                <ScalarProperty Name="radius" ColumnName="radius" />
+                <ScalarProperty Name="graphicID" ColumnName="graphicID" />
+                <ScalarProperty Name="marketGroupID" ColumnName="marketGroupID" />
+                <ScalarProperty Name="published" ColumnName="published" />
+                <ScalarProperty Name="basePrice" ColumnName="basePrice" />
+                <ScalarProperty Name="raceID" ColumnName="raceID" />
+                <ScalarProperty Name="factionID" ColumnName="factionID" />
+                <ScalarProperty Name="portionSize" ColumnName="portionSize" />
+                <ScalarProperty Name="capacity" ColumnName="capacity" />
+                <ScalarProperty Name="packagedVolume" ColumnName="packagedVolume" />
+                <ScalarProperty Name="volume" ColumnName="volume" />
+                <ScalarProperty Name="mass" ColumnName="mass" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="typeName" ColumnName="typeName" />
+                <ScalarProperty Name="groupID" ColumnName="groupID" />
+                <ScalarProperty Name="typeID" ColumnName="typeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mapConstellationJumps">
+            <EntityTypeMapping TypeName="SDEModel.mapConstellationJump">
+              <MappingFragment StoreEntitySet="mapConstellationJumps">
+                <ScalarProperty Name="toRegionID" ColumnName="toRegionID" />
+                <ScalarProperty Name="toConstellationID" ColumnName="toConstellationID" />
+                <ScalarProperty Name="fromConstellationID" ColumnName="fromConstellationID" />
+                <ScalarProperty Name="fromRegionID" ColumnName="fromRegionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mapConstellations">
+            <EntityTypeMapping TypeName="SDEModel.mapConstellation">
+              <MappingFragment StoreEntitySet="mapConstellations">
+                <ScalarProperty Name="factionID" ColumnName="factionID" />
+                <ScalarProperty Name="radius" ColumnName="radius" />
+                <ScalarProperty Name="z_Max" ColumnName="z_Max" />
+                <ScalarProperty Name="z_Min" ColumnName="z_Min" />
+                <ScalarProperty Name="y_Max" ColumnName="y_Max" />
+                <ScalarProperty Name="y_Min" ColumnName="y_Min" />
+                <ScalarProperty Name="x_Max" ColumnName="x_Max" />
+                <ScalarProperty Name="x_Min" ColumnName="x_Min" />
+                <ScalarProperty Name="z" ColumnName="z" />
+                <ScalarProperty Name="y" ColumnName="y" />
+                <ScalarProperty Name="x" ColumnName="x" />
+                <ScalarProperty Name="regionID" ColumnName="regionID" />
+                <ScalarProperty Name="constellationName" ColumnName="constellationName" />
+                <ScalarProperty Name="constellationID" ColumnName="constellationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mapRegions">
+            <EntityTypeMapping TypeName="SDEModel.mapRegion">
+              <MappingFragment StoreEntitySet="mapRegions">
+                <ScalarProperty Name="descriptionID" ColumnName="descriptionID" />
+                <ScalarProperty Name="nameID" ColumnName="nameID" />
+                <ScalarProperty Name="factionID" ColumnName="factionID" />
+                <ScalarProperty Name="z_Max" ColumnName="z_Max" />
+                <ScalarProperty Name="z_Min" ColumnName="z_Min" />
+                <ScalarProperty Name="y_Max" ColumnName="y_Max" />
+                <ScalarProperty Name="y_Min" ColumnName="y_Min" />
+                <ScalarProperty Name="x_Max" ColumnName="x_Max" />
+                <ScalarProperty Name="x_Min" ColumnName="x_Min" />
+                <ScalarProperty Name="z" ColumnName="z" />
+                <ScalarProperty Name="y" ColumnName="y" />
+                <ScalarProperty Name="x" ColumnName="x" />
+                <ScalarProperty Name="regionName" ColumnName="regionName" />
+                <ScalarProperty Name="regionID" ColumnName="regionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mapSolarSystemJumps">
+            <EntityTypeMapping TypeName="SDEModel.mapSolarSystemJump">
+              <MappingFragment StoreEntitySet="mapSolarSystemJumps">
+                <ScalarProperty Name="toRegionID" ColumnName="toRegionID" />
+                <ScalarProperty Name="toConstellationID" ColumnName="toConstellationID" />
+                <ScalarProperty Name="toSolarSystemID" ColumnName="toSolarSystemID" />
+                <ScalarProperty Name="fromSolarSystemID" ColumnName="fromSolarSystemID" />
+                <ScalarProperty Name="fromConstellationID" ColumnName="fromConstellationID" />
+                <ScalarProperty Name="fromRegionID" ColumnName="fromRegionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mapSolarSystems">
+            <EntityTypeMapping TypeName="SDEModel.mapSolarSystem">
+              <MappingFragment StoreEntitySet="mapSolarSystems">
+                <ScalarProperty Name="descriptionID" ColumnName="descriptionID" />
+                <ScalarProperty Name="visualEffect" ColumnName="visualEffect" />
+                <ScalarProperty Name="solarSystemNameID" ColumnName="solarSystemNameID" />
+                <ScalarProperty Name="securityClass" ColumnName="securityClass" />
+                <ScalarProperty Name="sunTypeID" ColumnName="sunTypeID" />
+                <ScalarProperty Name="radius" ColumnName="radius" />
+                <ScalarProperty Name="factionID" ColumnName="factionID" />
+                <ScalarProperty Name="security" ColumnName="security" />
+                <ScalarProperty Name="regional" ColumnName="regional" />
+                <ScalarProperty Name="international" ColumnName="international" />
+                <ScalarProperty Name="hub" ColumnName="hub" />
+                <ScalarProperty Name="fringe" ColumnName="fringe" />
+                <ScalarProperty Name="corridor" ColumnName="corridor" />
+                <ScalarProperty Name="border" ColumnName="border" />
+                <ScalarProperty Name="luminosity" ColumnName="luminosity" />
+                <ScalarProperty Name="z_Max" ColumnName="z_Max" />
+                <ScalarProperty Name="z_Min" ColumnName="z_Min" />
+                <ScalarProperty Name="y_Max" ColumnName="y_Max" />
+                <ScalarProperty Name="y_Min" ColumnName="y_Min" />
+                <ScalarProperty Name="x_Max" ColumnName="x_Max" />
+                <ScalarProperty Name="x_Min" ColumnName="x_Min" />
+                <ScalarProperty Name="z" ColumnName="z" />
+                <ScalarProperty Name="y" ColumnName="y" />
+                <ScalarProperty Name="x" ColumnName="x" />
+                <ScalarProperty Name="constellationID" ColumnName="constellationID" />
+                <ScalarProperty Name="regionID" ColumnName="regionID" />
+                <ScalarProperty Name="solarSystemName" ColumnName="solarSystemName" />
+                <ScalarProperty Name="solarSystemID" ColumnName="solarSystemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ores">
             <EntityTypeMapping TypeName="SDEModel.ore">
               <MappingFragment StoreEntitySet="ore">
@@ -899,8 +2439,176 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="skills">
+            <EntityTypeMapping TypeName="SDEModel.skill">
+              <MappingFragment StoreEntitySet="skills">
+                <ScalarProperty Name="secondaryAttr" ColumnName="secondaryAttr" />
+                <ScalarProperty Name="primaryAttr" ColumnName="primaryAttr" />
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="typeName" ColumnName="typeName" />
+                <ScalarProperty Name="typeId" ColumnName="typeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="mapRegionJumps" TypeName="SDEModel.mapRegionJumps" StoreEntitySet="mapRegionJumps">
+            <EndProperty Name="mapRegion1">
+              <ScalarProperty Name="regionID" ColumnName="toRegionID" />
+            </EndProperty>
+            <EndProperty Name="mapRegion">
+              <ScalarProperty Name="regionID" ColumnName="fromRegionID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="dgmAttributeTypes">
+            <EntityTypeMapping TypeName="SDEModel.dgmAttributeType">
+              <MappingFragment StoreEntitySet="dgmAttributeTypes">
+                <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+                <ScalarProperty Name="highIsGood" ColumnName="highIsGood" />
+                <ScalarProperty Name="stackable" ColumnName="stackable" />
+                <ScalarProperty Name="unitID" ColumnName="unitID" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="published" ColumnName="published" />
+                <ScalarProperty Name="defaultValue" ColumnName="defaultValue" />
+                <ScalarProperty Name="iconID" ColumnName="iconID" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="attributeName" ColumnName="attributeName" />
+                <ScalarProperty Name="attributeID" ColumnName="attributeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dgmTypeAttributes">
+            <EntityTypeMapping TypeName="SDEModel.dgmTypeAttribute">
+              <MappingFragment StoreEntitySet="dgmTypeAttributes">
+                <ScalarProperty Name="valueFloat" ColumnName="valueFloat" />
+                <ScalarProperty Name="valueInt" ColumnName="valueInt" />
+                <ScalarProperty Name="attributeID" ColumnName="attributeID" />
+                <ScalarProperty Name="typeID" ColumnName="typeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetAttribute" FunctionName="SDEModel.Store.GetAttribute">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="SDEModel.GetAttribute_Result">
+                <ScalarProperty Name="typeID" ColumnName="typeID" />
+                <ScalarProperty Name="valueFloat" ColumnName="valueFloat" />
+                <ScalarProperty Name="valueInt" ColumnName="valueInt" />
+                <ScalarProperty Name="attributeID" ColumnName="attributeID" />
+                <ScalarProperty Name="attributeName" ColumnName="attributeName" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="iconID" ColumnName="iconID" />
+                <ScalarProperty Name="defaultValue" ColumnName="defaultValue" />
+                <ScalarProperty Name="published" ColumnName="published" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="unitID" ColumnName="unitID" />
+                <ScalarProperty Name="stackable" ColumnName="stackable" />
+                <ScalarProperty Name="highIsGood" ColumnName="highIsGood" />
+                <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetBlueprintMaterials" FunctionName="SDEModel.Store.GetBlueprintMaterials">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetMats" FunctionName="SDEModel.Store.GetMats">
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetOreFromID" FunctionName="SDEModel.Store.GetOreFromID">
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSkillFromID" FunctionName="SDEModel.Store.GetSkillFromID">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSystemFromID" FunctionName="SDEModel.Store.GetSystemFromID">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSystemFromName" FunctionName="SDEModel.Store.GetSystemFromName">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTypeFromID" FunctionName="SDEModel.Store.GetTypeFromID">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTypeFromName" FunctionName="SDEModel.Store.GetTypeFromName">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTypesLikeName" FunctionName="SDEModel.Store.GetTypesLikeName">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetBlueprintProducts" FunctionName="SDEModel.Store.GetBlueprintProducts">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetBlueprintActivity" FunctionName="SDEModel.Store.GetBlueprintActivity">
+          </FunctionImportMapping>
+          <EntitySetMapping Name="dgmEffects">
+            <EntityTypeMapping TypeName="SDEModel.dgmEffect">
+              <MappingFragment StoreEntitySet="dgmEffects">
+                <ScalarProperty Name="fittingUsageChanceAttributeID" ColumnName="fittingUsageChanceAttributeID" />
+                <ScalarProperty Name="npcActivationChanceAttributeID" ColumnName="npcActivationChanceAttributeID" />
+                <ScalarProperty Name="npcUsageChanceAttributeID" ColumnName="npcUsageChanceAttributeID" />
+                <ScalarProperty Name="sfxName" ColumnName="sfxName" />
+                <ScalarProperty Name="distribution" ColumnName="distribution" />
+                <ScalarProperty Name="propulsionChance" ColumnName="propulsionChance" />
+                <ScalarProperty Name="electronicChance" ColumnName="electronicChance" />
+                <ScalarProperty Name="rangeChance" ColumnName="rangeChance" />
+                <ScalarProperty Name="isWarpSafe" ColumnName="isWarpSafe" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="published" ColumnName="published" />
+                <ScalarProperty Name="disallowAutoRepeat" ColumnName="disallowAutoRepeat" />
+                <ScalarProperty Name="falloffAttributeID" ColumnName="falloffAttributeID" />
+                <ScalarProperty Name="rangeAttributeID" ColumnName="rangeAttributeID" />
+                <ScalarProperty Name="dischargeAttributeID" ColumnName="dischargeAttributeID" />
+                <ScalarProperty Name="trackingSpeedAttributeID" ColumnName="trackingSpeedAttributeID" />
+                <ScalarProperty Name="durationAttributeID" ColumnName="durationAttributeID" />
+                <ScalarProperty Name="isAssistance" ColumnName="isAssistance" />
+                <ScalarProperty Name="isOffensive" ColumnName="isOffensive" />
+                <ScalarProperty Name="iconID" ColumnName="iconID" />
+                <ScalarProperty Name="guid" ColumnName="guid" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="postExpression" ColumnName="postExpression" />
+                <ScalarProperty Name="preExpression" ColumnName="preExpression" />
+                <ScalarProperty Name="effectCategory" ColumnName="effectCategory" />
+                <ScalarProperty Name="effectName" ColumnName="effectName" />
+                <ScalarProperty Name="effectID" ColumnName="effectID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dgmTypeEffects">
+            <EntityTypeMapping TypeName="SDEModel.dgmTypeEffect">
+              <MappingFragment StoreEntitySet="dgmTypeEffects">
+                <ScalarProperty Name="isDefault" ColumnName="isDefault" />
+                <ScalarProperty Name="effectID" ColumnName="effectID" />
+                <ScalarProperty Name="typeID" ColumnName="typeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dgmEffectsModifierInfoes">
+            <EntityTypeMapping TypeName="SDEModel.dgmEffectsModifierInfo">
+              <MappingFragment StoreEntitySet="dgmEffectsModifierInfo">
+                <ScalarProperty Name="secondEffectID" ColumnName="secondEffectID" />
+                <ScalarProperty Name="skillTypeID" ColumnName="skillTypeID" />
+                <ScalarProperty Name="operator" ColumnName="operator" />
+                <ScalarProperty Name="modifyingAttributeID" ColumnName="modifyingAttributeID" />
+                <ScalarProperty Name="modifiedAttributeID" ColumnName="modifiedAttributeID" />
+                <ScalarProperty Name="groupID" ColumnName="groupID" />
+                <ScalarProperty Name="func" ColumnName="func" />
+                <ScalarProperty Name="effectID" ColumnName="effectID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="invCategories">
+            <EntityTypeMapping TypeName="SDEModel.invCategory">
+              <MappingFragment StoreEntitySet="invCategories">
+                <ScalarProperty Name="iconID" ColumnName="iconID" />
+                <ScalarProperty Name="published" ColumnName="published" />
+                <ScalarProperty Name="categoryName" ColumnName="categoryName" />
+                <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="invGroups">
+            <EntityTypeMapping TypeName="SDEModel.invGroup">
+              <MappingFragment StoreEntitySet="invGroups">
+                <ScalarProperty Name="iconID" ColumnName="iconID" />
+                <ScalarProperty Name="useBasePrice" ColumnName="useBasePrice" />
+                <ScalarProperty Name="fittableNonSingleton" ColumnName="fittableNonSingleton" />
+                <ScalarProperty Name="anchored" ColumnName="anchored" />
+                <ScalarProperty Name="anchorable" ColumnName="anchorable" />
+                <ScalarProperty Name="published" ColumnName="published" />
+                <ScalarProperty Name="groupName" ColumnName="groupName" />
+                <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+                <ScalarProperty Name="groupID" ColumnName="groupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -922,6 +2630,49 @@ warning 6002: The table/view 'E:\USERS\JIMNE\DESKTOP\VISUAL STUDIO PROJECTS\CAPI
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
+    <Diagrams>
+      <Diagram DiagramId="f5ff98853d604cfc8c69a5b85de73a68" Name="Diagram1">
+        <EntityTypeShape EntityType="SDEModel.industryActivities" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.industryActivityMaterials" Width="1.5" PointX="7.5" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.industryactivityprobability" Width="1.5" PointX="7.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.industryActivityProducts" Width="1.5" PointX="10.5" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.invMarketGroups" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.invTypes" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.industryBlueprint" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.ore" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.skill" Width="1.5" PointX="5.25" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.mapconstellationjump" Width="1.5" PointX="12.25" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.mapconstellation" Width="1.5" PointX="10" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.mapregion" Width="1.5" PointX="7.75" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.mapsolarsystemjump" Width="1.5" PointX="15.25" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SDEModel.mapsolarsystem" Width="1.5" PointX="12.25" PointY="22.875" IsExpanded="true" />
+        <AssociationConnector Association="SDEModel.FK_industryactivity_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivitymaterials_industryactivity" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityprobabilities_industryactivity" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityproducts_industryactivity" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivitymaterials_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityproducts_MaterialTypeID_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityprobabilities_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityproducts_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_industryactivityproducts_ProductTypeID_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_invtypes_invmarketgroups" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_ore_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_skills_typeId_invtypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_mapconstellationjumps_mapconstellations_fromConstellation" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_mapconstellationjumps_mapconstellations_toConstellation" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_mapconstellationjumps_mapregions_fromRegion" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_mapconstellationjumps_mapregions_toRegion" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_mapconstellations_mapregions_region" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_mapsolarsystemjumps_mapconstellations_fromConstellation" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_mapsolarsystemjumps_mapconstellations_toConstellation" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_mapsolarsystems_mapregions_constellation" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_mapsolarsystemjumps_mapregions_fromRegion" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_mapsolarsystemjumps_mapregions_toRegion" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_mapsolarsystems_mapregions_region" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_mapsolarsystemjumps_mapsolarsystems_fromSolarSystem" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.FK_mapsolarsystemjumps_mapsolarsystems_toSolarSystem" ManuallyRouted="false" />
+        <AssociationConnector Association="SDEModel.mapregionjumps" ManuallyRouted="false" />
+      </Diagram>
+    </Diagrams>
   </Designer>
 </edmx:Edmx>

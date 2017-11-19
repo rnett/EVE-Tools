@@ -1,0 +1,33 @@
+﻿CREATE PROCEDURE [dbo].[UpdateDB]
+	@otherDB varchar(200)
+AS
+	
+DECLARE @NAME VARCHAR(100)
+
+DECLARE CUR CURSOR FOR
+  SELECT NAME
+  FROM   SYS.TABLES
+  WHERE  TYPE = 'U'
+         AND SCHEMA_ID = 1
+
+OPEN CUR
+
+FETCH NEXT FROM CUR INTO @NAME
+
+WHILE @@FETCH_STATUS = 0
+  BEGIN
+      
+	EXEC	[dbo].[UpdateDBTable]
+		@tableName = @NAME,
+		@otherDB = @otherDB
+
+      FETCH NEXT FROM CUR INTO @NAME
+  END
+
+CLOSE CUR
+
+DEALLOCATE CUR 
+
+
+	
+RETURN 0

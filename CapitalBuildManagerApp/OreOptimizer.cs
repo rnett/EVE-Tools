@@ -1,6 +1,7 @@
 ﻿using EVE;
 using Google.OrTools.LinearSolver;
 using Newtonsoft.Json.Linq;
+using SDEModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,9 @@ namespace CapitalBuildManagerApp
 				string json;
 				using (WebClient wc = new WebClient())
 				{
-					json = wc.DownloadString("https://market.fuzzwork.co.uk/aggregates/?station=60003760&types=" + types);
+                    string url = "https://market.fuzzwork.co.uk/aggregates/?station=60003760&types=" + types;
+
+                    json = wc.DownloadString(url);
 				}
 
 				JObject jsonObj = JObject.Parse(json);
@@ -42,7 +45,14 @@ namespace CapitalBuildManagerApp
 				foreach (ore ore in _sde.ores)
 				{
 					ore.name = ore.name.TrimEnd();
-					Prices.Add(ore, (double)jsonObj[ore.typeID.ToString()]["sell"]["min"]);
+
+                    double price = (double)jsonObj[ore.typeID.ToString()]["sell"]["min"];
+                    int vol = (int)double.Parse((string)jsonObj[ore.typeID.ToString()]["sell"]["volume"]);
+
+                    if (price < 100 || vol < 20)
+                        continue;
+
+					Prices.Add(ore, price);
 				}
 
 			}
@@ -130,7 +140,7 @@ namespace CapitalBuildManagerApp
 			{
 				if (var.Key.SolutionValue() > 0)
 				{
-					list.Add(var.Value.invtype, (int)var.Key.SolutionValue());
+					list.Add(var.Value.invType, (int)var.Key.SolutionValue());
 				}
 			}
 

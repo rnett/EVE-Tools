@@ -1,25 +1,27 @@
-﻿namespace EVE
+﻿
+using SDEModel;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Web;
+namespace EVE
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Configuration;
-	using System.Linq;
-	using System.Web;
 
 	/// <summary>
 	/// A list of items
 	/// </summary>
 	[SettingsSerializeAs(SettingsSerializeAs.Xml)]
-	public class ItemList : IDictionary<invtype, int>
+	public class ItemList : IDictionary<invType, int>
 	{
-		private Dictionary<invtype, int> _items;
+		private Dictionary<invType, int> _items;
 
-		public ICollection<invtype> Keys
+		public ICollection<invType> Keys
 		{
 			get
 			{
-				return ((IDictionary<invtype, int>)_items).Keys;
+				return ((IDictionary<invType, int>)_items).Keys;
 			}
 		}
 
@@ -27,7 +29,7 @@
 		{
 			get
 			{
-				return ((IDictionary<invtype, int>)_items).Values;
+				return ((IDictionary<invType, int>)_items).Values;
 			}
 		}
 
@@ -35,7 +37,7 @@
 		{
 			get
 			{
-				return ((IDictionary<invtype, int>)_items).Count;
+				return ((IDictionary<invType, int>)_items).Count;
 			}
 		}
 
@@ -43,20 +45,20 @@
 		{
 			get
 			{
-				return ((IDictionary<invtype, int>)_items).IsReadOnly;
+				return ((IDictionary<invType, int>)_items).IsReadOnly;
 			}
 		}
 
-		public int this[invtype key]
+		public int this[invType key]
 		{
 			get
 			{
-				return ((IDictionary<invtype, int>)_items)[key];
+				return ((IDictionary<invType, int>)_items)[key];
 			}
 
 			set
 			{
-				((IDictionary<invtype, int>)_items)[key] = value;
+				((IDictionary<invType, int>)_items)[key] = value;
 			}
 		}
 
@@ -69,7 +71,7 @@
 			return result;
 		}
 
-		public static ItemList operator +(ItemList c1, KeyValuePair<invtype, int> c2)
+		public static ItemList operator +(ItemList c1, KeyValuePair<invType, int> c2)
 		{
 			c1.Add(c2);
 
@@ -88,7 +90,7 @@
 			return result;
 		}
 
-		public static ItemList operator -(ItemList c1, KeyValuePair<invtype, int> c2)
+		public static ItemList operator -(ItemList c1, KeyValuePair<invType, int> c2)
 		{
 			c1.Add(c2.Key, -1 * c2.Value);
 
@@ -109,42 +111,42 @@
 			return c1;
 		}
 
-		public ItemList(Dictionary<invtype, int> items)
+		public ItemList(Dictionary<invType, int> items)
 		{
 			this._items = items;
 		}
 
-		public ItemList(ICollection<industryactivitymaterial> mats)
+		public ItemList(ICollection<industryActivityMaterial> mats)
 		{
-			this._items = new Dictionary<invtype, int>();
+			this._items = new Dictionary<invType, int>();
 
 			foreach (var mat in mats)
 			{
-				this.Add(mat.material_invtype, mat.quantity ?? 0);
+				this.Add(mat.materialType, mat.quantity ?? 0);
 			}
 		}
 
-		public ItemList(ICollection<industryactivityproduct> products)
+		public ItemList(ICollection<industryActivityProduct> products)
 		{
-			this._items = new Dictionary<invtype, int>();
+			this._items = new Dictionary<invType, int>();
 
 			foreach (var mat in products)
 			{
-				this.Add(mat.product_invtype, mat.quantity ?? 0);
+				this.Add(mat.productType, mat.quantity ?? 0);
 			}
 		}
 
 		public ItemList()
 		{
-			this._items = new Dictionary<invtype, int>();
+			this._items = new Dictionary<invType, int>();
 		}
 
-		public bool ContainsKey(invtype key)
+		public bool ContainsKey(invType key)
 		{
-			return ((IDictionary<invtype, int>)_items).ContainsKey(key);
+			return ((IDictionary<invType, int>)_items).ContainsKey(key);
 		}
 
-		public void Add(invtype key, int value)
+		public void Add(invType key, int value)
 		{
 			if (_items.ContainsKey(key))
 			{
@@ -158,11 +160,11 @@
 			}
 			else
 			{
-				((IDictionary<invtype, int>)_items).Add(key, value);
+				((IDictionary<invType, int>)_items).Add(key, value);
 			}
 		}
 
-		public void AddAll(IDictionary<invtype, int> items)
+		public void AddAll(IDictionary<invType, int> items)
 		{
 			foreach (var stack in items.AsEnumerable())
 			{
@@ -179,49 +181,49 @@
 			}
 		}
 
-		public bool Remove(invtype key)
+		public bool Remove(invType key)
 		{
-			return ((IDictionary<invtype, float>)_items).Remove(key);
+			return ((IDictionary<invType, float>)_items).Remove(key);
 		}
 
-		public bool TryGetValue(invtype key, out int value)
+		public bool TryGetValue(invType key, out int value)
 		{
-			return ((IDictionary<invtype, int>)_items).TryGetValue(key, out value);
+			return ((IDictionary<invType, int>)_items).TryGetValue(key, out value);
 		}
 
-		public void Add(KeyValuePair<invtype, int> item)
+		public void Add(KeyValuePair<invType, int> item)
 		{
 			this.Add(item.Key, item.Value);
 		}
 
 		public void Clear()
 		{
-			((IDictionary<invtype, int>)_items).Clear();
+			((IDictionary<invType, int>)_items).Clear();
 		}
 
-		public bool Contains(KeyValuePair<invtype, int> item)
+		public bool Contains(KeyValuePair<invType, int> item)
 		{
-			return ((IDictionary<invtype, int>)_items).Contains(item);
+			return ((IDictionary<invType, int>)_items).Contains(item);
 		}
 
-		public void CopyTo(KeyValuePair<invtype, int>[] array, int arrayIndex)
+		public void CopyTo(KeyValuePair<invType, int>[] array, int arrayIndex)
 		{
-			((IDictionary<invtype, int>)_items).CopyTo(array, arrayIndex);
+			((IDictionary<invType, int>)_items).CopyTo(array, arrayIndex);
 		}
 
-		public bool Remove(KeyValuePair<invtype, int> item)
+		public bool Remove(KeyValuePair<invType, int> item)
 		{
-			return ((IDictionary<invtype, int>)_items).Remove(item);
+			return ((IDictionary<invType, int>)_items).Remove(item);
 		}
 
-		public IEnumerator<KeyValuePair<invtype, int>> GetEnumerator()
+		public IEnumerator<KeyValuePair<invType, int>> GetEnumerator()
 		{
-			return ((IDictionary<invtype, int>)_items).GetEnumerator();
+			return ((IDictionary<invType, int>)_items).GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			return ((IDictionary<invtype, float>)_items).GetEnumerator();
+			return ((IDictionary<invType, float>)_items).GetEnumerator();
 		}
 
 		public enum ItemListFormat { EFT, Tabs, Spaces }
@@ -278,7 +280,7 @@
 			return mats;
 		}
 
-		public ItemList getAllMats(double defaultME, IDictionary<invtype, double> MEs)  ///<todo>Make this work with ME</todo>
+		public ItemList getAllMats(double defaultME, IDictionary<invType, double> MEs)  ///<todo>Make this work with ME</todo>
 		{
 			ItemList mats = new ItemList();
 
@@ -298,7 +300,7 @@
 			return mats;
 		}
 
-		public static ItemList getMatsFor(invtype type)
+		public static ItemList getMatsFor(invType type)
 		{
 			var db = new SDEEntities();
 			return new ItemList(db.GetMats(type.typeID, 1).ToList());
@@ -306,7 +308,7 @@
 
 		public void SubtractIfPresent(ItemList toSubtract)
 		{
-			foreach(KeyValuePair<invtype, int> pair in toSubtract)
+			foreach(KeyValuePair<invType, int> pair in toSubtract)
 			{
 				if (this.ContainsKey(pair.Key))
 				{

@@ -7,17 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EVE
+namespace SDEModel
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class invmarketgroup
+    public partial class invMarketGroup
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public invmarketgroup()
+        public invMarketGroup()
         {
-            this.invtypes = new HashSet<invtype>();
+            this.typesInGroup = new HashSet<invType>();
+            this.children = new HashSet<invMarketGroup>();
         }
     
         public int marketGroupID { get; set; }
@@ -25,9 +26,12 @@ namespace EVE
         public string marketGroupName { get; set; }
         public string description { get; set; }
         public Nullable<int> iconID { get; set; }
-        public Nullable<byte> hasTypes { get; set; }
+        public Nullable<bool> hasTypes { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<invtype> invtypes { get; set; }
+        public virtual ICollection<invType> typesInGroup { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<invMarketGroup> children { get; set; }
+        public virtual invMarketGroup parent { get; set; }
     }
 }
