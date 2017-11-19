@@ -53,7 +53,7 @@ namespace CapitalBuildManagerApp
 		{
 			if (box.Text.Length > 1)
 			{
-				List<string> searchData = _sde.GetTypesLikeName(box.Text).Where(x => x.madeBy.Count > 0).ToList().Select(x => x.typeName).ToList();
+				List<string> searchData = _sde.GetTypesLikeName(box.Text).Where(x => x.madeBy.Count > 0).ToList().Select(x => x.typeName).Where(s => s != null && s != "").ToList();
 				HandleTextChanged(searchData, box);
 			}
 		}
@@ -65,13 +65,13 @@ namespace CapitalBuildManagerApp
             
 			if (box.Text.Count() >= 3 && dataSource.Count() > 0)
 			{
-                
+
 				var sText = box.Text;
-                dataSource.Insert(0, sText);
                 box.DroppedDown = false;
-				box.DataSource = dataSource;
-				box.DroppedDown = true;
-				box.Text = sText;
+                box.DropDownHeight = (int)(13.25 * Math.Min(16, dataSource.Count+1));
+                box.DroppedDown = true;
+                box.DataSource = dataSource;
+                box.Text = sText;
                 box.SelectionStart = sText.Length;
                 box.Select(sText.Count(), 0);
 				Cursor.Current = Cursors.Default;
@@ -82,7 +82,7 @@ namespace CapitalBuildManagerApp
 			else
 			{
 				box.DroppedDown = false;
-				box.SelectionStart = text.Length;
+                box.SelectionStart = text.Length;
 			}
 		}
 
